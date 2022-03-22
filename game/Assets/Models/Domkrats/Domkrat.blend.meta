@@ -1,9 +1,49 @@
 fileFormatVersion: 2
-guid: 774b90746b5fd424d9297d19304f42ba
+guid: 6d2279f36e68ea745a0fe825a1e33daa
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 20
+    second: {fileID: 2100000, guid: 4a533346150fd484a8223fdaaf43b539, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ruchka
+    second: {fileID: 2100000, guid: cbd86ad263593ea43a2ae0b95d9bde43, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bashka
+    second: {fileID: 2100000, guid: 42adaadd3fef04541ac93386dd3292ff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: down
+    second: {fileID: 2100000, guid: 88cf14aa90bba1545b82885a6d26340a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: main_gray_metal
+    second: {fileID: 2100000, guid: 766eed91dbe44c54bbccdb2b9b642cda, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: main_gray_metal.001
+    second: {fileID: 2100000, guid: b894e62f185641b48a802efa1a26735b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: main_gray_metal_move
+    second: {fileID: 2100000, guid: f52e3489413466c4a9c1e1cc018bdb62, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: main_green_metal
+    second: {fileID: 2100000, guid: 52b91fcd97e2bd24f8ea66b7fc1a47e4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

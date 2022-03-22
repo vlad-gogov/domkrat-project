@@ -6,15 +6,19 @@ TagManager:
   tags:
   - Domkrat
   - TPK
+  - Perehodnick
+  - SetPerehodnick
+  - Ruchka
+  - SetRuchka
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Learn
+  - PickUp
   - Water
   - UI
-  - 
-  - 
+  - Interaction
+  - PlaceForItem
   - 
   - 
   - 

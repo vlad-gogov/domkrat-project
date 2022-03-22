@@ -4,61 +4,115 @@ using UnityEngine;
 
 public class PlayerRay : MonoBehaviour
 {
+    public static PlayerRay playerRay { get; private set; }
 
     public float Distance;
-    [SerializeField] private GameObject Pointer;
     private GameObject _selectedObject;
-    [SerializeField] private GameObject Wall;
+    private GameObject hitObject;
+    private LayerMask PickUp;
+    private LayerMask Interaction;
+    private LayerMask PlaceForItem;
+    private Selectable selectable;
+    private MovingSelect moving;
+    private PlayerMove PlayerMove;
+    private PlaceForSet placeForSet;
 
-    void FixedUpdate()
+    /// <summary>
+    /// TODO:
+    /// Нужно реализовать систему установки предметов в нужные места
+    /// 1. Нужно подумать над полями selectable
+    /// </summary>
+
+    void Start()
+    {
+        PickUp = LayerMask.NameToLayer("PickUp");
+        Interaction = LayerMask.NameToLayer("Interaction");
+        PlaceForItem = LayerMask.NameToLayer("PlaceForItem");
+        playerRay = this;
+        PlayerMove = GetComponent<PlayerMove>();
+    }
+
+    public void UnSelectable()
+    {
+        selectable.Deselect();
+        selectable = null;
+        _selectedObject = null;
+        moving = null;
+        PlayerMove.isDomkrat = false;
+    }
+
+    void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(transform.position, transform.forward, Color.red);
 
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Distance))
+        if (Physics.Raycast(ray, out hit, Distance, 1 << PickUp.value) || Physics.Raycast(ray, out hit, Distance, 1 << Interaction.value))
         {
-            GameObject hitObject = hit.collider.gameObject;
-            Selectable selectable = hitObject.GetComponent<Selectable>();
-            Debug.Log(selectable);
-            if (selectable && Input.GetMouseButtonDown(0))
+            hitObject = hit.collider.gameObject;
+            selectable = hitObject.GetComponent<Selectable>();
+            if (!_selectedObject)
+                selectable.GetInfoMouse();
+        }
+        else if (!_selectedObject)
+        {
+            Singleton.Instance.UIManager.ClearEnterText();
+        }
+
+        if (selectable && Input.GetMouseButtonDown(0))
+        {
+            if (!selectable.isSelected)
             {
-                if (!_selectedObject)
+                selectable.Select();
+                if (hitObject.layer == PickUp)
                 {
-                    _selectedObject = hitObject.transform.parent.gameObject;
-                    Wall.GetComponent<BoxCollider>().enabled = true;
-                    selectable.Select();
-                }
-                else
-                {
-                    Wall.GetComponent<BoxCollider>().enabled = false;
-                    selectable.Deselect();
-                    _selectedObject = null;
+                    _selectedObject = selectable.GetSelectObject();
+                    moving = _selectedObject.GetComponent<MovingSelect>();
+                    Singleton.Instance.UIManager.ClearEnterText();
+                    if (_selectedObject.tag == "Domkrat")
+                    {
+                        PlayerMove.isDomkrat = true;
+                    }
                 }
             }
+            else if (selectable.Unselect)
+            {
+                UnSelectable();
+            }
         }
+
+        if (Physics.Raycast(ray, out hit, Distance, 1 << PlaceForItem.value))
+        {
+            placeForSet = hit.collider.GetComponent<PlaceForSet>();
+        }
+
+        if (placeForSet && Input.GetMouseButtonDown(0))
+        {
+            if (_selectedObject)
+            {
+                placeForSet.SetItem(_selectedObject);
+                UnSelectable();
+            }
+        }
+
         if (_selectedObject)
         {
-            Vector3 position = new Vector3(Pointer.transform.position.x, _selectedObject.transform.position.y, Pointer.transform.position.z);
-            _selectedObject.transform.position = position;
-            _selectedObject.transform.rotation = Pointer.transform.rotation;
-
-            /*
-            isCollision = _selectedObject.GetComponent<Domkrat>().isCollision;
-            if (!isCollision)
-            {
-                Vector3 position = new Vector3(Pointer.transform.position.x, _selectedObject.transform.position.y, Pointer.transform.position.z);
-                _selectedObject.transform.position = position;
-                _selectedObject.transform.rotation = Pointer.transform.rotation;
-            }
-            else
-            {
-                isCollision = false;
-                transform.position = new Vector3(transform.rotation.x, transform.position.y, transform.position.z - offset);
-            }
-            */
+            moving.Moving();
         }
 
+        //selectable = null;
+        placeForSet = null;
+
+    }
+
+    IEnumerator Wait(float time)
+    {
+        yield return new WaitForSeconds(time);
+    }
+
+    public GameObject GetSelected()
+    {
+        return _selectedObject;
     }
 
 }
