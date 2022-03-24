@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TakeRuchka : Selectable
 {
+     [SerializeField] GameObject down_ruchka;
     public override void Deselect()
     {
         isSelected = false;
@@ -11,7 +12,7 @@ public class TakeRuchka : Selectable
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы снять ручку");
+        Singleton.Instance.UIManager.SetEnterText("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
     }
 
     public override GameObject GetSelectObject()
@@ -22,6 +23,7 @@ public class TakeRuchka : Selectable
     public override void Select()
     {
         isSelected = true;
+        down_ruchka.GetComponent<Collider>().enabled = false;
     }
 
 }

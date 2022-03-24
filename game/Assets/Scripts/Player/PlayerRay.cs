@@ -19,8 +19,8 @@ public class PlayerRay : MonoBehaviour
 
     /// <summary>
     /// TODO:
-    /// Нужно реализовать систему установки предметов в нужные места
-    /// 1. Нужно подумать над полями selectable
+    /// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    /// 1. пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ selectable
     /// </summary>
 
     void Start()
@@ -52,34 +52,17 @@ public class PlayerRay : MonoBehaviour
             hitObject = hit.collider.gameObject;
             selectable = hitObject.GetComponent<Selectable>();
             if (!_selectedObject)
+            {
                 selectable.GetInfoMouse();
+            }
         }
         else if (!_selectedObject)
         {
             Singleton.Instance.UIManager.ClearEnterText();
+            selectable = null;
         }
 
-        if (selectable && Input.GetMouseButtonDown(0))
-        {
-            if (!selectable.isSelected)
-            {
-                selectable.Select();
-                if (hitObject.layer == PickUp)
-                {
-                    _selectedObject = selectable.GetSelectObject();
-                    moving = _selectedObject.GetComponent<MovingSelect>();
-                    Singleton.Instance.UIManager.ClearEnterText();
-                    if (_selectedObject.tag == "Domkrat")
-                    {
-                        PlayerMove.isDomkrat = true;
-                    }
-                }
-            }
-            else if (selectable.Unselect)
-            {
-                UnSelectable();
-            }
-        }
+        checkSelectable();
 
         if (Physics.Raycast(ray, out hit, Distance, 1 << PlaceForItem.value))
         {
@@ -103,6 +86,31 @@ public class PlayerRay : MonoBehaviour
         //selectable = null;
         placeForSet = null;
 
+    }
+
+    void checkSelectable()
+    {
+        if (selectable && Input.GetMouseButtonDown(0))
+        {
+            if (!selectable.isSelected)
+            {
+                selectable.Select();
+                if (hitObject.layer == PickUp)
+                {
+                    _selectedObject = selectable.GetSelectObject();
+                    moving = _selectedObject.GetComponent<MovingSelect>();
+                    Singleton.Instance.UIManager.ClearEnterText();
+                    if (_selectedObject.tag == "Domkrat")
+                    {
+                        PlayerMove.isDomkrat = true;
+                    }
+                }
+            }
+            else if (selectable.Unselect)
+            {
+                UnSelectable();
+            }
+        }
     }
 
     IEnumerator Wait(float time)
