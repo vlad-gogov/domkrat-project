@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum State
+public enum State
 {
     DEFAULT = 0,
     SET_PEREHODNICK = 1,
     CHECK_DOMKRATS = 2,
-    SET_DOMKRATS = 3
+    SET_DOMKRATS = 3,
+    UP_TPK = 4
 }
 
-enum GameMode
+public enum GameMode
 {
     TRAIN = 0,
     EXAM = 1
@@ -18,39 +19,33 @@ enum GameMode
 
 public class StateManager : MonoBehaviour
 {
-    //[SerializeField] GameObject DomkratLeft;
-    //[SerializeField] GameObject DomkratRight;
+    public List<Domkrat> domkrats; 
 
     private Dictionary<State, string> states = new Dictionary<State, string>();
     private State curState;
 
     // Счетчики для кол-ва
     public int countPerehodnick = 0;
-    public int countDomkrrats = 0;
+    public int countDomkrats = 0;
 
-
-    private List<Vector3> positionDomkrat;
 
     void Awake()
     {
         states.Add(State.DEFAULT, "");
-        states.Add(State.CHECK_DOMKRATS, "Выполнить проверку подъема и опускание домкарата в разных режимах");
         states.Add(State.SET_PEREHODNICK, "Установите переходники на пакет");
+        states.Add(State.CHECK_DOMKRATS, "Выполнить проверку подъема и опускание домкарата в разных режимах");
         states.Add(State.SET_DOMKRATS, "Подкатите и установите домкраты");
+        states.Add(State.UP_TPK, "Поднимите ТПК");
         
         curState = State.DEFAULT;
-
-        //positionDomkrat.Add(new Vector3(7f, 0f, -14f));
-        //positionDomkrat.Add(new Vector3(7f, 0f, -12f));
-        //positionDomkrat.Add(new Vector3(7f, 0f, -10f));
-        //positionDomkrat.Add(new Vector3(7f, 0f, -8f));
-
         NextState();
     }
 
     public void NextState()
     {
-        curState = curState++;
+        Debug.Log(curState);
+        curState = (State)((int)curState + 1);
+        Debug.Log(curState);
         ChangeTextHelper();
     }
 
@@ -60,12 +55,26 @@ public class StateManager : MonoBehaviour
         Singleton.Instance.UIManager.SetHelperText(string.Copy(states[curState]));
     }
 
+    void NotifyAllDomkrats(State state)
+    {
+        foreach(Domkrat domkrat in domkrats)
+        {
+            domkrat.Notify(state);
+        }
+    }
+
     void Update()
     {
         if (countPerehodnick == 4)
         {
             NextState();
-            //Instantiate(DomkratLeft, positionDomkrat[0], Quaternion.identity);
+            NotifyAllDomkrats(curState);
+            countPerehodnick++;
+        }
+        if (countDomkrats == 4)
+        {
+            NextState();
+            countDomkrats++;
         }
     }
 }

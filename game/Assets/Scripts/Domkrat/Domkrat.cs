@@ -6,9 +6,8 @@ public class Domkrat : MonoBehaviour
 {
 
     public OrientationHorizontal myOrientation;
-    // CurrentDomkrat installedOrientation;
     private float SpeedRotation = 80f;
-    private float SpeedMove = 0.1f;
+    private float SpeedMove = 0.007f;
     private Vector3 prev;
     [SerializeField] private GameObject LeftWheel;
     [SerializeField] private GameObject RightWheel;
@@ -22,7 +21,6 @@ public class Domkrat : MonoBehaviour
         GameObject child = gameObject.transform.GetChild(0).gameObject;
         up_part = child.GetComponent<Animator>();
         move_mech = child.transform.GetChild(0).gameObject.GetComponent<Animator>();
-        //anim = GetComponent<Animator>();
     }
 
     void RotateWheel()
@@ -47,23 +45,22 @@ public class Domkrat : MonoBehaviour
 
         var ptConfig = BeginPoint.GetComponent<Basic>();
 
-        if (ptConfig.curH != myOrientation)
-        {
-            Debug.Log("Pidoras pereputal domkrati!!!");
-            return false;
-        }
 
         if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKeyDown(KeyCode.E))
         {
+            if (ptConfig.curH != myOrientation)
+            {
+                Debug.Log("Pidoras pereputal domkrati!!!");
+                return false;
+            }
+
             transform.position = BeginPoint.transform.position;
             transform.rotation = new Quaternion(transform.rotation.x, BeginPoint.transform.rotation.y, BeginPoint.transform.rotation.z, BeginPoint.transform.rotation.w);
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<BoxCollider>().enabled = false;
             float begin = BeginPoint.transform.position.z;
             float end = EndPoint.transform.position.z;
-            //Corout(begin, end);
             StartCoroutine(MoveSet(end - begin));
-            Debug.Log(end - begin);
             up_part.SetTrigger("Finger_past");
             move_mech.SetTrigger("Up");
 
@@ -74,7 +71,7 @@ public class Domkrat : MonoBehaviour
 
     IEnumerator MoveSet(float delta)
     {
-        float shift = SpeedMove * Time.deltaTime;
+        float shift = SpeedMove;
         for (float i = 0; i <= Mathf.Abs(delta); i += shift)
         {
             gameObject.transform.Translate(Vector3.forward * shift);
@@ -87,7 +84,16 @@ public class Domkrat : MonoBehaviour
         if (Set(collider))
         {
             collider.enabled = false;
+            Singleton.Instance.StateManager.countDomkrats++;
             PlayerRay.playerRay.UnSelectable();
+        }
+    }
+
+    public void Notify(State state)
+    {
+        if (state == State.CHECK_DOMKRATS)
+        {
+            enabled = true;
         }
     }
 
