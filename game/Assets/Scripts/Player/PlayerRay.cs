@@ -32,6 +32,7 @@ public class PlayerRay : MonoBehaviour
 
     public void UnSelectable()
     {
+        Debug.Log("ALO UnSelectable");
         selectable.Deselect();
         selectable = null;
         _selectedObject = null;
@@ -105,7 +106,7 @@ public class PlayerRay : MonoBehaviour
                     }
                 }
             }
-            else if (selectable.Unselect)
+            else if (selectable.Unselect && Input.GetMouseButtonDown(0))
             {
                 UnSelectable();
             }
