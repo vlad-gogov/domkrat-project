@@ -39,14 +39,15 @@ public class Perehodnick : Selectable
 
     public bool Set(Collider trigger)
     {
-        if (trigger.gameObject.tag == "SetPerehodnick" && Input.GetKeyDown(KeyCode.E))
+        GameObject parent = trigger.gameObject;
+        if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKeyDown(KeyCode.E))
         {
-            GameObject point = trigger.gameObject.transform.GetChild(0).gameObject;
+            GameObject point = parent.transform.GetChild(0).gameObject;
             transform.position = point.transform.position;
             transform.rotation = point.transform.rotation;
             GetComponent<BoxCollider>().enabled = false;
             GetComponent<Rigidbody>().isKinematic = true;
-            Destroy(trigger.gameObject);
+            Destroy(point);
             Singleton.Instance.UIManager.ClearEnterText();
             Singleton.Instance.StateManager.countPerehodnick++;
             return true;
@@ -58,7 +59,7 @@ public class Perehodnick : Selectable
     {
         if (Set(collider))
         {
-            collider.enabled = false;
+            //collider.enabled = false;
             PlayerRay.playerRay.UnSelectable();
         }
     }

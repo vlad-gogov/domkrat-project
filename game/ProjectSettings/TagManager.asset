@@ -7,9 +7,10 @@ TagManager:
   - Domkrat
   - TPK
   - Perehodnick
-  - SetPerehodnick
   - Ruchka
   - SetRuchka
+  - SetDomkrat
+  - SetPerehodnickDomkrat
   layers:
   - Default
   - TransparentFX
