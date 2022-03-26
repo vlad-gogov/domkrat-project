@@ -15,7 +15,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private GameObject Pointer;
     private DomkratMoving moving;
     public float SpeedRotation = 10f;
-
+    bool isDaun = false;
 
     public void PickUpDomkrat(GameObject SelectedObject)
     {
@@ -35,6 +35,39 @@ public class PlayerMove : MonoBehaviour
 
             if (!isDomkrat)
                 transform.Rotate(0, Input.GetAxis("Mouse X") * RotateSensitivity, 0);
+        }
+        MaybeZoom();
+        MaybeCroach();
+    }
+
+    /// <summary>
+    /// Zoom camera via mouse wheel
+    /// </summary>
+    void MaybeZoom()
+    {
+        float sensitivity = 15;
+        int minFov = 20;
+        int maxFov = 60;
+        var fov = Camera.main.fieldOfView;
+        fov -= Input.GetAxis("Mouse ScrollWheel") * sensitivity;
+        fov = Mathf.Clamp(fov, minFov, maxFov);
+        Camera.main.fieldOfView = fov;
+    }
+
+    /// <summary>
+    /// Croach on LeftControl
+    /// </summary>
+    void MaybeCroach()
+    {
+        if (Input.GetKey(KeyCode.LeftControl) && !isDaun)
+        {
+            isDaun = true;
+            CameraTransform.Translate(new Vector3(0f, -1f, 0f));
+        }
+        else if (!Input.GetKey(KeyCode.LeftControl) && isDaun)
+        {
+            isDaun = false;
+            CameraTransform.Translate(new Vector3(0f, 1f, 0f));
         }
     }
 
