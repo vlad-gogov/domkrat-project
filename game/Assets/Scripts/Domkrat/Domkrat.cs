@@ -93,7 +93,7 @@ public class Domkrat : MonoBehaviour
     {
         if (state == State.CHECK_DOMKRATS)
         {
-            enabled = true;
+            gameObject.SetActive(true);
         }
     }
 

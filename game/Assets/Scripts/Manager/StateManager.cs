@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +24,7 @@ public class StateManager : MonoBehaviour
     private Dictionary<State, string> states = new Dictionary<State, string>();
     private State curState;
 
-    // Счетчики для кол-ва
+    // Г‘Г·ГҐГІГ·ГЁГЄГЁ Г¤Г«Гї ГЄГ®Г«-ГўГ 
     public int countPerehodnick = 0;
     public int countDomkrats = 0;
 
@@ -32,10 +32,10 @@ public class StateManager : MonoBehaviour
     void Awake()
     {
         states.Add(State.DEFAULT, "");
-        states.Add(State.SET_PEREHODNICK, "Установите переходники на пакет");
-        states.Add(State.CHECK_DOMKRATS, "Выполнить проверку подъема и опускание домкарата в разных режимах");
-        states.Add(State.SET_DOMKRATS, "Подкатите и установите домкраты");
-        states.Add(State.UP_TPK, "Поднимите ТПК");
+        states.Add(State.SET_PEREHODNICK, "Г“Г±ГІГ Г­Г®ГўГЁГІГҐ ГЇГҐГ°ГҐГµГ®Г¤Г­ГЁГЄГЁ Г­Г  ГЇГ ГЄГҐГІ");
+        states.Add(State.CHECK_DOMKRATS, "Г‚Г»ГЇГ®Г«Г­ГЁГІГј ГЇГ°Г®ГўГҐГ°ГЄГі ГЇГ®Г¤ГєГҐГ¬Г  ГЁ Г®ГЇГіГ±ГЄГ Г­ГЁГҐ Г¤Г®Г¬ГЄГ Г°Г ГІГ  Гў Г°Г Г§Г­Г»Гµ Г°ГҐГ¦ГЁГ¬Г Гµ");
+        states.Add(State.SET_DOMKRATS, "ГЏГ®Г¤ГЄГ ГІГЁГІГҐ ГЁ ГіГ±ГІГ Г­Г®ГўГЁГІГҐ Г¤Г®Г¬ГЄГ°Г ГІГ»");
+        states.Add(State.UP_TPK, "ГЏГ®Г¤Г­ГЁГ¬ГЁГІГҐ Г’ГЏГЉ");
         
         curState = State.DEFAULT;
         NextState();
