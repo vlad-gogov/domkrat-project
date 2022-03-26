@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2380,6 +2380,7 @@ MonoBehaviour:
   RightSwtch: {fileID: 8022665614546495408}
   handle: {fileID: 6279936937690492864}
   tpk_and_packet: {fileID: 1805599499}
+  actualDomkratUpPart: {fileID: 880619718}
 --- !u!65 &1048891499
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9656,6 +9657,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  TPK: {fileID: 1805599499}
+  ruchka: {fileID: 1048891494}
+  curPosition: 1
 --- !u!65 &3068827896279142688
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16590,6 +16594,7 @@ MonoBehaviour:
   LeftWheel: {fileID: 7698184407813860841}
   RightWheel: {fileID: 8337400629600831863}
   BackWheel: {fileID: 6176474948541661349}
+  isAttachedToTPK: 0
 --- !u!1 &7045516164604477476
 GameObject:
   m_ObjectHideFlags: 0

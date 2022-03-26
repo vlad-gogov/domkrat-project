@@ -16,6 +16,9 @@ public class Domkrat : MonoBehaviour
     Animator up_part;
     Animator move_mech;
 
+    // Переменная, показывающая подключен ли домкрат в ТПК
+    public bool isAttachedToTPK = false;
+
     void Start()
     {
         GameObject child = gameObject.transform.GetChild(0).gameObject;
@@ -84,6 +87,7 @@ public class Domkrat : MonoBehaviour
         if (Set(collider))
         {
             collider.enabled = false;
+            isAttachedToTPK = true;
             Singleton.Instance.StateManager.countDomkrats++;
             PlayerRay.playerRay.UnSelectable();
         }
