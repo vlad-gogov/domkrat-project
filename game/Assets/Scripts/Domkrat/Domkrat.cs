@@ -5,6 +5,8 @@ using UnityEngine;
 public class Domkrat : MonoBehaviour
 {
 
+    public OrientationHorizontal myOrientation;
+    // CurrentDomkrat installedOrientation;
     private float SpeedRotation = 80f;
     private float SpeedMove = 0.1f;
     private Vector3 prev;
@@ -39,10 +41,20 @@ public class Domkrat : MonoBehaviour
     public bool Set(Collider trigger)
     {
         GameObject parent = trigger.gameObject;
+
+        GameObject BeginPoint = parent.transform.GetChild(0).gameObject;
+        GameObject EndPoint = parent.transform.GetChild(1).gameObject;
+
+        var ptConfig = BeginPoint.GetComponent<Basic>();
+
+        if (ptConfig.curH != myOrientation)
+        {
+            Debug.Log("Pidoras pereputal domkrati!!!");
+            return false;
+        }
+
         if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKeyDown(KeyCode.E))
         {
-            GameObject BeginPoint = parent.transform.GetChild(0).gameObject;
-            GameObject EndPoint = parent.transform.GetChild(1).gameObject;
             transform.position = BeginPoint.transform.position;
             transform.rotation = new Quaternion(transform.rotation.x, BeginPoint.transform.rotation.y, BeginPoint.transform.rotation.z, BeginPoint.transform.rotation.w);
             GetComponent<Rigidbody>().isKinematic = true;

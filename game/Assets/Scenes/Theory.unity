@@ -922,6 +922,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 619768216}
+  - component: {fileID: 619768217}
   m_Layer: 0
   m_Name: BegibPointDomkrat
   m_TagString: Untagged
@@ -943,6 +944,20 @@ Transform:
   m_Father: {fileID: 7013735034185450757}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
+--- !u!114 &619768217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619768215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7e3eb2450b27a44a2a0fb78778488f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curH: 0
+  curV: 1
 --- !u!1 &705236567
 GameObject:
   m_ObjectHideFlags: 0
@@ -1912,6 +1927,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 926416556}
+  - component: {fileID: 926416557}
   m_Layer: 0
   m_Name: BegibPointDomkrat
   m_TagString: Untagged
@@ -1933,6 +1949,20 @@ Transform:
   m_Father: {fileID: 1988294788}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
+--- !u!114 &926416557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926416555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7e3eb2450b27a44a2a0fb78778488f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curH: 1
+  curV: 1
 --- !u!1 &977632070
 GameObject:
   m_ObjectHideFlags: 0
@@ -2040,6 +2070,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1001306337}
+  - component: {fileID: 1001306338}
   m_Layer: 0
   m_Name: BegibPointDomkrat
   m_TagString: Untagged
@@ -2061,6 +2092,20 @@ Transform:
   m_Father: {fileID: 1792153499}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
+--- !u!114 &1001306338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001306336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7e3eb2450b27a44a2a0fb78778488f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curH: 1
+  curV: 0
 --- !u!1 &1048891494
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,6 +2591,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1523019824}
+  - component: {fileID: 1523019825}
   m_Layer: 0
   m_Name: BegibPointDomkrat
   m_TagString: Untagged
@@ -2567,6 +2613,20 @@ Transform:
   m_Father: {fileID: 977632071}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
+--- !u!114 &1523019825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523019823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7e3eb2450b27a44a2a0fb78778488f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curH: 0
+  curV: 0
 --- !u!1 &1581713566
 GameObject:
   m_ObjectHideFlags: 0
@@ -6032,15 +6092,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1776307990972964494}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -1.647, y: 0, z: -4.275}
+  m_LocalRotation: {x: -0, y: 0.0683555, z: -0, w: 0.99766105}
+  m_LocalPosition: {x: 0.18, y: 0, z: -3.48}
   m_LocalScale: {x: 0.03923099, y: 0.03923099, z: 0.03923099}
   m_Children:
   - {fileID: 880619719}
   - {fileID: 326715365}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 7.839, z: 0}
 --- !u!4 &1439333933800249766
 Transform:
   m_ObjectHideFlags: 0
@@ -16046,6 +16106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d6c214e3cc97b4ba414267e7518bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myOrientation: 1
   LeftWheel: {fileID: 7698184407813860841}
   RightWheel: {fileID: 8337400629600831863}
   BackWheel: {fileID: 6176474948541661349}
