@@ -2,24 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 1. Настроить корутину и разобрать все возможные случаи установки домкарата в переходники
-/// </summary>
-
 public class Domkrat : MonoBehaviour
 {
 
     private float SpeedRotation = 80f;
-    private float SpeedMove = 80f;
+    private float SpeedMove = 0.1f;
     private Vector3 prev;
     [SerializeField] private GameObject LeftWheel;
     [SerializeField] private GameObject RightWheel;
     [SerializeField] private GameObject BackWheel;
-    Animator anim;
+    [SerializeField] private GameObject MovingMechanism;
 
     void Start()
     {
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
     }
 
     void RotateWheel()
@@ -45,23 +41,23 @@ public class Domkrat : MonoBehaviour
             transform.position = BeginPoint.transform.position;
             transform.rotation = new Quaternion(transform.rotation.x, BeginPoint.transform.rotation.y, BeginPoint.transform.rotation.z, BeginPoint.transform.rotation.w);
             GetComponent<Rigidbody>().isKinematic = true;
-            float begin = BeginPoint.transform.position.z <= EndPoint.transform.position.z ? BeginPoint.transform.position.z : EndPoint.transform.position.z;
-            float end = BeginPoint.transform.position.z >= EndPoint.transform.position.z ? BeginPoint.transform.position.z : EndPoint.transform.position.z;
-            Debug.Log(begin +  " " + end);
-            StartCoroutine(MoveSet(begin, end));
             GetComponent<BoxCollider>().enabled = false;
+            float begin = BeginPoint.transform.position.z;
+            float end = EndPoint.transform.position.z;
+            StartCoroutine(MoveSet(end - begin));
+            GetComponent<BoxCollider>().enabled = false;
+
             return true;
         }
         return false;
     }
 
-    IEnumerator MoveSet(float begin, float end)
+    IEnumerator MoveSet(float delta)
     {
-        Debug.Log(end - begin);
-        for(float i = 0; i <= end - begin; i += SpeedMove * Time.deltaTime)
+        float shift = SpeedMove * Time.deltaTime;
+        for (float i = 0; i <= Mathf.Abs(delta); i += shift)
         {
-            gameObject.transform.Translate(Vector3.forward * Time.deltaTime);
-            Debug.Log(gameObject.transform.position.z);
+            gameObject.transform.Translate(Vector3.forward * shift);
             yield return null;
         }
     }

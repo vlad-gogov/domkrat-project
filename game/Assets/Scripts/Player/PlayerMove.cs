@@ -20,6 +20,7 @@ public class PlayerMove : MonoBehaviour
     public void PickUpDomkrat(GameObject SelectedObject)
     {
         moving = SelectedObject.GetComponent<DomkratMoving>();
+        moving.StartMoving(Pointer);
     }
 
     private float _xRotation;

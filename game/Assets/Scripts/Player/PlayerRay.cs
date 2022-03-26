@@ -76,17 +76,14 @@ public class PlayerRay : MonoBehaviour
             }
         }
 
-        //selectable = null;
-        placeForSet = null;
-
-    }
-
-    void FixedUpdate()
-    {
         if (_selectedObject)
         {
             moving.Moving();
         }
+
+        //selectable = null;
+        placeForSet = null;
+
     }
 
     void checkSelectable()
@@ -103,7 +100,7 @@ public class PlayerRay : MonoBehaviour
                     Singleton.Instance.UIManager.ClearEnterText();
                     if (_selectedObject.tag == "Domkrat")
                     {
-                        PlayerMove.isDomkrat = true;
+                        PlayerMove.isDomkrat = true; 
                         PlayerMove.PickUpDomkrat(_selectedObject);
                     }
                 }
