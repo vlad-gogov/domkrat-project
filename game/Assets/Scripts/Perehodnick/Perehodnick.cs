@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class Perehodnick : Selectable
 {
+    [SerializeField] GameObject parent_object;
+
     public override void Select()
     {
         isSelected = true;
@@ -42,14 +44,18 @@ public class Perehodnick : Selectable
         GameObject parent = trigger.gameObject;
         if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKeyDown(KeyCode.E))
         {
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<BoxCollider>().enabled = false;
+            //parent.transform.SetParent(gameObject.transform);
+            
             GameObject point = parent.transform.GetChild(0).gameObject;
             transform.position = point.transform.position;
             transform.rotation = point.transform.rotation;
-            GetComponent<BoxCollider>().enabled = false;
-            GetComponent<Rigidbody>().isKinematic = true;
+            
             Destroy(point);
             Singleton.Instance.UIManager.ClearEnterText();
             Singleton.Instance.StateManager.countPerehodnick++;
+
             return true;
         }
         return false;

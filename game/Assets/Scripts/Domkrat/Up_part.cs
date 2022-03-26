@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum Makes
 {
@@ -10,7 +11,7 @@ public enum Makes
 
 public class Up_part : MonoBehaviour
 {
-
+    public UnityEvent my_event;
     Animator animator;
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,11 @@ public class Up_part : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void HideFinger()
+    {
+        my_event.Invoke();
     }
 
     public void Up()

@@ -113,6 +113,11 @@ public class PlayerRay : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        
+    }
+
     IEnumerator Wait(float time)
     {
         yield return new WaitForSeconds(time);
