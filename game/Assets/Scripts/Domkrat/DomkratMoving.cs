@@ -12,6 +12,7 @@ public class DomkratMoving : MovingSelect
     public void StartMoving(GameObject Pointer)
     {
         transform.rotation = Pointer.transform.rotation;
+        //transform.rotation.Set(Pointer.transform.rotation.x, Pointer.transform.rotation.y, transform.rotation.z, Pointer.transform.rotation.w);
     }
 
     public override void Moving()

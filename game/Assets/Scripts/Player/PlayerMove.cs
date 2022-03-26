@@ -50,8 +50,8 @@ public class PlayerMove : MonoBehaviour
             inputVector = new Vector3(0f, 0f, Input.GetAxis("Vertical"));
             inputVector /= 2;
             float angel = Input.GetAxis("Horizontal") * Time.deltaTime * SpeedRotation;
-            transform.RotateAround(Pointer.transform.position, Vector3.up, -angel);
-            moving.Rotate(Pointer, -angel);
+            transform.RotateAround(Pointer.transform.position, Vector3.up, angel);
+            moving.Rotate(Pointer, angel);
         }
         Vector3 speedVector = transform.TransformVector(inputVector);
         speedVector *= Speed;
