@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 1. Поправить Selectable
+/// </summary>
+
 public class PlayerRay : MonoBehaviour
 {
     public static PlayerRay playerRay { get; private set; }
@@ -16,12 +20,6 @@ public class PlayerRay : MonoBehaviour
     private MovingSelect moving;
     private PlayerMove PlayerMove;
     private PlaceForSet placeForSet;
-
-    /// <summary>
-    /// TODO:
-    /// ����� ����������� ������� ��������� ��������� � ������ �����
-    /// 1. ����� �������� ��� ������ selectable
-    /// </summary>
 
     void Start()
     {
@@ -78,14 +76,17 @@ public class PlayerRay : MonoBehaviour
             }
         }
 
+        //selectable = null;
+        placeForSet = null;
+
+    }
+
+    void FixedUpdate()
+    {
         if (_selectedObject)
         {
             moving.Moving();
         }
-
-        //selectable = null;
-        placeForSet = null;
-
     }
 
     void checkSelectable()
@@ -103,6 +104,7 @@ public class PlayerRay : MonoBehaviour
                     if (_selectedObject.tag == "Domkrat")
                     {
                         PlayerMove.isDomkrat = true;
+                        PlayerMove.PickUpDomkrat(_selectedObject);
                     }
                 }
             }

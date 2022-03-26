@@ -12,9 +12,15 @@ public class PlayerMove : MonoBehaviour
 
 
     public bool isDomkrat = false;
-    public GameObject Pointer;
+    [SerializeField] private GameObject Pointer;
+    private DomkratMoving moving;
     public float SpeedRotation = 10f;
 
+
+    public void PickUpDomkrat(GameObject SelectedObject)
+    {
+        moving = SelectedObject.GetComponent<DomkratMoving>();
+    }
 
     private float _xRotation;
 
@@ -42,7 +48,9 @@ public class PlayerMove : MonoBehaviour
         {
             inputVector = new Vector3(0f, 0f, Input.GetAxis("Vertical"));
             inputVector /= 2;
-            transform.RotateAround(Pointer.transform.position, Vector3.up, Input.GetAxis("Horizontal") * Time.deltaTime * SpeedRotation);
+            float angel = Input.GetAxis("Horizontal") * Time.deltaTime * SpeedRotation;
+            transform.RotateAround(Pointer.transform.position, Vector3.up, -angel);
+            moving.Rotate(Pointer, -angel);
         }
         Vector3 speedVector = transform.TransformVector(inputVector);
         speedVector *= Speed;

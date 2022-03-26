@@ -1,6 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// 1. Настроить корутину и разобрать все возможные случаи установки домкарата в переходники
+/// </summary>
 
 public class Domkrat : MonoBehaviour
 {
@@ -38,7 +42,6 @@ public class Domkrat : MonoBehaviour
         {
             GameObject BeginPoint = parent.transform.GetChild(0).gameObject;
             GameObject EndPoint = parent.transform.GetChild(1).gameObject;
-            //Debug.Log(BeginPoint);
             transform.position = BeginPoint.transform.position;
             transform.rotation = new Quaternion(transform.rotation.x, BeginPoint.transform.rotation.y, BeginPoint.transform.rotation.z, BeginPoint.transform.rotation.w);
             GetComponent<Rigidbody>().isKinematic = true;
