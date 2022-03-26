@@ -54,7 +54,6 @@ public class Perehodnick : Selectable
             
             Destroy(point);
             Singleton.Instance.UIManager.ClearEnterText();
-            Singleton.Instance.StateManager.countPerehodnick++;
 
             return true;
         }
@@ -63,11 +62,14 @@ public class Perehodnick : Selectable
 
     private void OnTriggerStay(Collider collider)
     {
+
         if (Set(collider))
         {
+            Singleton.Instance.StateManager.countPerehodnick++;
             //collider.enabled = false;
             PlayerRay.playerRay.UnSelectable();
         }
+
     }
 
     private void OnTriggerExit(Collider collider)
