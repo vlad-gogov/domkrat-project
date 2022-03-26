@@ -11,10 +11,15 @@ public class Domkrat : MonoBehaviour
     [SerializeField] private GameObject LeftWheel;
     [SerializeField] private GameObject RightWheel;
     [SerializeField] private GameObject BackWheel;
-    [SerializeField] private GameObject MovingMechanism;
+
+    Animator up_part;
+    Animator move_mech;
 
     void Start()
     {
+        GameObject child = gameObject.transform.GetChild(0).gameObject;
+        up_part = child.GetComponent<Animator>();
+        move_mech = child.transform.GetChild(0).gameObject.GetComponent<Animator>();
         //anim = GetComponent<Animator>();
     }
 
@@ -44,8 +49,11 @@ public class Domkrat : MonoBehaviour
             GetComponent<BoxCollider>().enabled = false;
             float begin = BeginPoint.transform.position.z;
             float end = EndPoint.transform.position.z;
+            //Corout(begin, end);
             StartCoroutine(MoveSet(end - begin));
-            GetComponent<BoxCollider>().enabled = false;
+            Debug.Log(end - begin);
+            up_part.SetTrigger("Finger_past");
+            move_mech.SetTrigger("Up");
 
             return true;
         }
