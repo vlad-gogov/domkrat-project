@@ -74,7 +74,6 @@ public class Ruchka : Selectable
             return;
         }
 
-
         if (
                 actualDomkratUpPart.GetComponent<Up_part>().curPosition == Makes.DOWN
                 && state.direction == Makes.UP
