@@ -14,8 +14,9 @@ public class Up_part : MonoBehaviour
     public UnityEvent my_event;
     Animator animator;
     Domkrat parentDomkrat;
-    public GameObject TPKEblan;
     public GameObject ruchka;
+
+    [SerializeField] Animator TPKAnim;
 
     public Makes curPosition;
 
@@ -33,8 +34,7 @@ public class Up_part : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        // parentDomkrat = gameObject.GetComponentInParent<Domkrat>();
-        parentDomkrat = transform.root.gameObject.GetComponent<Domkrat>();
+        parentDomkrat = gameObject.transform.parent.gameObject.transform.parent.gameObject.gameObject.GetComponent<Domkrat>();
         // should always be `DOWN` at Start
         curPosition = Makes.DOWN;
     }
@@ -136,7 +136,7 @@ public class Up_part : MonoBehaviour
         ruchka.GetComponent<Animator>().SetTrigger("Up"); // анимация вращения ручки
         if (liftTPK)
         {
-            TPK.TPKObj.transform.root.GetComponent<Animator>().SetTrigger("Up"); // анимация ПОДЪЕМА ТПК БЛЯТЬ (да-да не удивляйтесь)
+            TPKAnim.SetTrigger("Up"); // анимация ПОДЪЕМА ТПК БЛЯТЬ (да-да не удивляйтесь)
             TPK.TPKObj.LiftUp();
         }
     }
@@ -148,7 +148,7 @@ public class Up_part : MonoBehaviour
         ruchka.GetComponent<Animator>().SetTrigger("Down"); // анимация вращения ручки
         if (liftTPK)
         {
-            TPK.TPKObj.transform.root.GetComponent<Animator>().SetTrigger("Down"); // анимация ОПУСКАНИЯ ТПК БЛЯТЬ (да-да не удивляйтесь)
+            TPKAnim.SetTrigger("Down"); // анимация ОПУСКАНИЯ ТПК БЛЯТЬ (да-да не удивляйтесь)
             TPK.TPKObj.LiftDown();
         }
     }

@@ -1,14 +1,14 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingHand : Selectable
 {
-    GameObject parent;
+    GameObject root;
 
     void Awake()
     {
-
+        root = gameObject.transform.parent.transform.parent.transform.parent.gameObject;
     }
     public override void Select()
     {
@@ -22,11 +22,11 @@ public class MovingHand : Selectable
 
     public override GameObject GetSelectObject()
     {
-        return transform.root.gameObject;
+        return root;
     }
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы взять домкрат");
+        Singleton.Instance.UIManager.SetEnterText("РќР°Р¶РјРёС‚Рµ Р›РљРњ, С‡С‚РѕР±С‹ РІР·СЏС‚СЊ РґРѕРјРєСЂР°С‚");
     }
 }

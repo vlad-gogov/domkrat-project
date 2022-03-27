@@ -12,6 +12,7 @@ public class Domkrat : MonoBehaviour
     [SerializeField] private GameObject LeftWheel;
     [SerializeField] private GameObject RightWheel;
     [SerializeField] private GameObject BackWheel;
+    [SerializeField] private BoxCollider boxHand;
 
     Animator up_part;
     Animator move_mech;
@@ -94,6 +95,7 @@ public class Domkrat : MonoBehaviour
         {
             collider.enabled = false;
             isAttachedToTPK = true;
+            boxHand.enabled = false;
             Singleton.Instance.StateManager.countDomkrats++;
             id = TPK.TPKObj.AddDomkrat(this);
             PlayerRay.playerRay.UnSelectable();
