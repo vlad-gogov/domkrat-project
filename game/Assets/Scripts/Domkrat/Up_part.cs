@@ -34,7 +34,7 @@ public class Up_part : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        parentDomkrat = gameObject.transform.parent.gameObject.transform.parent.gameObject.gameObject.GetComponent<Domkrat>();
+        parentDomkrat = gameObject.transform.parent.GetComponent<Domkrat>();
         // should always be `DOWN` at Start
         curPosition = Makes.DOWN;
     }
