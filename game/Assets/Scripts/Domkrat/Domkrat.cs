@@ -53,7 +53,7 @@ public class Domkrat : MonoBehaviour
         {
             if (ptConfig.curH != myOrientation)
             {
-                Debug.Log("Pidoras pereputal domkrati!!!");
+                Singleton.Instance.StateManager.counterMistaks++;
                 return false;
             }
 

@@ -17,20 +17,34 @@ public enum GameMode
     EXAM = 1
 }
 
+public struct Error
+{
+    public string ErrorText;
+    public int Weight;
+}
+
+//Singleton.Instance.StateManager.onError(new Error() { ErrorText = "WORK", Weight = 0 });
+
+
 public class StateManager : MonoBehaviour
 {
+    [SerializeField] ErrorMessage errorMessage;
+
+    GameMode gameMode;
+    public int counterMistaks = 0;
+
     public List<Domkrat> domkrats; 
 
     private Dictionary<State, string> states = new Dictionary<State, string>();
     private State curState;
 
-    // Ñ÷åò÷èêè äëÿ êîë-âà
     public int countPerehodnick = 0;
     public int countDomkrats = 0;
 
 
     void Awake()
     {
+        gameMode = GameMode.TRAIN;
         states.Add(State.DEFAULT, "");
         states.Add(State.SET_PEREHODNICK, "Óñòàíîâèòå ïåðåõîäíèêè íà ïàêåò");
         states.Add(State.CHECK_DOMKRATS, "Âûïîëíèòü ïðîâåðêó ïîäúåìà è îïóñêàíèå äîìêàðàòà â ðàçíûõ ðåæèìàõ");
@@ -46,13 +60,22 @@ public class StateManager : MonoBehaviour
         Debug.Log(curState);
         curState = (State)((int)curState + 1);
         Debug.Log(curState);
-        ChangeTextHelper();
+        if (gameMode == GameMode.TRAIN)
+        {
+            ChangeTextHelper();
+        }
     }
 
     public void ChangeTextHelper()
     {
         int index = (int)curState;
         Singleton.Instance.UIManager.SetHelperText(string.Copy(states[curState]));
+    }
+
+    public void onError(Error error)
+    {
+        errorMessage.OnShow(string.Copy(error.ErrorText));
+        counterMistaks += error.Weight;
     }
 
     void NotifyAllDomkrats(State state)
