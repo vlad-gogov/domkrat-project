@@ -30,19 +30,12 @@ public class Up_part : MonoBehaviour
         {Makes.DOWN, new Dictionary<bool, bool> {{true, false}, { false, false} } },
     };
 
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         parentDomkrat = gameObject.GetComponentInParent<Domkrat>();
         // should always be `DOWN` at Start
         curPosition = Makes.DOWN;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void HideFinger()
@@ -59,7 +52,7 @@ public class Up_part : MonoBehaviour
             if (!isOnWeightMode)
             {
                 // Пытаемся поднять домкрат в режиме "без груза" с подключенным ТПК
-                Debug.Log("Debil ne v tom rezhime podnimaesh!!!");
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим подъема домкарата", Weight = ErrorWeight.HIGH });
             }
             RealUp();
         }
@@ -78,7 +71,7 @@ public class Up_part : MonoBehaviour
             if (!isOnWeightMode)
             {
                 // Пытаемся опустить домкрат в режиме "без груза" с подключенным ТПК
-                Debug.Log("Debil ne v tom rezhime opuskaet!!!");
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим опускания домкарата", Weight = ErrorWeight.HIGH });
             }
             RealDown();
         }
@@ -100,7 +93,6 @@ public class Up_part : MonoBehaviour
         if (doNowAllCheckComplete && !wasAllCheckComplete)
         {
             Debug.Log("Krasava, vse proverki s domkratom sdelal!!!");
-            // TODO: надо делать NextState() или что=то другое?
             Singleton.Instance.StateManager.NextState();
         }
     }

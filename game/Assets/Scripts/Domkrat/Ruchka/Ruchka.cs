@@ -70,7 +70,7 @@ public class Ruchka : Selectable
         var state = ComputeState();
         if (!state.isValidState)
         {
-            Debug.Log("u tebya rezhim ne validen che ti delaesh???");
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Конфликтующие режимы работы домкрата", Weight = ErrorWeight.LOW });
             return;
         }
 

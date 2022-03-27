@@ -17,10 +17,19 @@ public enum GameMode
     EXAM = 1
 }
 
+public enum ErrorWeight
+{
+    MINOR = 0,
+    LOW = 1,
+    MEDIUM = 2,
+    HIGH = 3,
+    CRITICAL = 100
+}
+
 public struct Error
 {
     public string ErrorText;
-    public int Weight;
+    public ErrorWeight Weight;
 }
 
 //Singleton.Instance.StateManager.onError(new Error() { ErrorText = "WORK", Weight = 0 });
@@ -46,18 +55,17 @@ public class StateManager : MonoBehaviour
     {
         gameMode = GameMode.TRAIN;
         states.Add(State.DEFAULT, "");
-        states.Add(State.SET_PEREHODNICK, "Óñòàíîâèòå ïåðåõîäíèêè íà ïàêåò");
-        states.Add(State.CHECK_DOMKRATS, "Âûïîëíèòü ïðîâåðêó ïîäúåìà è îïóñêàíèå äîìêàðàòà â ðàçíûõ ðåæèìàõ");
-        states.Add(State.SET_DOMKRATS, "Ïîäêàòèòå è óñòàíîâèòå äîìêðàòû");
-        states.Add(State.UP_TPK, "Ïîäíèìèòå ÒÏÊ");
-        
+        states.Add(State.SET_PEREHODNICK, "Установите переходники на пакет");
+        states.Add(State.CHECK_DOMKRATS, "Выполнить проверку подъема и опускание домкарата в разных режимах");
+        states.Add(State.SET_DOMKRATS, "Подкатите и установите домкраты");
+        states.Add(State.UP_TPK, "Поднимите ТПК");
+
         curState = State.DEFAULT;
         NextState();
     }
 
     public void NextState()
     {
-        Debug.Log(curState);
         curState = (State)((int)curState + 1);
         Debug.Log(curState);
         if (gameMode == GameMode.TRAIN)
@@ -75,7 +83,7 @@ public class StateManager : MonoBehaviour
     public void onError(Error error)
     {
         errorMessage.OnShow(string.Copy(error.ErrorText));
-        counterMistaks += error.Weight;
+        counterMistaks += (int)error.Weight;
     }
 
     void NotifyAllDomkrats(State state)

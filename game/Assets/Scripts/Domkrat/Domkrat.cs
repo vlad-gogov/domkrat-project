@@ -53,7 +53,7 @@ public class Domkrat : MonoBehaviour
         {
             if (ptConfig.curH != myOrientation)
             {
-                Singleton.Instance.StateManager.counterMistaks++;
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильная ориентация домкрата", Weight = ErrorWeight.LOW });
                 return false;
             }
 
