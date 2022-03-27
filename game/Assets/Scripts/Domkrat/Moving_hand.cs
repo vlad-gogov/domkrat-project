@@ -1,15 +1,20 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingHand : Selectable
+public class Moving_hand : Selectable
 {
-    GameObject parent;
-
+    private Animator anim;
+    
     void Awake()
     {
-
+        anim = GetComponent<Animator>();
     }
+
+    private void Start()
+    {
+    }
+
     public override void Select()
     {
         isSelected = true;
@@ -27,6 +32,6 @@ public class MovingHand : Selectable
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы взять домкрат");
+        Singleton.Instance.UIManager.SetEnterText("Р–РѕРїР° РѕС‡РєРѕ Р¶РѕРїР°");
     }
 }

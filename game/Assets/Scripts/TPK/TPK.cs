@@ -9,7 +9,7 @@ public class TPK : MonoBehaviour
     // 2. Смена режимов на всём (ручка)
     // 3. САСного/рояльные положения ТОЛЬКО МЕЖДУ ПАРАЛЛЕЛЬНЫМИ домкратами
     // 4. Синхронить повороты нижних частей
-    List<Domkrat> attachedDomkrats;
+    public List<Domkrat> attachedDomkrats;
 
     public static TPK TPKObj { get; private set; }
 
