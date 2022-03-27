@@ -1,13 +1,22 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Ruchka : Selectable
 {
+    struct StateProperties
+    {
+        public bool isValidState;
+        public bool hasWeightOn;
+        public Makes direction;
+    }
+
     [SerializeField] GameObject LeftSwitch;
     [SerializeField] GameObject RightSwtch;
     [SerializeField] GameObject handle;
     [SerializeField] GameObject tpk_and_packet;
+
+    public GameObject actualDomkratUpPart;
 
     private Up_part m_part_up;
     private Switch left, right;
@@ -19,7 +28,7 @@ public class Ruchka : Selectable
     void Start()
     {
         tpk_and_packet_anim = tpk_and_packet.GetComponent<Animator>();
-        up_part_anim = GetComponent<Animator>();
+        up_part_anim = actualDomkratUpPart.GetComponent<Animator>();
         left = LeftSwitch.GetComponent<Switch>();
         right = RightSwtch.GetComponent<Switch>();
         han = handle.GetComponent<Selectable>();
@@ -40,23 +49,50 @@ public class Ruchka : Selectable
         return null;
     }
 
+    StateProperties ComputeState()
+    {
+        var result = new StateProperties();
+
+        result.isValidState = (
+            left.curType == TypeMode.Off || right.curType == TypeMode.Off
+        );
+
+        var activeSwitcher = left.curType == TypeMode.Off ? right : left;
+        result.direction = activeSwitcher.curType == TypeMode.Podem ? Makes.UP : Makes.DOWN;
+        // Левая ручка без груза, правая с грузом
+        result.hasWeightOn = left.curType == TypeMode.Off ? true : false;
+
+        return result;
+    }
+
     public override void Select()
     {
-        if (((left.curType == TypeMode.Podem && right.curType == TypeMode.Off) || 
-        (right.curType == TypeMode.Podem && left.curType == TypeMode.Off)) && han.isSelected)
+        var state = ComputeState();
+        if (!state.isValidState)
         {
-            isSelected = true;
-            m_part_up.Up();
-            up_part_anim.SetTrigger("Up");
-            tpk_and_packet_anim.SetTrigger("Up");
+            Debug.Log("u tebya rezhim ne validen che ti delaesh???");
+            return;
         }
 
-        if (((right.curType == TypeMode.Opusk && left.curType == TypeMode.Off) || 
-        (left.curType == TypeMode.Opusk && right.curType == TypeMode.Off)) && han.isSelected)
+
+        if (
+                actualDomkratUpPart.GetComponent<Up_part>().curPosition == Makes.DOWN
+                && state.direction == Makes.UP
+                && han.isSelected
+        )
         {
             isSelected = true;
-            m_part_up.Down();
-            up_part_anim.SetTrigger("Down");
+            m_part_up.Up(state.hasWeightOn); // Анимация подъема верхней части домкрата
+        }
+
+        if (
+                actualDomkratUpPart.GetComponent<Up_part>().curPosition == Makes.UP 
+                && state.direction == Makes.DOWN
+                && han.isSelected
+        )
+        {
+            isSelected = true;
+            m_part_up.Down(state.hasWeightOn); // Анимация опускания верхней части домкрата
         }
     }
 }
