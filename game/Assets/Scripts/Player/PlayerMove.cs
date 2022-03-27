@@ -62,12 +62,12 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl) && !isDaun)
         {
             isDaun = true;
-            CameraTransform.Translate(new Vector3(0f, -1f, 0f));
+            CameraTransform.position = new Vector3(CameraTransform.position.x, CameraTransform.position.y - 1f, CameraTransform.position.z);
         }
         else if (!Input.GetKey(KeyCode.LeftControl) && isDaun)
         {
             isDaun = false;
-            CameraTransform.Translate(new Vector3(0f, 1f, 0f));
+            CameraTransform.position = new Vector3(CameraTransform.position.x, CameraTransform.position.y + 1f, CameraTransform.position.z);
         }
     }
 

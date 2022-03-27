@@ -54,6 +54,7 @@ public class Up_part : MonoBehaviour
             {
                 // Пытаемся поднять домкрат в режиме "без груза" с подключенным ТПК
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим подъема домкарата", Weight = ErrorWeight.HIGH });
+                return;
             }
             RealUp();
         }
@@ -73,6 +74,7 @@ public class Up_part : MonoBehaviour
             {
                 // Пытаемся опустить домкрат в режиме "без груза" с подключенным ТПК
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим опускания домкарата", Weight = ErrorWeight.HIGH });
+                return;
             }
             RealDown();
         }
