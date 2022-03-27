@@ -14,7 +14,7 @@ public class Up_part : MonoBehaviour
     public UnityEvent my_event;
     Animator animator;
     Domkrat parentDomkrat;
-    public GameObject TPK;
+    public GameObject TPKEblan;
     public GameObject ruchka;
 
     public Makes curPosition;
@@ -33,7 +33,8 @@ public class Up_part : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        parentDomkrat = gameObject.GetComponentInParent<Domkrat>();
+        // parentDomkrat = gameObject.GetComponentInParent<Domkrat>();
+        parentDomkrat = transform.root.gameObject.GetComponent<Domkrat>();
         // should always be `DOWN` at Start
         curPosition = Makes.DOWN;
     }
@@ -126,17 +127,27 @@ public class Up_part : MonoBehaviour
         ruchka.GetComponent<Animator>().SetTrigger("LittleMove"); // анимация вращения ручки
     }
 
-    void RealUp()
+    public void RealUp(bool liftTPK=true)
     {
+        curPosition = Makes.UP;
         animator.SetTrigger("Up"); // анимация подъема самого домкрата
         ruchka.GetComponent<Animator>().SetTrigger("Up"); // анимация вращения ручки
-        TPK.GetComponent<Animator>().SetTrigger("Up"); // анимация ПОДЪЕМА ТПК БЛЯТЬ (да-да не удивляйтесь)
+        if (liftTPK)
+        {
+            TPK.TPKObj.transform.root.GetComponent<Animator>().SetTrigger("Up"); // анимация ПОДЪЕМА ТПК БЛЯТЬ (да-да не удивляйтесь)
+            TPK.TPKObj.LiftUp();
+        }
     }
 
-    void RealDown()
+    public void RealDown(bool liftTPK=true)
     {
+        curPosition = Makes.DOWN;
         animator.SetTrigger("Down"); // анимация опускания (по масти) самого домкрата
         ruchka.GetComponent<Animator>().SetTrigger("Down"); // анимация вращения ручки
-        TPK.GetComponent<Animator>().SetTrigger("Down"); // анимация ОПУСКАНИЯ ТПК БЛЯТЬ (да-да не удивляйтесь)
+        if (liftTPK)
+        {
+            TPK.TPKObj.transform.root.GetComponent<Animator>().SetTrigger("Down"); // анимация ОПУСКАНИЯ ТПК БЛЯТЬ (да-да не удивляйтесь)
+            TPK.TPKObj.LiftDown();
+        }
     }
 }

@@ -15,6 +15,9 @@ public class Domkrat : MonoBehaviour
 
     Animator up_part;
     Animator move_mech;
+    Up_part childRuchka;
+
+    int id = -1;
 
     // Переменная, показывающая подключен ли домкрат в ТПК
     public bool isAttachedToTPK = false;
@@ -24,6 +27,8 @@ public class Domkrat : MonoBehaviour
         GameObject child = gameObject.transform.GetChild(0).gameObject;
         up_part = child.GetComponent<Animator>();
         move_mech = child.transform.GetChild(0).gameObject.GetComponent<Animator>();
+
+        childRuchka = transform.GetChild(0).gameObject.GetComponent<Up_part>();
     }
 
     void RotateWheel()
@@ -49,7 +54,7 @@ public class Domkrat : MonoBehaviour
         var ptConfig = BeginPoint.GetComponent<Basic>();
 
 
-        if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKeyDown(KeyCode.E))
+        if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKey(KeyCode.E))
         {
             if (ptConfig.curH != myOrientation)
             {
@@ -89,6 +94,7 @@ public class Domkrat : MonoBehaviour
             collider.enabled = false;
             isAttachedToTPK = true;
             Singleton.Instance.StateManager.countDomkrats++;
+            id = TPK.TPKObj.AddDomkrat(this);
             PlayerRay.playerRay.UnSelectable();
         }
     }
@@ -99,6 +105,16 @@ public class Domkrat : MonoBehaviour
         {
             gameObject.SetActive(true);
         }
+    }
+
+    public void LiftUp(bool liftTPK=true)
+    {
+        childRuchka.RealUp(liftTPK);
+    }
+
+    public void LiftDown(bool liftTPK = true)
+    {
+        childRuchka.RealDown(liftTPK);
     }
 
     void Update()

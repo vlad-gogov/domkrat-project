@@ -42,7 +42,8 @@ public class Perehodnick : Selectable
     public bool Set(Collider trigger)
     {
         GameObject parent = trigger.gameObject;
-        if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKeyDown(KeyCode.E))
+        Debug.Log($"tag={parent.tag} | keyDown={Input.GetKey(KeyCode.E)}");
+        if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKey(KeyCode.E))
         {
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<BoxCollider>().enabled = false;
@@ -62,7 +63,7 @@ public class Perehodnick : Selectable
 
     private void OnTriggerStay(Collider collider)
     {
-
+        Debug.Log("onTriggerStay");
         if (Set(collider))
         {
             Singleton.Instance.StateManager.countPerehodnick++;

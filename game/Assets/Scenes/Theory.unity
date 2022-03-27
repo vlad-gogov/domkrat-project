@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5285,7 +5285,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  TPK: {fileID: 1805599499}
+  TPKEblan: {fileID: 919132148857994581}
   ruchka: {fileID: 246192939}
   curPosition: 1
 --- !u!95 &1060725735
@@ -8269,8 +8269,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.3910718, y: 0.99999976, z: 2.81}
-  m_Center: {x: -0.74, y: 0, z: 0.75}
+  m_Size: {x: 2.48, y: 1.88, z: 2.81}
+  m_Center: {x: 0.13, y: 0, z: 0.75}
 --- !u!23 &1988294790
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10420,6 +10420,7 @@ GameObject:
   - component: {fileID: 543450652796397551}
   - component: {fileID: 1747791003}
   - component: {fileID: 1747791002}
+  - component: {fileID: 919132148857994582}
   m_Layer: 0
   m_Name: PaketAndTpk
   m_TagString: Untagged
@@ -10427,6 +10428,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &919132148857994582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148857994581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cda507f2b54a245bca42b25bd6825d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &929506096132346898
 Transform:
   m_ObjectHideFlags: 0
@@ -14521,7 +14534,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  TPK: {fileID: 1805599499}
+  TPKEblan: {fileID: 919132148857994581}
   ruchka: {fileID: 1048891494}
   curPosition: 1
 --- !u!65 &3068827896279142688
@@ -21269,8 +21282,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.3910718, y: 0.99999976, z: 2.81}
-  m_Center: {x: 0.85, y: 0, z: 0.56}
+  m_Size: {x: 3.46, y: 1.64, z: 4.39}
+  m_Center: {x: 0.24, y: 0, z: 0.56}
 --- !u!23 &7013735034185450759
 MeshRenderer:
   m_ObjectHideFlags: 0
