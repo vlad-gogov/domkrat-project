@@ -42,7 +42,7 @@ public class StateManager : MonoBehaviour
     GameMode gameMode;
     public int counterMistaks = 0;
 
-    public List<Domkrat> domkrats; 
+    public List<Domkrat> domkrats = new List<Domkrat>(); 
 
     private Dictionary<State, string> states = new Dictionary<State, string>();
     private State curState;
@@ -99,8 +99,8 @@ public class StateManager : MonoBehaviour
         if (countPerehodnick == 4)
         {
             NextState();
-            NotifyAllDomkrats(curState);
             countPerehodnick++;
+            NotifyAllDomkrats(curState);
         }
         if (countDomkrats == 4)
         {
