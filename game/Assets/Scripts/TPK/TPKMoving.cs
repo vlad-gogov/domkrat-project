@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class TPKMoving : MonoBehaviour
 {
-    [SerializeField] GameObject dom;
+    Animator anim;
+    bool is_front_was = false;
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    void Awake()
+    {
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -19,16 +25,16 @@ public class TPKMoving : MonoBehaviour
 
     void Moving()
     {
-        if (Input.GetKey(KeyCode.R)) {
-            Debug.Log("RRRRRR");
-            Vector3 inputVector = transform.TransformVector(new Vector3(0.1f, 0f, 0f));
-            foreach (Domkrat domkrat in TPK.TPKObj.attachedDomkrats)
+        if (Input.GetKeyDown(KeyCode.R)) {
+
+            if (!is_front_was)
             {
-                domkrat.transform.position = domkrat.transform.position + inputVector; 
-                //= inputVector  + domkrat.transform.position;
+                anim.SetTrigger("Moving_front");
+                is_front_was = true;
             }
-            gameObject.transform.position = inputVector + gameObject.transform.position; 
-            //= inputVector * TPK.TPKObj.attachedDomkrats[0].transform.localScale.x + gameObject.transform.position;
+            else {
+                anim.SetTrigger("Valim_bokom");
+            }
         }
     }
 }
