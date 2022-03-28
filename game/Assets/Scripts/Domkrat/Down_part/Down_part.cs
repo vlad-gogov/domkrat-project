@@ -6,10 +6,9 @@ public class Down_part : MonoBehaviour
 {
     Animator animator;
     Domkrat parentDomkrat;
+    [SerializeField] Down_part_rotation rotation_down_part;
     public GameObject ruchka;
     public Makes curPosition;
-    private float step = 40f;
-    private bool isRotate = false;
 
     void Start()
     {
@@ -19,7 +18,7 @@ public class Down_part : MonoBehaviour
         curPosition = Makes.DOWN;
     }
 
-    public void Up(bool isTechStand = false)
+    public bool Up(bool isTechStand = false)
     {
         curPosition = Makes.UP;
         if (parentDomkrat.isAttachedToTPK)
@@ -28,13 +27,14 @@ public class Down_part : MonoBehaviour
             {
                 // Пытаемся поднять нижнюю часть домкрата без технологической подставки с подключенным ТПК
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установить технологическую подставку перед тем как поднимать нижнюю часть домкарата", Weight = ErrorWeight.HIGH });
-                return;
+                return false;
             }
             RealUp();
         }
+        return true;
     }
 
-    public void Down(bool isTechStand = false)
+    public bool Down(bool isTechStand = false)
     {
         curPosition = Makes.DOWN;
         if (parentDomkrat.isAttachedToTPK)
@@ -43,10 +43,11 @@ public class Down_part : MonoBehaviour
             {
                 // Пытаемся поднять нижнюю часть домкрата без технологической подставки с подключенным ТПК
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установить технологическую подставку перед тем как поднимать нижнюю часть домкарата", Weight = ErrorWeight.HIGH });
-                return;
+                return false;
             }
             RealDown();
         }
+        return true;
     }
 
     void RealUp()
@@ -67,12 +68,15 @@ public class Down_part : MonoBehaviour
     {
         if (curPosition == Makes.UP)
         {
-            if (!isRotate)
+            if (!rotation_down_part.isRotate)
             {
-                if (Input.GetKeyDown(KeyCode.E)) // 200$ c Vladika
+                if (Input.GetKey(KeyCode.E)) // 200$ c Vladika
                 {
-                    //gameObject.transform.Rotate(Vector3.left, Input.GetAxis("Mouse Y"), Space.World);
-                    
+                    rotation_down_part.RotateDownPart(90f);
+                }
+                else if (Input.GetKey(KeyCode.Q))
+                {
+                    rotation_down_part.RotateDownPart(-90f);
                 }
             }
 

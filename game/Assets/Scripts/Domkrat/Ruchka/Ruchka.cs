@@ -82,9 +82,8 @@ public class Ruchka : Selectable
             )
             {
                 Debug.Log("1");
-                isSelected = true;
-                actualDomkratDownPart.Up(TechStand.isSelected); // Анимация подъема нижней части домкрата
-                TechStand.enabled = false;
+                if (actualDomkratDownPart.Up(TechStand.isSelected)) // Анимация подъема нижней части домкрата
+                    TechStand.enabled = false;
             }
             if (
                     actualDomkratUpPart.curPosition == Makes.UP
@@ -94,9 +93,8 @@ public class Ruchka : Selectable
             )
             {
                 Debug.Log("2");
-                isSelected = true;
-                actualDomkratDownPart.Down(TechStand.isSelected); // Анимация подъема нижней части домкрата
-                TechStand.enabled = true;
+                if (actualDomkratDownPart.Down(TechStand.isSelected)) // Анимация подъема нижней части домкрата
+                    TechStand.enabled = true;
             }
         }
 
@@ -108,7 +106,6 @@ public class Ruchka : Selectable
                 && han.isSelected
         )
         {
-            isSelected = true;
             actualDomkratUpPart.Up(state.hasWeightOn); // Анимация подъема верхней части домкрата
         }
 
