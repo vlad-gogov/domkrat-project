@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum StateTPK
+{
+    UP = 0,
+    DOWN = 1
+}
+
 public class TPK : MonoBehaviour
 {
     // Какие операции синхронить между домкратами:
@@ -11,23 +17,20 @@ public class TPK : MonoBehaviour
     // 4. Синхронить повороты нижних частей
     public List<Domkrat> attachedDomkrats;
 
+    public StateTPK state;
+
     public static TPK TPKObj { get; private set; }
 
-    // Start is called before the first frame update
     void Start()
     {
         TPKObj = this;
         attachedDomkrats = new List<Domkrat>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        state = StateTPK.DOWN;
     }
 
     public void LiftUp()
     {
+        state = StateTPK.UP;
         foreach (var domkrat in attachedDomkrats)
         {
             domkrat.LiftUp(/*liftTPK=*/false);
@@ -36,6 +39,7 @@ public class TPK : MonoBehaviour
 
     public void LiftDown()
     {
+        state = StateTPK.DOWN;
         foreach (var domkrat in attachedDomkrats)
         {
             domkrat.LiftDown(/*liftTPK=*/false);

@@ -64,7 +64,6 @@ public class Domkrat : MonoBehaviour
             }
 
             transform.position = BeginPoint.transform.position;
-            // transform.rotation = new Quaternion(BeginPoint.transform.rotation.x, BeginPoint.transform.rotation.y, BeginPoint.transform.rotation.z, BeginPoint.transform.rotation.w);
             transform.rotation = BeginPoint.transform.rotation;
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<BoxCollider>().enabled = false;

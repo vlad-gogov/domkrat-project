@@ -12,13 +12,15 @@ public enum Makes
 public class Up_part : MonoBehaviour
 {
     public UnityEvent my_event;
+
     Animator animator;
     Domkrat parentDomkrat;
     public GameObject ruchka;
+    public Makes curPosition;
 
+    public GameObject TechStand;
     [SerializeField] Animator TPKAnim;
 
-    public Makes curPosition;
 
     // Словарь по факту содержит матрицу всех возможных проверок: doneCheck[Makes][bool1] -> bool2
     //      - Makes: направление в котором проверяли (вверх-вниз)
@@ -53,7 +55,7 @@ public class Up_part : MonoBehaviour
             if (!isOnWeightMode)
             {
                 // Пытаемся поднять домкрат в режиме "без груза" с подключенным ТПК
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим подъема домкарата", Weight = ErrorWeight.HIGH });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим подъема домкрата", Weight = ErrorWeight.HIGH });
                 return;
             }
             RealUp();
@@ -73,7 +75,7 @@ public class Up_part : MonoBehaviour
             if (!isOnWeightMode)
             {
                 // Пытаемся опустить домкрат в режиме "без груза" с подключенным ТПК
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим опускания домкарата", Weight = ErrorWeight.HIGH });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим опускания домкрата", Weight = ErrorWeight.HIGH });
                 return;
             }
             RealDown();
@@ -132,6 +134,7 @@ public class Up_part : MonoBehaviour
     public void RealUp(bool liftTPK=true)
     {
         curPosition = Makes.UP;
+        TechStand.SetActive(true);
         animator.SetTrigger("Up"); // анимация подъема самого домкрата
         ruchka.GetComponent<Animator>().SetTrigger("Up"); // анимация вращения ручки
         if (liftTPK)
@@ -144,6 +147,7 @@ public class Up_part : MonoBehaviour
     public void RealDown(bool liftTPK=true)
     {
         curPosition = Makes.DOWN;
+        TechStand.SetActive(false);
         animator.SetTrigger("Down"); // анимация опускания (по масти) самого домкрата
         ruchka.GetComponent<Animator>().SetTrigger("Down"); // анимация вращения ручки
         if (liftTPK)

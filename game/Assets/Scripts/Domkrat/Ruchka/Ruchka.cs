@@ -14,26 +14,15 @@ public class Ruchka : Selectable
     [SerializeField] GameObject LeftSwitch;
     [SerializeField] GameObject RightSwtch;
     [SerializeField] GameObject handle;
-    [SerializeField] GameObject tpk_and_packet;
 
-    public GameObject actualDomkratUpPart;
+    [SerializeField] TechStand TechStand;
+    public Up_part actualDomkratUpPart;
+    public Down_part actualDomkratDownPart;
 
-    private Up_part m_part_up;
     private Switch left, right;
     private Selectable han;
 
-    Animator up_part_anim;
-    Animator tpk_and_packet_anim;
 
-    void Start()
-    {
-        tpk_and_packet_anim = tpk_and_packet.GetComponent<Animator>();
-        up_part_anim = actualDomkratUpPart.GetComponent<Animator>();
-        left = LeftSwitch.GetComponent<Switch>();
-        right = RightSwtch.GetComponent<Switch>();
-        han = handle.GetComponent<Selectable>();
-        m_part_up = gameObject.GetComponentInParent<Up_part>();
-    }
     public override void Deselect()
     {
         isSelected = false;
@@ -42,6 +31,13 @@ public class Ruchka : Selectable
     public override void GetInfoMouse()
     {
         return;
+    }
+
+    void Start()
+    {
+        left = LeftSwitch.GetComponent<Switch>();
+        right = RightSwtch.GetComponent<Switch>();
+        han = handle.GetComponent<Selectable>();
     }
 
     public override GameObject GetSelectObject()
@@ -74,24 +70,59 @@ public class Ruchka : Selectable
             return;
         }
 
+        // Нижняя часть домкарата
+        if (TPK.TPKObj.state == StateTPK.UP)
+        {
+
+            if (
+                    actualDomkratUpPart.curPosition == Makes.UP
+                    && actualDomkratDownPart.curPosition == Makes.DOWN
+                    && state.direction == Makes.UP
+                    && han.isSelected
+            )
+            {
+                isSelected = true;
+                actualDomkratDownPart.Up(TechStand.isSelected); // Анимация подъема нижней части домкрата
+                TechStand.enabled = false;
+            }
+            if (
+                    actualDomkratUpPart.curPosition == Makes.UP
+                    && actualDomkratDownPart.curPosition == Makes.UP
+                    && state.direction == Makes.DOWN
+                    && han.isSelected
+            )
+            {
+                isSelected = true;
+                actualDomkratDownPart.Down(TechStand.isSelected); // Анимация подъема нижней части домкрата
+                TechStand.enabled = true;
+            }
+        }
+
+        // Верхняя часть домкарата
         if (
-                actualDomkratUpPart.GetComponent<Up_part>().curPosition == Makes.DOWN
+                actualDomkratUpPart.curPosition == Makes.DOWN
+                && actualDomkratDownPart.curPosition == Makes.DOWN
                 && state.direction == Makes.UP
                 && han.isSelected
         )
         {
             isSelected = true;
-            m_part_up.Up(state.hasWeightOn); // Анимация подъема верхней части домкрата
+            actualDomkratUpPart.Up(state.hasWeightOn); // Анимация подъема верхней части домкрата
         }
 
         if (
-                actualDomkratUpPart.GetComponent<Up_part>().curPosition == Makes.UP 
+                actualDomkratUpPart.curPosition == Makes.UP
+                && actualDomkratDownPart.curPosition == Makes.DOWN
                 && state.direction == Makes.DOWN
                 && han.isSelected
         )
         {
+            if (TechStand.isSelected)
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем как опускать ТПК", Weight = ErrorWeight.HIGH });
+            }
             isSelected = true;
-            m_part_up.Down(state.hasWeightOn); // Анимация опускания верхней части домкрата
+            actualDomkratUpPart.Down(state.hasWeightOn); // Анимация опускания верхней части домкрата
         }
     }
 }
