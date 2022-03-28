@@ -77,10 +77,11 @@ public class Ruchka : Selectable
             if (
                     actualDomkratUpPart.curPosition == Makes.UP
                     && actualDomkratDownPart.curPosition == Makes.DOWN
-                    && state.direction == Makes.UP
+                    && state.direction == Makes.DOWN
                     && han.isSelected
             )
             {
+                Debug.Log("1");
                 isSelected = true;
                 actualDomkratDownPart.Up(TechStand.isSelected); // Анимация подъема нижней части домкрата
                 TechStand.enabled = false;
@@ -88,10 +89,11 @@ public class Ruchka : Selectable
             if (
                     actualDomkratUpPart.curPosition == Makes.UP
                     && actualDomkratDownPart.curPosition == Makes.UP
-                    && state.direction == Makes.DOWN
+                    && state.direction == Makes.UP
                     && han.isSelected
             )
             {
+                Debug.Log("2");
                 isSelected = true;
                 actualDomkratDownPart.Down(TechStand.isSelected); // Анимация подъема нижней части домкрата
                 TechStand.enabled = true;
