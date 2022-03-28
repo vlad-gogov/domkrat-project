@@ -5797,6 +5797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myOrientation: 0
+  currentWheelState: 1
   LeftWheel: {fileID: 383062514}
   RightWheel: {fileID: 892322985}
   BackWheel: {fileID: 1324126319}
@@ -7070,6 +7071,7 @@ MonoBehaviour:
   TechStand: {fileID: 772336412}
   actualDomkratUpPart: {fileID: 1455057280}
   actualDomkratDownPart: {fileID: 1985010299}
+  domkrat: {fileID: 1517327877}
 --- !u!65 &1918701439
 BoxCollider:
   m_ObjectHideFlags: 0

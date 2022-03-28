@@ -4,17 +4,10 @@ using UnityEngine;
 
 public class SwitchRoyal : Selectable
 {
-    struct StateProperties
-    {
-        public bool isValidState;
-        public bool hasWeightOn;
-        public Makes direction;
-    }
-
     [SerializeField] TechStand TechStand;
     public Up_part actualDomkratUpPart;
     public Down_part actualDomkratDownPart;
-
+    public Domkrat domkrat;
 
     public override void Deselect()
     {
@@ -37,7 +30,6 @@ public class SwitchRoyal : Selectable
 
     public override void Select()
     {
-        // ?????? ????? ?????????
         if (TPK.TPKObj.state == StateTPK.UP)
         {
 
@@ -46,9 +38,17 @@ public class SwitchRoyal : Selectable
                     && actualDomkratDownPart.curPosition == Makes.UP
             )
             {
-                Debug.Log("3");
-                isSelected = true;
-                actualDomkratDownPart.GetComponent<Animator>().SetTrigger("ToRoyal");
+                if (domkrat.currentWheelState == WheelState.SOOS)
+                {
+                    Debug.Log("3");
+                    actualDomkratDownPart.GetComponent<Animator>().SetTrigger("ToRoyal");
+                    domkrat.currentWheelState = WheelState.ROYAL;
+                } else
+                {
+                    Debug.Log("4");
+                    actualDomkratDownPart.GetComponent<Animator>().SetTrigger("ToSoos");
+                    domkrat.currentWheelState = WheelState.SOOS;
+                }
             }
         }
 

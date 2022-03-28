@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WheelState
+{
+    ROYAL = 0,
+    SOOS = 1
+}
+
 public class Domkrat : MonoBehaviour
 {
 
@@ -9,6 +15,7 @@ public class Domkrat : MonoBehaviour
     private float SpeedRotation = 80f;
     private float SpeedMove = 0.007f;
     private Vector3 prev;
+    public WheelState currentWheelState = WheelState.SOOS; 
     [SerializeField] private GameObject LeftWheel;
     [SerializeField] private GameObject RightWheel;
     [SerializeField] private GameObject BackWheel;
