@@ -77,6 +77,5 @@ public class Down_part : MonoBehaviour
             }
 
         }
-      
     }
 }
