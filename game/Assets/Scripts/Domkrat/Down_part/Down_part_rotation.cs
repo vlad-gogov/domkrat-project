@@ -13,7 +13,7 @@ public enum Direction
 public class Down_part_rotation : MonoBehaviour
 {
     public bool isRotate = false;
-    private float step = 40f;
+    private float step = 0.1f;
     public Direction dir = Direction.FORWARD;
 
     
@@ -24,12 +24,11 @@ public class Down_part_rotation : MonoBehaviour
 
     public IEnumerator Rotate(float angle)
     {
-        float temp = angle >= 0 ? -1 : 1;
+        float temp = angle >= 0 ? 1 : -1;
         isRotate = true;
-        Debug.Log("ANGEL: " + angle);
-        for (float t = 0; t <= Mathf.Abs(angle); t += step * Time.deltaTime)
+        for (float t = 0; t <= Mathf.Abs(angle); t += step)
         {
-            gameObject.transform.Rotate(0f, step * temp * Time.deltaTime, 0f);
+            gameObject.transform.Rotate(step * temp, 0f, 0f);
             yield return null;
         }
         isRotate = false;
