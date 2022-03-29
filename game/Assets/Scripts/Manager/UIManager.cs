@@ -8,6 +8,14 @@ public class UIManager : MonoBehaviour
     public Text enter;
     public Text helper;
 
+    void Start()
+    {
+        if (Singleton.Instance.StateManager.gameMode == GameMode.EXAM)
+        {
+            helper.GetComponentInParent<Image>().gameObject.SetActive(false);
+        }
+    }
+
     public void SetEnterText(string text)
     {
         enter.text = text;

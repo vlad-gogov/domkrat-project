@@ -48,10 +48,14 @@ public class Up_part : MonoBehaviour
 
     public void Up(bool isOnWeightMode = false)
     {
-        curPosition = Makes.UP;
-        UpdateTestingDict(curPosition, isOnWeightMode);
+        UpdateTestingDict(Makes.UP, isOnWeightMode);
         if (parentDomkrat.isAttachedToTPK)
         {
+            if (TPK.TPKObj.attachedDomkrats.Count != 1)
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уставоите все домкраты чтобы поднять ТПК", Weight = ErrorWeight.HIGH });
+                return;
+            }
             if (!isOnWeightMode)
             {
                 // Пытаемся поднять домкрат в режиме "без груза" с подключенным ТПК
@@ -68,8 +72,7 @@ public class Up_part : MonoBehaviour
 
     public void Down(bool isOnWeightMode = false)
     {
-        curPosition = Makes.DOWN;
-        UpdateTestingDict(curPosition, isOnWeightMode);
+        UpdateTestingDict(Makes.DOWN, isOnWeightMode);
         if (parentDomkrat.isAttachedToTPK)
         {
             if (!isOnWeightMode)
@@ -121,12 +124,14 @@ public class Up_part : MonoBehaviour
 
     void TestingUp()
     {
+        curPosition = Makes.UP;
         animator.SetTrigger("LittleUp"); // анимация подъема самого домкрата
         ruchka.GetComponent<Animator>().SetTrigger("LittleMove"); // анимация вращения ручки
     }
 
     void TestingDown()
     {
+        curPosition = Makes.DOWN;
         animator.SetTrigger("LittleDown"); // анимация опускания самого домкрата
         ruchka.GetComponent<Animator>().SetTrigger("LittleMove"); // анимация вращения ручки
     }

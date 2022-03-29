@@ -21,10 +21,12 @@ public class Domkrat : MonoBehaviour
     public OrientationVertical curV = OrientationVertical.None;
     public Down_part_rotation downPartRotation;
     public Rotate_fixator rotateFixator;
+    public WheelState currentWheelState = WheelState.SOOS; 
+    public TechStand techStand;
     private float SpeedRotation = 80f;
     private float SpeedMove = 0.007f;
     private Vector3 prev;
-    public WheelState currentWheelState = WheelState.SOOS; 
+    private MovingHand moveHand;
     [SerializeField] private GameObject LeftWheel;
     [SerializeField] private GameObject RightWheel;
     [SerializeField] private GameObject BackWheel;
@@ -45,6 +47,7 @@ public class Domkrat : MonoBehaviour
         up_part = child.GetComponent<Animator>();
         move_mech = child.transform.GetChild(0).gameObject.GetComponent<Animator>();
         childRuchka = transform.GetChild(0).gameObject.GetComponent<Up_part>();
+        moveHand = boxHand.gameObject.GetComponent<MovingHand>();
     }
 
     void RotateWheel()
@@ -72,26 +75,30 @@ public class Domkrat : MonoBehaviour
 
         if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKey(KeyCode.E))
         {
-            if (ptConfig.type != type)
+            Singleton.Instance.UIManager.SetEnterText("Нажмите E чтобы установить домкрат в переходник");
+            if (Input.GetKey(KeyCode.E))
             {
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильная ориентация домкрата", Weight = ErrorWeight.LOW });
-                return false;
+                if (ptConfig.type != type)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильная ориентация домкрата", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+
+                curH = ptConfig.curH;
+                curV = ptConfig.curV;
+
+                transform.position = BeginPoint.transform.position;
+                transform.rotation = BeginPoint.transform.rotation;
+                GetComponent<Rigidbody>().isKinematic = true;
+                GetComponent<BoxCollider>().enabled = false;
+                float begin = BeginPoint.transform.position.z;
+                float end = EndPoint.transform.position.z;
+                StartCoroutine(MoveSet(end - begin));
+                up_part.SetTrigger("Finger_past");
+                move_mech.SetTrigger("Up");
+
+                return true;
             }
-
-            curH = ptConfig.curH;
-            curV = ptConfig.curV;
-
-            transform.position = BeginPoint.transform.position;
-            transform.rotation = BeginPoint.transform.rotation;
-            GetComponent<Rigidbody>().isKinematic = true;
-            GetComponent<BoxCollider>().enabled = false;
-            float begin = BeginPoint.transform.position.z;
-            float end = EndPoint.transform.position.z;
-            StartCoroutine(MoveSet(end - begin));
-            up_part.SetTrigger("Finger_past");
-            move_mech.SetTrigger("Up");
-
-            return true;
         }
         return false;
     }
@@ -108,7 +115,7 @@ public class Domkrat : MonoBehaviour
 
     private void OnTriggerStay(Collider collider)
     {
-        if (Set(collider))
+        if (moveHand.isSelected && Set(collider))
         {
             collider.enabled = false;
             isAttachedToTPK = true;

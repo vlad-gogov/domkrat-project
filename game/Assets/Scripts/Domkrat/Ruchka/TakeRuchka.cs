@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +12,7 @@ public class TakeRuchka : Selectable
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("������� ���, ����� ����� �����");
+        Singleton.Instance.UIManager.SetEnterText("");
     }
 
     public override GameObject GetSelectObject()

@@ -2,10 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 1. Поправить Selectable
-/// </summary>
-
 public class PlayerRay : MonoBehaviour
 {
     public static PlayerRay playerRay { get; private set; }
@@ -110,16 +106,6 @@ public class PlayerRay : MonoBehaviour
                 UnSelectable();
             }
         }
-    }
-
-    void FixedUpdate()
-    {
-        
-    }
-
-    IEnumerator Wait(float time)
-    {
-        yield return new WaitForSeconds(time);
     }
 
     public GameObject GetSelected()

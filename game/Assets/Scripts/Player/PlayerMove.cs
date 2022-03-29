@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -27,6 +28,10 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
         if (Input.GetMouseButton(1))
         {
             _xRotation -= Input.GetAxis("Mouse Y") * RotateSensitivity;
@@ -39,10 +44,6 @@ public class PlayerMove : MonoBehaviour
         MaybeZoom();
         MaybeCroach();
     }
-
-    /// <summary>
-    /// Zoom camera via mouse wheel
-    /// </summary>
     void MaybeZoom()
     {
         float sensitivity = 15;
@@ -53,10 +54,6 @@ public class PlayerMove : MonoBehaviour
         fov = Mathf.Clamp(fov, minFov, maxFov);
         Camera.main.fieldOfView = fov;
     }
-
-    /// <summary>
-    /// Croach on LeftControl
-    /// </summary>
     void MaybeCroach()
     {
         if (Input.GetKey(KeyCode.LeftControl) && !isDaun)

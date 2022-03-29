@@ -28,7 +28,7 @@ public class Perehodnick : Selectable
 
     public void Interaction(Collider trigger)
     {
-        if (trigger.gameObject.tag == "SetPerehodnick")
+        if (trigger.gameObject.tag == "SetPerehodnickDomkrat")
         {
             Singleton.Instance.UIManager.SetEnterText("Нажмите E чтобы установить переходник в ТПК");
         }

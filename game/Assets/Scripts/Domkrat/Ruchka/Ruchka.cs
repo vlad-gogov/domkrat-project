@@ -26,7 +26,7 @@ public class Ruchka : Selectable
 
     public override void GetInfoMouse()
     {
-        return;
+        Singleton.Instance.UIManager.SetEnterText("Нажмите чтобы взаимодейсвовать с ручкой");
     }
 
     public override GameObject GetSelectObject()
@@ -89,28 +89,29 @@ public class Ruchka : Selectable
             }
 
             // Верхняя часть домкарата
-            if (
-                    actualDomkratUpPart.curPosition == Makes.DOWN
-                    && actualDomkratDownPart.curPosition == Makes.DOWN
-                    && state.direction == Makes.UP
-            )
+            if (actualDomkratDownPart.curPosition == Makes.DOWN)
             {
-                actualDomkratUpPart.Up(state.activeSwitcher == ModeSwitch.LOADED); // Анимация подъема верхней части домкрата
-            }
-
-            if (
-                    actualDomkratUpPart.curPosition == Makes.UP
-                    && actualDomkratDownPart.curPosition == Makes.DOWN
-                    && state.direction == Makes.DOWN
-            )
-            {
-                if (TechStand.isSelected)
+                if (
+                      actualDomkratUpPart.curPosition == Makes.DOWN
+                      && state.direction == Makes.UP
+                )
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем как опускать ТПК", Weight = ErrorWeight.HIGH });
-                    return;
+                    actualDomkratUpPart.Up(state.activeSwitcher == ModeSwitch.LOADED); // Анимация подъема верхней части домкрата
                 }
-                isSelected = true;
-                actualDomkratUpPart.Down(state.activeSwitcher == ModeSwitch.LOADED); // Анимация опускания верхней части домкрата
+
+                if (
+                        actualDomkratUpPart.curPosition == Makes.UP
+                        && state.direction == Makes.DOWN
+                )
+                {
+                    if (TechStand.isSelected)
+                    {
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем как опускать ТПК", Weight = ErrorWeight.HIGH });
+                        return;
+                    }
+                    isSelected = true;
+                    actualDomkratUpPart.Down(state.activeSwitcher == ModeSwitch.LOADED); // Анимация опускания верхней части домкрата
+                }
             }
         }
         else

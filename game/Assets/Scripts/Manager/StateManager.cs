@@ -8,13 +8,22 @@ public enum State
     SET_PEREHODNICK = 1,
     CHECK_DOMKRATS = 2,
     SET_DOMKRATS = 3,
-    UP_TPK = 4
+    UP_TPK = 4,
+    CONFIG_DOMKRAT_TO_FORWARD = 5,
+    CONFIG_DOMKRAT_TO_RIGHT = 6
 }
 
 public enum GameMode
 {
     TRAIN = 0,
     EXAM = 1
+}
+
+public enum TypeArea
+{
+    FLAT = 0,
+    UP = 1,
+    DOWN = 2
 }
 
 public enum ErrorWeight
@@ -39,7 +48,8 @@ public class StateManager : MonoBehaviour
 {
     [SerializeField] ErrorMessage errorMessage;
 
-    GameMode gameMode;
+    public GameMode gameMode;
+    public TypeArea typeArea;
     public int counterMistaks = 0;
 
     public List<Domkrat> domkrats = new List<Domkrat>(); 
@@ -54,11 +64,28 @@ public class StateManager : MonoBehaviour
     void Awake()
     {
         gameMode = GameMode.TRAIN;
+        typeArea = TypeArea.FLAT;
         states.Add(State.DEFAULT, "");
         states.Add(State.SET_PEREHODNICK, "Установите переходники на пакет");
         states.Add(State.CHECK_DOMKRATS, "Выполнить проверку подъема и опускание домкарата в разных режимах");
         states.Add(State.SET_DOMKRATS, "Подкатите и установите домкраты");
         states.Add(State.UP_TPK, "Поднимите ТПК");
+
+        if (typeArea == TypeArea.FLAT)
+        {
+            states.Add(State.CONFIG_DOMKRAT_TO_FORWARD, "Установите домкарты для перемещения вперед и нажмите R");
+            states.Add(State.CONFIG_DOMKRAT_TO_RIGHT, "Установите домкарты для перемещения вправо и нажмите R");
+        }
+
+        else if (typeArea == TypeArea.UP)
+        {
+
+        }
+
+        else if (typeArea == TypeArea.DOWN)
+        {
+
+        }
 
         curState = State.DEFAULT;
         NextState();
@@ -82,7 +109,8 @@ public class StateManager : MonoBehaviour
 
     public void onError(Error error)
     {
-        errorMessage.OnShow(string.Copy(error.ErrorText));
+        if (gameMode == GameMode.TRAIN)
+            errorMessage.OnShow(string.Copy(error.ErrorText));
         counterMistaks += (int)error.Weight;
     }
 
