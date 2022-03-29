@@ -21,7 +21,6 @@ public class Down_part : MonoBehaviour
 
     public bool Up(bool isTechStand = false)
     {
-        curPosition = Makes.UP;
         if (parentDomkrat.isAttachedToTPK)
         {
             if (!isTechStand)
@@ -32,12 +31,12 @@ public class Down_part : MonoBehaviour
             }
             RealUp();
         }
+        // curPosition = Makes.UP;
         return true;
     }
 
     public bool Down(bool isTechStand = false)
     {
-        curPosition = Makes.DOWN;
         if (parentDomkrat.isAttachedToTPK)
         {
             if (!isTechStand)
@@ -48,6 +47,7 @@ public class Down_part : MonoBehaviour
             }
             RealDown();
         }
+        // curPosition = Makes.DOWN;
         return true;
     }
 

@@ -8,7 +8,9 @@ enum TPKDirection
     FORWARD = 1,
     RIGHT = 2,
     UP = 3,
-    DOWN = 4
+    DOWN = 4,
+    LEFT = 5,
+    BACK = 6
 }
 
 public class TPKMoving : MonoBehaviour
@@ -28,17 +30,20 @@ public class TPKMoving : MonoBehaviour
 
     void Moving()
     {
-        MovingTPK();
+        Debug.Log("Ya pidoras: Moving()");
         if (Input.GetKeyDown(KeyCode.R)) {
-
+            MovingTPK();
+            Debug.Log("curDirection: " + curDirection.ToString());
             if (curDirection == TPKDirection.FORWARD)
             {
                 Singleton.Instance.StateManager.NextState();
-                anim.SetTrigger("Moving_front");
+                StartCoroutine(MoveTpk(TPKDirection.FORWARD));
+                // anim.SetTrigger("Moving_front");
             }
             else if (curDirection == TPKDirection.RIGHT) 
             {
-                anim.SetTrigger("Valim_bokom");
+                // anim.SetTrigger("Valim_bokom");
+                StartCoroutine(MoveTpk(TPKDirection.RIGHT));
             }
             else if (curDirection == TPKDirection.UP)
             {
@@ -55,7 +60,7 @@ public class TPKMoving : MonoBehaviour
     void MovingTPK()
     {
         List<Domkrat> attachedDomkrats = TPK.TPKObj.attachedDomkrats;
-        if (attachedDomkrats.Count == 4)
+        if (attachedDomkrats.Count == 1)
         {
             TypeArea type = Singleton.Instance.StateManager.typeArea;
 
@@ -121,19 +126,21 @@ public class TPKMoving : MonoBehaviour
     {
         foreach (var domkrat in attachedDomkrats)
         {
+            Debug.Log(domkrat.currentWheelState.ToString() + " " + domkrat.downPartRotation.dir.ToString() + " " + domkrat.rotateFixator.isSelected.ToString());
             if (domkrat.curH == OrientationHorizontal.Right)
             {
-                if (domkrat.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.BACK || !domkrat.rotateFixator.isSelected)
+                if (domkrat.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.LEFT || !domkrat.rotateFixator.isSelected)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вперед", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }
             else if (domkrat.curH == OrientationHorizontal.Left)
             {
-                if (domkrat.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.FORWARD || domkrat.rotateFixator.isSelected)
+                Debug.Log("Ya pidoras!!! (isRight)");
+                if (domkrat.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.RIGHT || domkrat.rotateFixator.isSelected)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вперед", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }
@@ -165,5 +172,45 @@ public class TPKMoving : MonoBehaviour
             }
         }
         return true;
+    }
+
+    IEnumerator MoveTpk(TPKDirection direction)
+    {
+        Debug.Log("Ya pidoras: MoveTPK()");
+        float shift = 0.2f;
+        // right : минус по х
+        // left : плюс по х
+        // forward : минус по z
+        // daun blyat : плюс по z
+
+        Vector3 vector = new Vector3(0, 0, 0);
+        float delta = 3f;
+
+        switch (direction)
+        {
+            case TPKDirection.RIGHT:
+                vector = new Vector3(-delta, 0, 0);
+                break;
+            case TPKDirection.LEFT:
+                vector = new Vector3(delta, 0, 0);
+                break;
+            case TPKDirection.FORWARD:
+                vector = new Vector3(0, 0, -delta);
+                break;
+            case TPKDirection.BACK:
+                vector = new Vector3(0, 0, delta);
+                break;
+        }
+        Debug.Log("ALO " + vector.ToString());
+        for (float i = 0; i <= Mathf.Abs(delta); i += shift * Time.deltaTime)
+        {
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                break;
+            }
+            Debug.Log("ALO2 " + (vector * shift).ToString());
+            gameObject.transform.Translate(vector * shift * Time.deltaTime);
+            yield return null;
+        }
     }
 }
