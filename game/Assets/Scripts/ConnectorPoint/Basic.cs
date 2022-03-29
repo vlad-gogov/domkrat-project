@@ -6,19 +6,20 @@ public enum OrientationHorizontal
 {
     Left,
     Right,
-    Gay
+    None
 };
 
 public enum OrientationVertical
 {
     Up,
     Down,
-    Gay
+    None
 };
+
 
 public class Basic : MonoBehaviour
 {
-
+    public DomkratType type;
     public OrientationHorizontal curH;
     public OrientationVertical curV;
 }

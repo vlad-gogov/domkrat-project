@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DomkratType
+{
+    LEFT = 0,
+    RIGHT = 1
+}
+
 public enum WheelState
 {
     ROYAL = 0,
@@ -10,8 +16,11 @@ public enum WheelState
 
 public class Domkrat : MonoBehaviour
 {
-
-    public OrientationHorizontal myOrientation;
+    public DomkratType type;
+    public OrientationHorizontal curH = OrientationHorizontal.None;
+    public OrientationVertical curV = OrientationVertical.None;
+    public Down_part_rotation downPartRotation;
+    public Rotate_fixator rotateFixator;
     private float SpeedRotation = 80f;
     private float SpeedMove = 0.007f;
     private Vector3 prev;
@@ -35,7 +44,6 @@ public class Domkrat : MonoBehaviour
         GameObject child = gameObject.transform.GetChild(0).gameObject;
         up_part = child.GetComponent<Animator>();
         move_mech = child.transform.GetChild(0).gameObject.GetComponent<Animator>();
-
         childRuchka = transform.GetChild(0).gameObject.GetComponent<Up_part>();
     }
 
@@ -64,11 +72,14 @@ public class Domkrat : MonoBehaviour
 
         if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKey(KeyCode.E))
         {
-            if (ptConfig.curH != myOrientation)
+            if (ptConfig.type != type)
             {
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильная ориентация домкрата", Weight = ErrorWeight.LOW });
                 return false;
             }
+
+            curH = ptConfig.curH;
+            curV = ptConfig.curV;
 
             transform.position = BeginPoint.transform.position;
             transform.rotation = BeginPoint.transform.rotation;
