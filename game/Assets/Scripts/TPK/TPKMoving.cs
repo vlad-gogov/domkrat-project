@@ -33,6 +33,7 @@ public class TPKMoving : MonoBehaviour
         Debug.Log("Ya pidoras: Moving()");
         if (Input.GetKeyDown(KeyCode.R)) {
             MovingTPK();
+            StartCoroutine(MoveTpk(TPKDirection.RIGHT));
             Debug.Log("curDirection: " + curDirection.ToString());
             if (curDirection == TPKDirection.FORWARD)
             {
@@ -60,7 +61,7 @@ public class TPKMoving : MonoBehaviour
     void MovingTPK()
     {
         List<Domkrat> attachedDomkrats = TPK.TPKObj.attachedDomkrats;
-        if (attachedDomkrats.Count == 1)
+        if (attachedDomkrats.Count != 0)
         {
             TypeArea type = Singleton.Instance.StateManager.typeArea;
 
