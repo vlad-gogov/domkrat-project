@@ -4,16 +4,29 @@ using UnityEngine;
 
 public class Rotate_fixator : Selectable
 {
-    Animator anim;
+    private float lenght = 0.01f;
+    private float step = 0.01f;
+    private bool isMove = false;
 
-    void Awake()
+    IEnumerator MoveFixator(float lenght)
     {
-        anim = GetComponent<Animator>();
+        isMove = true;
+        float temp = lenght >= 0 ? 1 : -1;
+        for (float t = 0; t <= Mathf.Abs(lenght); t += step * Time.deltaTime)
+        {
+            gameObject.transform.Translate(step * temp * Time.deltaTime, 0f, 0f);
+            yield return null;
+        }
+        isMove = false;
     }
+
     public override void Deselect()
     {
-        isSelected = false;
-        anim.SetTrigger("Fixator_off");
+        if (!isMove)
+        {
+            isSelected = false;
+            StartCoroutine(MoveFixator(-lenght));
+        }
     }
 
     public override void GetInfoMouse()
@@ -34,7 +47,10 @@ public class Rotate_fixator : Selectable
 
     public override void Select()
     {
-        isSelected = true;
-        anim.SetTrigger("Fixator_on");
+        if (!isMove)
+        {
+            isSelected = true;
+            StartCoroutine(MoveFixator(lenght));
+        }
     }
 }
