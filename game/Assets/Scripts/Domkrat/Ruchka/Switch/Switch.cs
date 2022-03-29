@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+public enum ModeSwitch {
+    LOADED = 0,
+    WITHOUTLOAD = 1
+}
 public class Switch : MonoBehaviour
 {
+    public ModeSwitch mode;
     public TypeMode curType = TypeMode.Off;
     public float[] rotate;
     private float step = 40f;
