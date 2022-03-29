@@ -69,7 +69,7 @@ public class Ruchka : Selectable
                 if (
                         actualDomkratUpPart.curPosition == Makes.UP
                         && actualDomkratDownPart.curPosition == Makes.DOWN
-                        && state.direction == Makes.UP
+                        && state.direction == Makes.DOWN
                 )
                 {
                     Debug.Log("1");
@@ -79,7 +79,7 @@ public class Ruchka : Selectable
                 if (
                         actualDomkratUpPart.curPosition == Makes.UP
                         && actualDomkratDownPart.curPosition == Makes.UP
-                        && state.direction == Makes.DOWN
+                        && state.direction == Makes.UP
                 )
                 {
                     Debug.Log("2");
