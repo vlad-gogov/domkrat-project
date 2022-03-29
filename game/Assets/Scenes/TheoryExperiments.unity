@@ -12218,6 +12218,9 @@ GameObject:
   - component: {fileID: 1005064298}
   - component: {fileID: 1005064302}
   - component: {fileID: 1005064301}
+  - component: {fileID: 1005064305}
+  - component: {fileID: 1005064304}
+  - component: {fileID: 1005064303}
   m_Layer: 0
   m_Name: TpkAndPacket
   m_TagString: Untagged
@@ -12284,8 +12287,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.8, y: 0.17, z: 4.75}
-  m_Center: {x: 3.39, y: 0.15, z: 0}
+  m_Size: {x: 0.27267838, y: 0.17000002, z: 0.20919037}
+  m_Center: {x: 1.681339, y: 0.11, z: 2.2704048}
 --- !u!54 &1005064302
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12302,6 +12305,45 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
+--- !u!65 &1005064303
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005064297}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.27267838, y: 0.17000002, z: 0.20919037}
+  m_Center: {x: 4.74, y: 0.11, z: -2.22}
+--- !u!65 &1005064304
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005064297}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.27267838, y: 0.17000002, z: 0.20919037}
+  m_Center: {x: 4.74, y: 0.11, z: 2.2704048}
+--- !u!65 &1005064305
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005064297}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.27267838, y: 0.17000002, z: 0.20919037}
+  m_Center: {x: 1.681339, y: 0.11, z: -2.21}
 --- !u!1 &1013905585
 GameObject:
   m_ObjectHideFlags: 0
