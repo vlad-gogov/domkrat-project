@@ -26,21 +26,22 @@ public class Down_part_rotation : MonoBehaviour
     {
         float temp = angle >= 0 ? 1 : -1;
         isRotate = true;
+        float prevState = gameObject.transform.localEulerAngles.y;
+
         for (float t = 0; t <= Mathf.Abs(angle); t += step * Time.deltaTime)
         {
             gameObject.transform.Rotate(step * temp * Time.deltaTime, 0f, 0f);
             yield return null;
         }
         isRotate = false;
-        Debug.Log(gameObject.transform.rotation);
-        // Здесь нужна строчка для установки поворота на точный угол
-        //gameObject.transform.rotation = Quaternion.Euler(0f, 0f, gameObject.transform.rotation.z + temp * angle);
+        gameObject.transform.localEulerAngles = new Vector3(0f, prevState + angle, gameObject.transform.localEulerAngles.z);
         ChangeDir();
     }
     
     private void ChangeDir()
     {
-        int transformY = (int)gameObject.transform.rotation.y % 360;
+        int temp = (int)gameObject.transform.localEulerAngles.y;
+        int transformY = temp >= 0 ? temp % 360 : -temp % 360;
         dir = (Direction)transformY;
     }
 }
