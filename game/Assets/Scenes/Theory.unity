@@ -2696,6 +2696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   errorMessage: {fileID: 2062068765}
   gameMode: 0
+  typeArea: 0
   counterMistaks: 0
   domkrats:
   - {fileID: 0}
@@ -4374,7 +4375,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.3910718, y: 0.99999976, z: 2.81}
-  m_Center: {x: -0.56, y: 0, z: 0.56}
+  m_Center: {x: 0.88, y: 0, z: 0.56}
 --- !u!23 &977632073
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5944,6 +5945,7 @@ MonoBehaviour:
   downPartRotation: {fileID: 888827968}
   rotateFixator: {fileID: 54071319}
   currentWheelState: 1
+  techStand: {fileID: 772336412}
   LeftWheel: {fileID: 383062514}
   RightWheel: {fileID: 892322985}
   BackWheel: {fileID: 1324126319}
@@ -6848,7 +6850,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.3910718, y: 0.99999976, z: 2.81}
-  m_Center: {x: -0.56, y: 0, z: 0.56}
+  m_Center: {x: -0.79, y: 0, z: 0.83}
 --- !u!23 &1792153501
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6963,7 +6965,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ec4eb2180269247a6516dee0815284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TEMP: 2
 --- !u!1001 &1865864231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8658,6 +8659,10 @@ PrefabInstance:
     - target: {fileID: 256954975, guid: 3f97eb8f29c43e34a900a17f76698419, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 800199198, guid: 3f97eb8f29c43e34a900a17f76698419, type: 3}
+      propertyPath: m_Mass
+      value: 0.0000001
       objectReference: {fileID: 0}
     - target: {fileID: 800199199, guid: 3f97eb8f29c43e34a900a17f76698419, type: 3}
       propertyPath: Speed
