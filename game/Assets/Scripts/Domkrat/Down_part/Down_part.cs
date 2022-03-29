@@ -9,6 +9,7 @@ public class Down_part : MonoBehaviour
     [SerializeField] Down_part_rotation rotation_down_part;
     public GameObject ruchka;
     public Makes curPosition;
+    public Rotate_fixator fixator;
 
     void Start()
     {
@@ -68,7 +69,8 @@ public class Down_part : MonoBehaviour
     {
         if (curPosition == Makes.UP)
         {
-            if (!rotation_down_part.isRotate)
+
+            if (!rotation_down_part.isRotate && fixator.isSelected)
             {
                 if (Input.GetKey(KeyCode.E)) // 200$ c Vladika
                 {
@@ -78,6 +80,10 @@ public class Down_part : MonoBehaviour
                 {
                     rotation_down_part.RotateDownPart(-90f);
                 }
+            } else
+            {
+                //Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Разблокируйте фиксатор поворота", Weight = ErrorWeight.LOW });
+                
             }
 
         }
