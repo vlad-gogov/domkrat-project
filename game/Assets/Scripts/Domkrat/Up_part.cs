@@ -51,7 +51,7 @@ public class Up_part : MonoBehaviour
         UpdateTestingDict(Makes.UP, isOnWeightMode);
         if (parentDomkrat.isAttachedToTPK)
         {
-            if (TPK.TPKObj.attachedDomkrats.Count < 1)
+            if (TPK.TPKObj.attachedDomkrats.Count < 4)
             {
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уставоите все домкраты чтобы поднять ТПК", Weight = ErrorWeight.HIGH });
                 return;
@@ -62,6 +62,7 @@ public class Up_part : MonoBehaviour
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим подъема домкрата", Weight = ErrorWeight.HIGH });
                 return;
             }
+            
             RealUp();
         }
         else

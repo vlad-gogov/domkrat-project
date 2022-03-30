@@ -26,20 +26,16 @@ public class Perehodnick : Selectable
         Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы поднять переходник");
     }
 
-    public void Interaction(Collider trigger)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (trigger.gameObject.tag == "SetPerehodnickDomkrat")
+        GameObject trigger = collider.gameObject;
+        if (!trigger.GetComponent<PointToSet>().isPerehodnick && trigger.tag == "SetPerehodnickDomkrat")
         {
             Singleton.Instance.UIManager.SetEnterText("Нажмите E чтобы установить переходник в ТПК");
         }
     }
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        Interaction(collider);
-    }
-
-    public bool Set(Collider trigger)
+    public bool Set(GameObject trigger)
     {
         GameObject parent = trigger.gameObject;
         if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKey(KeyCode.E))
@@ -61,8 +57,15 @@ public class Perehodnick : Selectable
 
     private void OnTriggerStay(Collider collider)
     {
-        if (Set(collider))
+        GameObject trigger = collider.gameObject;
+        PointToSet p = trigger.GetComponent<PointToSet>();
+        if (p.isPerehodnick)
         {
+            return;
+        }
+        if (Set(trigger))
+        {
+            p.isPerehodnick = true;
             Singleton.Instance.StateManager.countPerehodnick++;
             //collider.enabled = false;
             PlayerRay.playerRay.UnSelectable();

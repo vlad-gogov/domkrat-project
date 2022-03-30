@@ -17,6 +17,8 @@ public class PlayerRay : MonoBehaviour
     private PlayerMove PlayerMove;
     private PlaceForSet placeForSet;
 
+    public BoxCollider wall;
+
     void Start()
     {
         PickUp = LayerMask.NameToLayer("PickUp");
@@ -33,6 +35,7 @@ public class PlayerRay : MonoBehaviour
         _selectedObject = null;
         moving = null;
         PlayerMove.isDomkrat = false;
+        wall.enabled = false;
     }
 
     void Update()
@@ -98,6 +101,10 @@ public class PlayerRay : MonoBehaviour
                     {
                         PlayerMove.isDomkrat = true; 
                         PlayerMove.PickUpDomkrat(_selectedObject);
+                    }
+                    if (_selectedObject.tag == "Domkrat" || _selectedObject.tag == "Perehodnick")
+                    {
+                        wall.enabled = true;
                     }
                 }
             }

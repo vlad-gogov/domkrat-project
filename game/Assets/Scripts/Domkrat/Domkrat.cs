@@ -63,10 +63,42 @@ public class Domkrat : MonoBehaviour
         prev = transform.position;
     }
 
-    public bool Set(Collider trigger)
+    private void OnTriggerEnter(Collider collider)
     {
-        GameObject parent = trigger.gameObject;
+        GameObject trigger = collider.gameObject;
+        if (trigger.GetComponent<PointToSet>().isPerehodnick && trigger.tag == "SetPerehodnickDomkrat")
+        {
+            Singleton.Instance.UIManager.SetEnterText("Нажмите E чтобы установить домкрат в переходник");
+        }
+    }
 
+    private void OnTriggerExit(Collider collider)
+    {
+        Singleton.Instance.UIManager.ClearEnterText();
+    }
+
+    private void OnTriggerStay(Collider collider)
+    {
+        GameObject trigger = collider.gameObject;
+        PointToSet p = trigger.GetComponent<PointToSet>();
+        if (!p.isPerehodnick || p.isDomkrat)
+        {
+            return;
+        }
+        if (moveHand.isSelected && Set(collider))
+        {
+            p.isDomkrat = true;
+            collider.enabled = false;
+            isAttachedToTPK = true;
+            boxHand.enabled = false;
+            Singleton.Instance.StateManager.countDomkrats++;
+            id = TPK.TPKObj.AddDomkrat(this);
+            PlayerRay.playerRay.UnSelectable();
+        }
+    }
+
+    public bool Set(Collider parent)
+    {
         GameObject BeginPoint = parent.transform.GetChild(0).gameObject;
         GameObject EndPoint = parent.transform.GetChild(1).gameObject;
 
@@ -75,7 +107,6 @@ public class Domkrat : MonoBehaviour
 
         if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKey(KeyCode.E))
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите E чтобы установить домкрат в переходник");
             if (Input.GetKey(KeyCode.E))
             {
                 if (ptConfig.type != type)
@@ -87,13 +118,15 @@ public class Domkrat : MonoBehaviour
                 curH = ptConfig.curH;
                 curV = ptConfig.curV;
 
-                transform.position = BeginPoint.transform.position;
-                transform.rotation = BeginPoint.transform.rotation;
                 GetComponent<Rigidbody>().isKinematic = true;
                 GetComponent<BoxCollider>().enabled = false;
                 LeftWheel.GetComponent<SphereCollider>().enabled = false;
                 RightWheel.GetComponent<SphereCollider>().enabled = false;
                 BackWheel.GetComponent<SphereCollider>().enabled = false;
+
+                transform.position = BeginPoint.transform.position;
+                transform.rotation = BeginPoint.transform.rotation;
+
                 float begin = BeginPoint.transform.position.z;
                 float end = EndPoint.transform.position.z;
                 StartCoroutine(MoveSet(end - begin));
@@ -113,19 +146,6 @@ public class Domkrat : MonoBehaviour
         {
             gameObject.transform.Translate(Vector3.forward * shift);
             yield return null;
-        }
-    }
-
-    private void OnTriggerStay(Collider collider)
-    {
-        if (moveHand.isSelected && Set(collider))
-        {
-            collider.enabled = false;
-            isAttachedToTPK = true;
-            boxHand.enabled = false;
-            Singleton.Instance.StateManager.countDomkrats++;
-            id = TPK.TPKObj.AddDomkrat(this);
-            PlayerRay.playerRay.UnSelectable();
         }
     }
 
