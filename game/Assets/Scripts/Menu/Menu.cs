@@ -2,21 +2,29 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class Menu : MonoBehaviour
+public class CrossScenesStorage
+{
+    public static GameMode gameMode;
+    public static TypeArea typeArea;
+}
+
+public partial class Menu : MonoBehaviour
 {
     public void onClickTheory()
     {
-        SceneManager.LoadScene(1);
+        CrossScenesStorage.gameMode = GameMode.TRAIN;
+        SceneManager.LoadScene("MenuSurface");
     }
 
     public void onClickExam()
     {
-        SceneManager.LoadScene(1);
+        CrossScenesStorage.gameMode = GameMode.EXAM;
+        SceneManager.LoadScene("MenuSurface");
     }
 
     public void onClickTest()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Flat");
     }
 
     public void onClickExit()

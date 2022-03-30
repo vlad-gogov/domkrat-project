@@ -128,16 +128,16 @@ public class Ruchka : Selectable
                     isSelected = true;
                     actualDomkratUpPart.Down(state.activeSwitcher == ModeSwitch.LOADED); // Анимация опускания верхней части домкрата
                 }
-                else if (actualDomkratUpPart.curPosition == Makes.DOWN && state.direction == Makes.DOWN)
-                {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя опустить домкрат: он и так в нижнем положении.", Weight = ErrorWeight.MINOR });
-                    return;
-                }
-                else if (actualDomkratUpPart.curPosition == Makes.UP && state.direction == Makes.UP)
-                {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя поднять домкрат: он и так в верхнем положении.", Weight = ErrorWeight.MINOR });
-                    return;
-                }
+                //else if (actualDomkratUpPart.curPosition == Makes.DOWN && state.direction == Makes.DOWN)
+                //{
+                //    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя опустить домкрат: он и так в нижнем положении.", Weight = ErrorWeight.MINOR });
+                //    return;
+                //}
+                //else if (actualDomkratUpPart.curPosition == Makes.UP && state.direction == Makes.UP)
+                //{
+                //    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя поднять домкрат: он и так в верхнем положении.", Weight = ErrorWeight.MINOR });
+                //    return;
+                //}
             }
         }
         else

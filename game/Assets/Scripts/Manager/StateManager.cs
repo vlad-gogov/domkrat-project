@@ -16,7 +16,8 @@ public enum State
 public enum GameMode
 {
     TRAIN = 0,
-    EXAM = 1
+    EXAM = 1,
+    FREEPLAY = 2,
 }
 
 public enum TypeArea
@@ -56,6 +57,8 @@ public class StateManager : MonoBehaviour
 
     private Dictionary<State, string> states = new Dictionary<State, string>();
     private State curState;
+    // Переменная, проверяющая завершили ли мы сценарий
+    bool finished = false;
 
     public int countPerehodnick = 0;
     public int countDomkrats = 0;
@@ -63,8 +66,10 @@ public class StateManager : MonoBehaviour
 
     void Awake()
     {
-        gameMode = GameMode.TRAIN;
-        typeArea = TypeArea.FLAT;
+        gameMode = CrossScenesStorage.gameMode;
+        typeArea = CrossScenesStorage.typeArea;
+        Debug.Log($"Current mode is: {gameMode} | {typeArea}");
+
         states.Add(State.DEFAULT, "");
         states.Add(State.SET_PEREHODNICK, "Установите переходники на пакет");
         states.Add(State.CHECK_DOMKRATS, "Выполнить проверку подъема и опускание домкарата в разных режимах");
@@ -76,23 +81,36 @@ public class StateManager : MonoBehaviour
             states.Add(State.CONFIG_DOMKRAT_TO_FORWARD, "Установите домкарты для перемещения вперед и нажмите стрелку вверх");
             states.Add(State.CONFIG_DOMKRAT_TO_RIGHT, "Установите домкарты для перемещения вправо и нажмите стрелку вправо");
         }
-
         else if (typeArea == TypeArea.UP)
         {
 
         }
-
         else if (typeArea == TypeArea.DOWN)
         {
 
         }
 
         curState = State.DEFAULT;
+
+        if (gameMode == GameMode.FREEPLAY)
+        {
+            // Переходим в самое последнее состояние, чтобы открыть все части для свободной игры
+            for (int i = 0; i < states.Count - 1; i++)
+            {
+                NextState();
+            }
+            finished = true;
+        }
         NextState();
     }
 
     public void NextState()
     {
+        if (finished)
+        {
+            Debug.Log("Calling 'NextState' when 'finished' flag is set to 'true', ignoring this call...");
+            return;
+        }
         curState = (State)((int)curState + 1);
         Debug.Log(curState);
         if (curState == State.SET_DOMKRATS)

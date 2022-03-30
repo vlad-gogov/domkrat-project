@@ -16,6 +16,7 @@ enum TPKDirection
 public class TPKMoving : MonoBehaviour
 {
     TPKDirection curDirection = TPKDirection.STAY;
+    bool isMoving = false;
 
     void Update()
     {
@@ -57,6 +58,10 @@ public class TPKMoving : MonoBehaviour
             }
             TypeArea type = Singleton.Instance.StateManager.typeArea;
 
+            if (isMoving)
+            {
+                return;
+            }
             // Ровная поверхность
             if (type == TypeArea.FLAT)
             {
@@ -289,7 +294,7 @@ public class TPKMoving : MonoBehaviour
         // left : плюс по х
         // forward : минус по z
         // daun blyat : плюс по z
-
+        isMoving = true;
         Vector3 vector = new Vector3(0, 0, 0);
         float delta = 3f;
 
@@ -317,5 +322,6 @@ public class TPKMoving : MonoBehaviour
             gameObject.transform.Translate(vector * shift * Time.deltaTime);
             yield return null;
         }
+        isMoving = false;
     }
 }
