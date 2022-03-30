@@ -72,7 +72,7 @@ public class TPKMoving : MonoBehaviour
                 {
                     StartCoroutine(MoveTpk(TPKDirection.LEFT));
                 }
-                else if (tpkDir == TPKDirection.RIGHT && isBack(attachedDomkrats))
+                else if (tpkDir == TPKDirection.BACK && isBack(attachedDomkrats))
                 {
                     StartCoroutine(MoveTpk(TPKDirection.BACK));
                 }
@@ -134,19 +134,46 @@ public class TPKMoving : MonoBehaviour
         {
             if (domkrat.curH == OrientationHorizontal.Right)
             {
-                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.LEFT || !domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState == WheelState.ROYAL && domkrat.rotateFixator.isSelected)
+                {
+                    if (domkrat.curV == OrientationVertical.Up && domkrat.downPartRotation.dir != Direction.LEFT)
+                    {
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
+                        return false;
+                    }
+                    else if (domkrat.curV == OrientationVertical.Down && domkrat.downPartRotation.dir != Direction.RIGHT)
+                    {
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
+                        return false;
+                    }
+                } else
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
                     return false;
                 }
+               
             }
             else if (domkrat.curH == OrientationHorizontal.Left)
             {
-                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.RIGHT || domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState == WheelState.SOOS && !domkrat.rotateFixator.isSelected)
+                {
+                    if (domkrat.curV == OrientationVertical.Up && domkrat.downPartRotation.dir != Direction.LEFT)
+                    {
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
+                        return false;
+                    }
+                    else if (domkrat.curV == OrientationVertical.Down && domkrat.downPartRotation.dir != Direction.RIGHT)
+                    {
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
+                        return false;
+                    }
+                }
+                else
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
                     return false;
                 }
+
             }
         }
         return true;
@@ -160,7 +187,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.LEFT || !domkrat.rotateFixator.isSelected)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения влево", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }
@@ -168,7 +195,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.RIGHT || domkrat.rotateFixator.isSelected)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения влево", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }
@@ -184,7 +211,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.LEFT || !domkrat.rotateFixator.isSelected)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния задних домкратов для движения назад", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }
@@ -192,7 +219,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.RIGHT || domkrat.rotateFixator.isSelected)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния передних домкратов для движения назад", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }

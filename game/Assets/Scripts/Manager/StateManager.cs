@@ -73,8 +73,8 @@ public class StateManager : MonoBehaviour
 
         if (typeArea == TypeArea.FLAT)
         {
-            states.Add(State.CONFIG_DOMKRAT_TO_FORWARD, "Установите домкарты для перемещения вперед и нажмите R");
-            states.Add(State.CONFIG_DOMKRAT_TO_RIGHT, "Установите домкарты для перемещения вправо и нажмите R");
+            states.Add(State.CONFIG_DOMKRAT_TO_FORWARD, "Установите домкарты для перемещения вперед и нажмите стрелку вверх");
+            states.Add(State.CONFIG_DOMKRAT_TO_RIGHT, "Установите домкарты для перемещения вправо и нажмите стрелку вправо");
         }
 
         else if (typeArea == TypeArea.UP)
