@@ -10781,7 +10781,6 @@ MonoBehaviour:
   ruchka: {fileID: 2104098374}
   curPosition: 1
   fixator: {fileID: 213146649}
-  TPKobj: {fileID: 0}
 --- !u!95 &927599589
 Animator:
   serializedVersion: 3
@@ -16915,7 +16914,6 @@ MonoBehaviour:
   ruchka: {fileID: 884483772}
   curPosition: 1
   fixator: {fileID: 1167922425}
-  TPKobj: {fileID: 0}
 --- !u!95 &1588482644
 Animator:
   serializedVersion: 3
@@ -18141,7 +18139,6 @@ MonoBehaviour:
   ruchka: {fileID: 1091992964}
   curPosition: 1
   fixator: {fileID: 1312328976}
-  TPKobj: {fileID: 0}
 --- !u!95 &1702359442
 Animator:
   serializedVersion: 3
@@ -20733,7 +20730,6 @@ MonoBehaviour:
   ruchka: {fileID: 1394100159}
   curPosition: 1
   fixator: {fileID: 54071319}
-  TPKobj: {fileID: 0}
 --- !u!1 &1988294787
 GameObject:
   m_ObjectHideFlags: 0
