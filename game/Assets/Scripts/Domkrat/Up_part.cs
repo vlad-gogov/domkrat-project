@@ -51,7 +51,7 @@ public class Up_part : MonoBehaviour
         UpdateTestingDict(Makes.UP, isOnWeightMode);
         if (parentDomkrat.isAttachedToTPK)
         {
-            if (TPK.TPKObj.attachedDomkrats.Count != 1)
+            if (TPK.TPKObj.attachedDomkrats.Count < 1)
             {
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уставоите все домкраты чтобы поднять ТПК", Weight = ErrorWeight.HIGH });
                 return;

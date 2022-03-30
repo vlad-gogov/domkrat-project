@@ -91,6 +91,9 @@ public class Domkrat : MonoBehaviour
                 transform.rotation = BeginPoint.transform.rotation;
                 GetComponent<Rigidbody>().isKinematic = true;
                 GetComponent<BoxCollider>().enabled = false;
+                LeftWheel.GetComponent<SphereCollider>().enabled = false;
+                RightWheel.GetComponent<SphereCollider>().enabled = false;
+                BackWheel.GetComponent<SphereCollider>().enabled = false;
                 float begin = BeginPoint.transform.position.z;
                 float end = EndPoint.transform.position.z;
                 StartCoroutine(MoveSet(end - begin));
