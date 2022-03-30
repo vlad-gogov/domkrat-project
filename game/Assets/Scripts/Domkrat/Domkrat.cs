@@ -125,6 +125,8 @@ public class Domkrat : MonoBehaviour
                 StartCoroutine(MoveSet(end - begin));
                 up_part.SetTrigger("Finger_past");
                 move_mech.SetTrigger("Up");
+                Destroy(BeginPoint);
+                Destroy(EndPoint);
 
                 return true;
             }
@@ -144,7 +146,11 @@ public class Domkrat : MonoBehaviour
 
     public void Notify(State state)
     {
-        if (state == State.CHECK_DOMKRATS)
+        if (state == State.SET_DOMKRATS)
+        {
+            boxHand.enabled = true;
+        }
+        else if (state == State.CHECK_DOMKRATS)
         {
             gameObject.SetActive(true);
         }

@@ -95,6 +95,10 @@ public class StateManager : MonoBehaviour
     {
         curState = (State)((int)curState + 1);
         Debug.Log(curState);
+        if (curState == State.SET_DOMKRATS)
+        {
+            NotifyAllDomkrats(curState);
+        }
         if (gameMode == GameMode.TRAIN)
         {
             ChangeTextHelper();

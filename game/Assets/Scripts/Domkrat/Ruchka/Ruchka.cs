@@ -110,7 +110,7 @@ public class Ruchka : Selectable
                       && state.direction == Makes.UP
                 )
                 {
-                    Debug.Log("qqqq");
+                    Debug.Log("Up part UP");
                     actualDomkratUpPart.Up(state.activeSwitcher == ModeSwitch.LOADED); // Анимация подъема верхней части домкрата
                 }
 
@@ -119,7 +119,7 @@ public class Ruchka : Selectable
                         && state.direction == Makes.DOWN
                 )
                 {
-                    Debug.Log("wwww");
+                    Debug.Log("Up part DOWN");
                     if (TechStand.isSelected)
                     {
                         Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем как опускать ТПК", Weight = ErrorWeight.HIGH });
