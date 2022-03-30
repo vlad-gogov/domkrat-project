@@ -44,7 +44,21 @@ public class Ruchka : Selectable
 
 
         var activeSwitcher = left.curType == TypeMode.Off ? right : left;
-        result.direction = activeSwitcher.curType == TypeMode.Podem ? Makes.UP : Makes.DOWN;
+
+        if (activeSwitcher.curType == TypeMode.Podem)
+        {
+            result.direction = Makes.UP;
+        }
+        else if (activeSwitcher.curType == TypeMode.Opusk)
+        {
+            result.direction = Makes.DOWN;
+        }
+        else
+        {
+            result.direction = Makes.STAY;
+        }
+
+
         // Левая ручка без груза, правая с грузом
         result.activeSwitcher = activeSwitcher.mode;
 

@@ -6,7 +6,8 @@ using UnityEngine.Events;
 public enum Makes
 {
     UP = 0,
-    DOWN = 1
+    DOWN = 1,
+    STAY = 3
 }
 
 public class Up_part : MonoBehaviour

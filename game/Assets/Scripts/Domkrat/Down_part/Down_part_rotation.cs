@@ -10,13 +10,19 @@ public enum Direction
     LEFT = 270
 }
 
+public enum WheelState
+{
+    ROYAL = 0,
+    SOOS = 1
+}
+
 public class Down_part_rotation : MonoBehaviour
 {
     public bool isRotate = false;
     private float step = 40f;
     public Direction dir = Direction.FORWARD;
+    public WheelState currentWheelState = WheelState.SOOS;
 
-    
     public void RotateDownPart(float angle)
     {
         StartCoroutine(Rotate(angle));
@@ -38,10 +44,29 @@ public class Down_part_rotation : MonoBehaviour
         ChangeDir();
     }
     
-    private void ChangeDir()
+    public void ChangeDir()
     {
         int temp = (int)gameObject.transform.localEulerAngles.y;
         int transformY = temp >= 0 ? temp % 360 : -temp % 360;
         dir = (Direction)transformY;
+        if (currentWheelState == WheelState.ROYAL)
+        {
+            if (dir == Direction.FORWARD)
+            {
+                dir = Direction.BACK;
+            }
+            else if (dir == Direction.BACK)
+            {
+                dir = Direction.FORWARD;
+            }
+            else if (dir == Direction.LEFT)
+            {
+                dir = Direction.RIGHT;
+            }
+            else if (dir == Direction.RIGHT)
+            {
+                dir = Direction.LEFT;
+            }
+        }
     }
 }

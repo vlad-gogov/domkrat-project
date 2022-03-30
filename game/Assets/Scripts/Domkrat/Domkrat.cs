@@ -8,12 +8,6 @@ public enum DomkratType
     RIGHT = 1
 }
 
-public enum WheelState
-{
-    ROYAL = 0,
-    SOOS = 1
-}
-
 public class Domkrat : MonoBehaviour
 {
     public DomkratType type;
@@ -21,7 +15,6 @@ public class Domkrat : MonoBehaviour
     public OrientationVertical curV = OrientationVertical.None;
     public Down_part_rotation downPartRotation;
     public Rotate_fixator rotateFixator;
-    public WheelState currentWheelState = WheelState.SOOS; 
     public TechStand techStand;
     private float SpeedRotation = 80f;
     private float SpeedMove = 0.007f;
@@ -77,7 +70,7 @@ public class Domkrat : MonoBehaviour
         Singleton.Instance.UIManager.ClearEnterText();
     }
 
-    private void OnTriggerStay(Collider collider)
+        private void OnTriggerStay(Collider collider)
     {
         GameObject trigger = collider.gameObject;
         PointToSet p = trigger.GetComponent<PointToSet>();

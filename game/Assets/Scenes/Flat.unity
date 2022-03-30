@@ -2324,7 +2324,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &216697534
 Transform:
   m_ObjectHideFlags: 0
@@ -2359,7 +2359,6 @@ MonoBehaviour:
   curV: 2
   downPartRotation: {fileID: 398506757}
   rotateFixator: {fileID: 213146649}
-  currentWheelState: 1
   techStand: {fileID: 890948970}
   LeftWheel: {fileID: 1917626343}
   RightWheel: {fileID: 1649052449}
@@ -4205,7 +4204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5283019, g: 0.46600214, b: 0.46600214, a: 1}
+  m_Color: {r: 0.990566, g: 0.6887766, b: 0.0046724924, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4952,6 +4951,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRotate: 0
   dir: 0
+  currentWheelState: 1
 --- !u!23 &398506758
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6432,6 +6432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRotate: 0
   dir: 0
+  currentWheelState: 1
 --- !u!23 &609677253
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8356,6 +8357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRotate: 0
   dir: 0
+  currentWheelState: 1
 --- !u!23 &796864490
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8607,7 +8609,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &823102068
 Transform:
   m_ObjectHideFlags: 0
@@ -8642,7 +8644,6 @@ MonoBehaviour:
   curV: 2
   downPartRotation: {fileID: 796864489}
   rotateFixator: {fileID: 1167922425}
-  currentWheelState: 1
   techStand: {fileID: 1704329356}
   LeftWheel: {fileID: 1005644713}
   RightWheel: {fileID: 311404716}
@@ -9550,6 +9551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRotate: 0
   dir: 0
+  currentWheelState: 1
 --- !u!1 &890948968
 GameObject:
   m_ObjectHideFlags: 0
@@ -15768,7 +15770,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1517327875
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15815,7 +15817,6 @@ MonoBehaviour:
   curV: 2
   downPartRotation: {fileID: 888827968}
   rotateFixator: {fileID: 54071319}
-  currentWheelState: 1
   techStand: {fileID: 772336412}
   LeftWheel: {fileID: 383062514}
   RightWheel: {fileID: 892322985}
@@ -16825,10 +16826,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSelected: 0
   Unselect: 1
-  TechStand: {fileID: 1704329356}
   actualDomkratUpPart: {fileID: 153242360}
   actualDomkratDownPart: {fileID: 1588482643}
-  domkrat: {fileID: 823102069}
 --- !u!65 &1613667473
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18630,10 +18629,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSelected: 0
   Unselect: 1
-  TechStand: {fileID: 1883772577}
   actualDomkratUpPart: {fileID: 863507898}
   actualDomkratDownPart: {fileID: 1702359441}
-  domkrat: {fileID: 2112446761}
 --- !u!65 &1763337039
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19182,10 +19179,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSelected: 0
   Unselect: 1
-  TechStand: {fileID: 890948970}
   actualDomkratUpPart: {fileID: 1635091702}
   actualDomkratDownPart: {fileID: 927599588}
-  domkrat: {fileID: 216697535}
 --- !u!65 &1860072236
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19983,10 +19978,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSelected: 0
   Unselect: 1
-  TechStand: {fileID: 772336412}
   actualDomkratUpPart: {fileID: 1455057280}
   actualDomkratDownPart: {fileID: 1985010299}
-  domkrat: {fileID: 1517327877}
 --- !u!65 &1918701439
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21981,7 +21974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2112446760
 Transform:
   m_ObjectHideFlags: 0
@@ -22016,7 +22009,6 @@ MonoBehaviour:
   curV: 2
   downPartRotation: {fileID: 609677252}
   rotateFixator: {fileID: 1312328976}
-  currentWheelState: 1
   techStand: {fileID: 1883772577}
   LeftWheel: {fileID: 760741235}
   RightWheel: {fileID: 1532630610}

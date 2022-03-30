@@ -6,7 +6,7 @@ public class Down_part : MonoBehaviour
 {
     Animator animator;
     Domkrat parentDomkrat;
-    [SerializeField] Down_part_rotation rotation_down_part;
+    public Down_part_rotation rotation_down_part;
     public GameObject ruchka;
     public Makes curPosition;
     public Rotate_fixator fixator;

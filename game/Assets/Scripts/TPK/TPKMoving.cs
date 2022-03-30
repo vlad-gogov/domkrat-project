@@ -49,13 +49,12 @@ public class TPKMoving : MonoBehaviour
             return;
         }
         List<Domkrat> attachedDomkrats = TPK.TPKObj.attachedDomkrats;
-        // Добавить ошибку на кол-во подключенных домкратов
-        if (attachedDomkrats.Count != 0)
+        if (attachedDomkrats.Count == 4)
         {
-            if (TPK.TPKObj.state != StateTPK.UP)
+            if (TPK.TPKObj.state == StateTPK.DOWN)
             {
                 Singleton.Instance.StateManager.onError(new Error(){ ErrorText = "Поднимите ТПК перед тем как его перемещать", Weight = ErrorWeight.CRITICAL});
-             }
+            }
             TypeArea type = Singleton.Instance.StateManager.typeArea;
 
             // Ровная поверхность
@@ -93,6 +92,10 @@ public class TPKMoving : MonoBehaviour
                 curDirection = TPKDirection.DOWN;
             }
         }
+        else
+        {
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите 4 домкрата перед тем как его перемещать", Weight = ErrorWeight.CRITICAL });
+        }
         curDirection = TPKDirection.STAY;
     }
 
@@ -107,7 +110,7 @@ public class TPKMoving : MonoBehaviour
             }
             if (domkrat.curV == OrientationVertical.Up)
             {
-                if (domkrat.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.BACK || !domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.BACK || !domkrat.rotateFixator.isSelected)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния передних домкратов для движения вперед", Weight = ErrorWeight.LOW });
                     return false;
@@ -115,7 +118,7 @@ public class TPKMoving : MonoBehaviour
             }
             else if (domkrat.curV == OrientationVertical.Down)
             {
-                if (domkrat.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.FORWARD || domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.FORWARD || domkrat.rotateFixator.isSelected)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния задних домкратов для движения вперед", Weight = ErrorWeight.LOW });
                     return false;
@@ -131,7 +134,7 @@ public class TPKMoving : MonoBehaviour
         {
             if (domkrat.curH == OrientationHorizontal.Right)
             {
-                if (domkrat.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.LEFT || !domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.LEFT || !domkrat.rotateFixator.isSelected)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
                     return false;
@@ -139,7 +142,7 @@ public class TPKMoving : MonoBehaviour
             }
             else if (domkrat.curH == OrientationHorizontal.Left)
             {
-                if (domkrat.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.RIGHT || domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.RIGHT || domkrat.rotateFixator.isSelected)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
                     return false;
@@ -155,7 +158,7 @@ public class TPKMoving : MonoBehaviour
         {
             if (domkrat.curH == OrientationHorizontal.Left)
             {
-                if (domkrat.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.LEFT || !domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.LEFT || !domkrat.rotateFixator.isSelected)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
                     return false;
@@ -163,7 +166,7 @@ public class TPKMoving : MonoBehaviour
             }
             else if (domkrat.curH == OrientationHorizontal.Right)
             {
-                if (domkrat.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.RIGHT || domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.RIGHT || domkrat.rotateFixator.isSelected)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
                     return false;
@@ -179,7 +182,7 @@ public class TPKMoving : MonoBehaviour
         {
             if (domkrat.curV == OrientationVertical.Down)
             {
-                if (domkrat.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.LEFT || !domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.LEFT || !domkrat.rotateFixator.isSelected)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
                     return false;
@@ -187,7 +190,7 @@ public class TPKMoving : MonoBehaviour
             }
             else if (domkrat.curV == OrientationVertical.Up)
             {
-                if (domkrat.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.RIGHT || domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.RIGHT || domkrat.rotateFixator.isSelected)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
                     return false;

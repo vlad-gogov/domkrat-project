@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class SwitchRoyal : Selectable
 {
-    [SerializeField] TechStand TechStand;
     public Up_part actualDomkratUpPart;
     public Down_part actualDomkratDownPart;
-    public Domkrat domkrat;
 
     public override void Deselect()
     {
@@ -17,10 +15,6 @@ public class SwitchRoyal : Selectable
     public override void GetInfoMouse()
     {
         return;
-    }
-
-    void Start()
-    {
     }
 
     public override GameObject GetSelectObject()
@@ -38,17 +32,16 @@ public class SwitchRoyal : Selectable
                     && actualDomkratDownPart.curPosition == Makes.UP
             )
             {
-                if (domkrat.currentWheelState == WheelState.SOOS)
+                if (actualDomkratDownPart.rotation_down_part.currentWheelState == WheelState.SOOS)
                 {
-                    Debug.Log("3");
                     actualDomkratDownPart.GetComponent<Animator>().SetTrigger("ToRoyal");
-                    domkrat.currentWheelState = WheelState.ROYAL;
+                    actualDomkratDownPart.rotation_down_part.currentWheelState = WheelState.ROYAL;
                 } else
                 {
-                    Debug.Log("4");
                     actualDomkratDownPart.GetComponent<Animator>().SetTrigger("ToSoos");
-                    domkrat.currentWheelState = WheelState.SOOS;
+                    actualDomkratDownPart.rotation_down_part.currentWheelState = WheelState.SOOS;
                 }
+                actualDomkratDownPart.rotation_down_part.ChangeDir();
             }
         }
 
