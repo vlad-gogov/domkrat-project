@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,14 +20,32 @@ public class Mode : Selectable
         sw = Switch.GetComponent<Switch>();
     }
 
+    string VerboseName()
+    {
+        string result = "";
+        switch (type)
+        {
+            case TypeMode.Off:
+                result = "нейтральный";
+                break;
+            case TypeMode.Podem:
+                result = "подъём";
+                break;
+            case TypeMode.Opusk:
+                result = "опускание";
+                break;
+        }
+        return result;
+    }
+
     public override void Deselect()
     {
-        return;
+        Singleton.Instance.UIManager.ClearHelperText();
     }
 
     public override void GetInfoMouse()
     {
-        return;
+        Singleton.Instance.UIManager.SetEnterText($"Нажмите ЛКМ, чтобы выбрать режим домкрата '{VerboseName()}'.");
     }
 
     public override GameObject GetSelectObject()

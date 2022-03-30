@@ -26,7 +26,7 @@ public class Ruchka : Selectable
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите чтобы взаимодейсвовать с ручкой");
+        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы взаимодействовать с ручкой.");
     }
 
     public override GameObject GetSelectObject()
@@ -90,7 +90,7 @@ public class Ruchka : Selectable
                     if (actualDomkratDownPart.Up(TechStand.isSelected)) // Анимация подъема нижней части домкрата
                         boxCol.enabled = false;
                 }
-                if (
+                else if (
                         actualDomkratUpPart.curPosition == Makes.UP
                         && actualDomkratDownPart.curPosition == Makes.UP
                         && state.direction == Makes.UP
@@ -100,6 +100,7 @@ public class Ruchka : Selectable
                     if (actualDomkratDownPart.Down(TechStand.isSelected)) // Анимация опускания нижней части домкрата
                         boxCol.enabled = true;
                 }
+
             }
 
             // Верхняя часть домкарата
@@ -113,8 +114,7 @@ public class Ruchka : Selectable
                     Debug.Log("Up part UP");
                     actualDomkratUpPart.Up(state.activeSwitcher == ModeSwitch.LOADED); // Анимация подъема верхней части домкрата
                 }
-
-                if (
+                else if (
                         actualDomkratUpPart.curPosition == Makes.UP
                         && state.direction == Makes.DOWN
                 )
@@ -127,6 +127,16 @@ public class Ruchka : Selectable
                     }
                     isSelected = true;
                     actualDomkratUpPart.Down(state.activeSwitcher == ModeSwitch.LOADED); // Анимация опускания верхней части домкрата
+                }
+                else if (actualDomkratUpPart.curPosition == Makes.DOWN && state.direction == Makes.DOWN)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя опустить домкрат: он и так в нижнем положении.", Weight = ErrorWeight.MINOR });
+                    return;
+                }
+                else if (actualDomkratUpPart.curPosition == Makes.UP && state.direction == Makes.UP)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя поднять домкрат: он и так в верхнем положении.", Weight = ErrorWeight.MINOR });
+                    return;
                 }
             }
         }

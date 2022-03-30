@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +30,6 @@ public class Haft : Selectable
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы взаимодействовать с ручкой");
+        Singleton.Instance.UIManager.SetEnterText("РќР°Р¶РјРёС‚Рµ Р›РљРњ, С‡С‚РѕР±С‹ РїРµСЂРµРєР»СЋС‡РёС‚СЊ РїРѕР»РѕР¶РµРЅРёРµ СЂСѓС‡РєРё (СЂР°Р±РѕС‡РµРµ/РЅРµ СЂР°Р±РѕС‡РµРµ)");
     }
 }

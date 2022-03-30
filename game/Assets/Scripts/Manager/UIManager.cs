@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public Text enter;
     public Text helper;
+    public GameObject enterBox;
 
     void Start()
     {
@@ -18,11 +19,13 @@ public class UIManager : MonoBehaviour
 
     public void SetEnterText(string text)
     {
+        enterBox.SetActive(true);
         enter.text = text;
     }
 
     public void ClearEnterText()
     {
+        enterBox.SetActive(false);
         enter.text = "";
     }
 

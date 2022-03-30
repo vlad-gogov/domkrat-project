@@ -10,11 +10,12 @@ public class SwitchRoyal : Selectable
     public override void Deselect()
     {
         isSelected = false;
+        Singleton.Instance.UIManager.ClearHelperText();
     }
 
     public override void GetInfoMouse()
     {
-        return;
+        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы переключить саосно/рояльное положение колёс.");
     }
 
     public override GameObject GetSelectObject()

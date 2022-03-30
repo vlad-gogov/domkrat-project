@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.UI;
 
 public class Perehodnick : Selectable
@@ -23,7 +23,7 @@ public class Perehodnick : Selectable
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы поднять переходник");
+        Singleton.Instance.UIManager.SetEnterText("РќР°Р¶РјРёС‚Рµ Р›РљРњ, С‡С‚РѕР±С‹ РїРѕРґРЅСЏС‚СЊ РїРµСЂРµС…РѕРґРЅРёРє");
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -31,7 +31,7 @@ public class Perehodnick : Selectable
         GameObject trigger = collider.gameObject;
         if (!trigger.GetComponent<PointToSet>().isPerehodnick && trigger.tag == "SetPerehodnickDomkrat")
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите E чтобы установить переходник в ТПК");
+            Singleton.Instance.UIManager.SetEnterText("РќР°Р¶РјРёС‚Рµ E С‡С‚РѕР±С‹ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РїРµСЂРµС…РѕРґРЅРёРє РІ РўРџРљ");
         }
     }
 
