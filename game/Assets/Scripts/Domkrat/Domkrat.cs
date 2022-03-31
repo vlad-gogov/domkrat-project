@@ -16,9 +16,7 @@ public class Domkrat : MonoBehaviour
     public Down_part_rotation downPartRotation;
     public Rotate_fixator rotateFixator;
     public TechStand techStand;
-    private float SpeedRotation = 80f;
     private float SpeedMove = 0.007f;
-    private Vector3 prev;
     private MovingHand moveHand;
     [SerializeField] private GameObject LeftWheel;
     [SerializeField] private GameObject RightWheel;
@@ -41,19 +39,6 @@ public class Domkrat : MonoBehaviour
         move_mech = child.transform.GetChild(0).gameObject.GetComponent<Animator>();
         childRuchka = transform.GetChild(0).gameObject.GetComponent<Up_part>();
         moveHand = boxHand.gameObject.GetComponent<MovingHand>();
-    }
-
-    void RotateWheel()
-    {
-        float temp = transform.position.x - prev.x;
-        if (temp != 0)
-        {
-            float rot = (temp > 0 ? SpeedRotation : -SpeedRotation) * Time.deltaTime;
-            LeftWheel.transform.Rotate(0f, rot, 0f);
-            RightWheel.transform.Rotate(0f, rot, 0f);
-            BackWheel.transform.Rotate(0f, 0f, -rot);
-        }
-        prev = transform.position;
     }
 
     private void OnTriggerEnter(Collider collider)
