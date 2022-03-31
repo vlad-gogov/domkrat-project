@@ -158,4 +158,9 @@ public class StateManager : MonoBehaviour
             countDomkrats++;
         }
     }
+
+    public State GetState()
+    {
+        return curState;
+    }
 }

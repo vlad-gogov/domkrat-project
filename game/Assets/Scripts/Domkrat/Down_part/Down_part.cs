@@ -17,6 +17,7 @@ public class Down_part : MonoBehaviour
         parentDomkrat = gameObject.transform.parent.GetComponent<Domkrat>();
         // should always be `DOWN` at Start
         curPosition = Makes.DOWN;
+        rotation_down_part = transform.GetChild(transform.childCount - 1).GetComponent<Down_part_rotation>();
     }
 
     public bool Up(bool isTechStand = false)

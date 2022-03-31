@@ -18,9 +18,21 @@ public class TPKMoving : MonoBehaviour
     TPKDirection curDirection = TPKDirection.STAY;
     bool isMoving = false;
 
+    float speedRotation = 100f;
+    List<DomkratMoving> domkratMovings = new List<DomkratMoving>();
+
     void Update()
     {
         Moving();
+
+        if (domkratMovings.Count == 0)
+        {
+            if (Singleton.Instance.StateManager.GetState() == State.UP_TPK)
+            {
+                foreach (var domkrat in TPK.TPKObj.attachedDomkrats)
+                    domkratMovings.Add(domkrat.GetComponent<DomkratMoving>());
+            }
+        }
     }
 
     void Moving()
@@ -318,6 +330,10 @@ public class TPKMoving : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.T))
             {
                 break;
+            }
+            foreach (var domkrat in domkratMovings)
+            {
+                domkrat.RotateWheel(speedRotation * Time.deltaTime);
             }
             gameObject.transform.Translate(vector * shift * Time.deltaTime);
             yield return null;

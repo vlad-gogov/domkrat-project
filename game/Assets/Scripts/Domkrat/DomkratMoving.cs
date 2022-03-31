@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DomkratMoving : MovingSelect
 {
-    public float speedRotation;
+    private float speedRotation = 100f;
     [SerializeField] private GameObject LeftWheel;
     [SerializeField] private GameObject RightWheel;
     [SerializeField] private GameObject BackWheel;
@@ -22,7 +22,11 @@ public class DomkratMoving : MovingSelect
     {
         Vector3 position = new Vector3(Pointer.transform.position.x, transform.position.y, Pointer.transform.position.z);
         transform.position = position;
-        float angle = Input.GetAxis("Vertical") * speedRotation * Time.deltaTime;
+        RotateWheel(Input.GetAxis("Vertical") * speedRotation * Time.deltaTime);
+    }
+
+    public void RotateWheel(float angle)
+    {
         LeftWheel.transform.Rotate(Vector3.up, -angle);
         RightWheel.transform.Rotate(Vector3.up, -angle);
         BackWheel.transform.Rotate(Vector3.forward, angle);
