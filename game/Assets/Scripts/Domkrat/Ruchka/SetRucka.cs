@@ -10,9 +10,11 @@ public class SetRucka : PlaceForSet
     {
         if (gameObject.tag == "Ruchka")
         {
-            down_ruchka.GetComponent<Collider>().enabled = true;
+            down_ruchka.GetComponent<BoxCollider>().enabled = true;
             gameObject.transform.position = Pointer.transform.position;
             gameObject.transform.rotation = Pointer.transform.rotation;
+            Ruchka r = gameObject.GetComponent<Ruchka>();
+            r.curPosition = r.curPosition == PositionRuchka.UP ? PositionRuchka.DOWN : PositionRuchka.UP;
         }
     }
 }

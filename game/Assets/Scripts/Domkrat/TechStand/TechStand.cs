@@ -13,6 +13,7 @@ public class TechStand : Selectable
 
     public override void Deselect()
     {
+        TPK.TPKObj.SwtichTechStand(true);
         isSelected = false;
         meshRenderer.enabled = false;    
     }
@@ -34,5 +35,6 @@ public class TechStand : Selectable
     {
         isSelected = true;
         meshRenderer.enabled = true;
+        TPK.TPKObj.SwtichTechStand(false);
     }
 }

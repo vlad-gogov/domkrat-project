@@ -16,6 +16,7 @@ public class TPK : MonoBehaviour
     // 3. САСного/рояльные положения ТОЛЬКО МЕЖДУ ПАРАЛЛЕЛЬНЫМИ домкратами
     // 4. Синхронить повороты нижних частей
     public List<Domkrat> attachedDomkrats;
+    List<TechStand> techStands = new List<TechStand>();
 
     public StateTPK state;
 
@@ -26,6 +27,19 @@ public class TPK : MonoBehaviour
         TPKObj = this;
         attachedDomkrats = new List<Domkrat>();
         state = StateTPK.DOWN;
+    }
+
+    void Update()
+    {
+        if (techStands.Count == 0 && Singleton.Instance.StateManager.GetState() == State.UP_TPK)
+        {
+            foreach(var techSand in attachedDomkrats)
+            {
+                techStands.Add(techSand.techStand);
+            }
+        }
+
+
     }
 
     public void LiftUp()
@@ -58,5 +72,16 @@ public class TPK : MonoBehaviour
     public void RemoveDomkrat(int id)
     {
         attachedDomkrats.RemoveAt(id);
+    }
+
+    public void SwtichTechStand(bool Signal)
+    {
+        foreach (var techStand in techStands)
+        {
+            if(!techStand.isSelected)
+            {
+                techStand.gameObject.GetComponent<BoxCollider>().enabled = Signal;
+            }
+        }
     }
 }

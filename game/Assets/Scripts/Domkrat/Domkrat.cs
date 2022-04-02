@@ -150,9 +150,4 @@ public class Domkrat : MonoBehaviour
     {
         childRuchka.RealDown(liftTPK);
     }
-
-    void Update()
-    {
-        //RotateWheel();
-    }
 }

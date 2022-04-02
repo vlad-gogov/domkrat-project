@@ -8,9 +8,10 @@ public enum State
     SET_PEREHODNICK = 1,
     CHECK_DOMKRATS = 2,
     SET_DOMKRATS = 3,
-    UP_TPK = 4,
-    CONFIG_DOMKRAT_TO_FORWARD = 5,
-    CONFIG_DOMKRAT_TO_RIGHT = 6
+    CHECK_TURING_MACHANISM = 4,
+    UP_TPK = 5,
+    CONFIG_DOMKRAT_TO_FORWARD = 6,
+    CONFIG_DOMKRAT_TO_RIGHT = 7
 }
 
 public enum GameMode
@@ -74,6 +75,7 @@ public class StateManager : MonoBehaviour
         states.Add(State.SET_PEREHODNICK, "Установите переходники на пакет");
         states.Add(State.CHECK_DOMKRATS, "Выполнить проверку подъема и опускание домкарата в разных режимах");
         states.Add(State.SET_DOMKRATS, "Подкатите и установите домкраты");
+        states.Add(State.CHECK_TURING_MACHANISM, "Проверьте работу механизма поворота домкрата");
         states.Add(State.UP_TPK, "Поднимите ТПК");
 
         if (typeArea == TypeArea.FLAT)

@@ -25,13 +25,10 @@ public class TPKMoving : MonoBehaviour
     {
         Moving();
 
-        if (domkratMovings.Count == 0)
+        if (domkratMovings.Count == 0 && Singleton.Instance.StateManager.GetState() == State.UP_TPK)
         {
-            if (Singleton.Instance.StateManager.GetState() == State.UP_TPK)
-            {
-                foreach (var domkrat in TPK.TPKObj.attachedDomkrats)
-                    domkratMovings.Add(domkrat.GetComponent<DomkratMoving>());
-            }
+            foreach (var domkrat in TPK.TPKObj.attachedDomkrats)
+                domkratMovings.Add(domkrat.GetComponent<DomkratMoving>());
         }
     }
 
@@ -333,7 +330,7 @@ public class TPKMoving : MonoBehaviour
             }
             foreach (var domkrat in domkratMovings)
             {
-                domkrat.RotateWheel(speedRotation * Time.deltaTime);
+                domkrat.RotateWheel(speedRotation * Time.deltaTime, false);
             }
             gameObject.transform.Translate(vector * shift * Time.deltaTime);
             yield return null;
