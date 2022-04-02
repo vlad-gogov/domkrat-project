@@ -44,45 +44,50 @@ public class PlayerRay : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward, Color.red);
 
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Distance, 1 << PickUp.value) || Physics.Raycast(ray, out hit, Distance, 1 << Interaction.value))
+        if (!_selectedObject)
         {
-            Debug.Log($"hit: {hit}");
-            hitObject = hit.collider.gameObject;
-            selectable = hitObject.GetComponent<Selectable>();
-            Debug.Log($"hitObj: {hitObject}");
-            Debug.Log($"selectable: {selectable}");
-            Debug.Log($"_selectedObj: {_selectedObject}");
-            if (!_selectedObject)
+            if (Physics.Raycast(ray, out hit, Distance, 1 << PickUp.value) || Physics.Raycast(ray, out hit, Distance, 1 << Interaction.value))
             {
-                Debug.Log("calling getInfoMouse...");
-                selectable.GetInfoMouse();
+                Debug.Log($"hit: {hit}");
+                hitObject = hit.collider.gameObject;
+                selectable = hitObject.GetComponent<Selectable>();
+                Debug.Log($"hitObj: {hitObject}");
+                Debug.Log($"selectable: {selectable}");
+                Debug.Log($"_selectedObj: {_selectedObject}");
+                if (!_selectedObject)
+                {
+                    Debug.Log("calling getInfoMouse...");
+                    selectable.GetInfoMouse();
+                }
             }
-        }
-        else if (!_selectedObject)
-        {
-            Singleton.Instance.UIManager.ClearEnterText();
-            selectable = null;
-        }
-
-        checkSelectable();
-
-        if (Physics.Raycast(ray, out hit, Distance, 1 << PlaceForItem.value))
-        {
-            placeForSet = hit.collider.GetComponent<PlaceForSet>();
-        }
-
-        if (placeForSet && Input.GetMouseButtonDown(0))
-        {
-            if (_selectedObject)
+            else if (!_selectedObject)
             {
-                placeForSet.SetItem(_selectedObject);
-                UnSelectable();
+                Singleton.Instance.UIManager.ClearEnterText();
+                selectable = null;
             }
+            checkSelectable();
         }
-
-        if (_selectedObject)
+        else
         {
             moving.Moving();
+            if (Physics.Raycast(ray, out hit, Distance, 1 << PlaceForItem.value))
+            {
+                placeForSet = hit.collider.GetComponent<PlaceForSet>();
+                if (_selectedObject)
+                {
+                    placeForSet.GetInfoMouse();
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        placeForSet.SetItem(_selectedObject);
+                        UnSelectable();
+                    }
+                }
+            }
+            else
+            {
+                Singleton.Instance.UIManager.ClearEnterText();
+                placeForSet = null;
+            }
         }
 
         //selectable = null;

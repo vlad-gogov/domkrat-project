@@ -707,6 +707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Pointer: {fileID: 0}
   down_ruchka: {fileID: 645766007}
+  pos: 0
 --- !u!65 &103611533
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1244,7 +1245,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSelected: 0
   Unselect: 0
+  curPos: 0
   down_ruchka: {fileID: 645766007}
+  RuckaMoving: {fileID: 0}
 --- !u!65 &184657770
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1799,6 +1802,7 @@ GameObject:
   - component: {fileID: 278365067}
   - component: {fileID: 278365066}
   - component: {fileID: 278365065}
+  - component: {fileID: 278365069}
   m_Layer: 3
   m_Name: Push
   m_TagString: Untagged
@@ -1834,7 +1838,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSelected: 0
   Unselect: 0
+  curPos: 0
   down_ruchka: {fileID: 1476144138}
+  RuckaMoving: {fileID: 940963873}
 --- !u!65 &278365066
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1897,6 +1903,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278365063}
   m_Mesh: {fileID: 4355602943898263745, guid: 6d2279f36e68ea745a0fe825a1e33daa, type: 3}
+--- !u!95 &278365069
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278365063}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ccadac3a7eac75e46bf28ece947fc0c3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &287243614
 GameObject:
   m_ObjectHideFlags: 0
@@ -4221,6 +4246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Pointer: {fileID: 1183397665}
   down_ruchka: {fileID: 645766007}
+  pos: 0
 --- !u!65 &582553877
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5336,6 +5362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pointer: {fileID: 418504301}
+  isMoving: 0
 --- !u!4 &733505286
 Transform:
   m_ObjectHideFlags: 0
@@ -6490,6 +6517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pointer: {fileID: 418504301}
+  isMoving: 0
 --- !u!4 &940963874
 Transform:
   m_ObjectHideFlags: 0
@@ -10472,6 +10500,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Pointer: {fileID: 597984244}
   down_ruchka: {fileID: 1476144138}
+  pos: 0
 --- !u!65 &1549813445
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10580,6 +10609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Pointer: {fileID: 1585257712}
   down_ruchka: {fileID: 1476144138}
+  pos: 1
 --- !u!65 &1585257715
 BoxCollider:
   m_ObjectHideFlags: 0

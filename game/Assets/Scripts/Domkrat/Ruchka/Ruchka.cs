@@ -40,9 +40,9 @@ public class Ruchka : Selectable
         {
             boxCollider.enabled = true;
         }
-        if (boxCollider.enabled && Singleton.Instance.StateManager.GetState() == State.UP_TPK)
+        if (boxCollider.enabled && Singleton.Instance.StateManager.GetState() == State.CHECK_TURING_MACHANISM)
         {
-
+            boxCollider.enabled = false;
         }
     }
 
@@ -94,6 +94,10 @@ public class Ruchka : Selectable
 
     public override void Select()
     {
+        if (PlayerRay.playerRay.GetSelected())
+        {
+            return;
+        }
         var state = ComputeState();
         if (!state.isValidState)
         {
