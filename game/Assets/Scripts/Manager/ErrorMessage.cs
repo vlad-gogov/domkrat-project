@@ -11,12 +11,12 @@ public class ErrorMessage : MonoBehaviour
     {
         erroText.text = textError;
         gameObject.SetActive(true);
-        Time.timeScale = 0;
+        Singleton.Instance.StateManager.Pause();
     }
 
     public void Close()
     {
-        Time.timeScale = 1;
+        Singleton.Instance.StateManager.Resume();
         erroText.text = "";
         gameObject.SetActive(false);
     }

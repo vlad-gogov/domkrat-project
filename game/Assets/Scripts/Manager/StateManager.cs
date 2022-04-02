@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public enum State
@@ -52,10 +54,13 @@ public class StateManager : MonoBehaviour
     public GameMode gameMode;
     public TypeArea typeArea;
     public int counterMistaks = 0;
+    public GameObject player;
 
-    public List<Domkrat> domkrats = new List<Domkrat>(); 
+    public List<Domkrat> domkrats = new List<Domkrat>();
 
+    public bool OnPause { get; private set; }
     private Dictionary<State, string> states = new Dictionary<State, string>();
+    Dictionary<State, string> tutorials = new Dictionary<State, string>();
     private State curState;
     // Переменная, проверяющая завершили ли мы сценарий
     bool finished = false;
@@ -63,8 +68,7 @@ public class StateManager : MonoBehaviour
     public int countPerehodnick = 0;
     public int countDomkrats = 0;
 
-
-    void Awake()
+    void Start()
     {
         gameMode = CrossScenesStorage.gameMode;
         typeArea = CrossScenesStorage.typeArea;
@@ -72,9 +76,11 @@ public class StateManager : MonoBehaviour
 
         states.Add(State.DEFAULT, "");
         states.Add(State.SET_PEREHODNICK, "Установите переходники на пакет");
+
         states.Add(State.CHECK_DOMKRATS, "Выполнить проверку подъема и опускание домкарата в разных режимах");
         states.Add(State.SET_DOMKRATS, "Подкатите и установите домкраты");
         states.Add(State.UP_TPK, "Поднимите ТПК");
+        LoadTutorial();
 
         if (typeArea == TypeArea.FLAT)
         {
@@ -92,8 +98,10 @@ public class StateManager : MonoBehaviour
 
         curState = State.DEFAULT;
 
-        if (gameMode == GameMode.FREEPLAY)
+        if ( gameMode == GameMode.FREEPLAY)
         {
+            NotifyAllDomkrats(State.CHECK_DOMKRATS);
+            NotifyAllDomkrats(State.SET_DOMKRATS);
             // Переходим в самое последнее состояние, чтобы открыть все части для свободной игры
             for (int i = 0; i < states.Count - 1; i++)
             {
@@ -101,7 +109,7 @@ public class StateManager : MonoBehaviour
             }
             finished = true;
         }
-        NextState();
+        ChangeTextHelper();
     }
 
     public void NextState()
@@ -127,6 +135,8 @@ public class StateManager : MonoBehaviour
     {
         int index = (int)curState;
         Singleton.Instance.UIManager.SetHelperText(string.Copy(states[curState]));
+        // InitialStateHack();
+        Singleton.Instance.UIManager.OpenTutorial(string.Copy(tutorials[curState]));
     }
 
     public void onError(Error error)
@@ -162,5 +172,41 @@ public class StateManager : MonoBehaviour
     public State GetState()
     {
         return curState;
+    }
+
+    public void Pause()
+    {
+        OnPause = true;
+        player.GetComponent<PlayerMove>().enabled = false;
+        player.GetComponent<PlayerRay>().enabled = false;
+        // если установить time в 0, то перестают работать видосы...
+        // Time.timeScale = 0;
+    }
+
+    public void Resume()
+    {
+        OnPause = false;
+        player.GetComponent<PlayerMove>().enabled = true;
+        player.GetComponent<PlayerRay>().enabled = true;
+        // Time.timeScale = 1;
+    }
+
+    void LoadTutorial()
+    {
+        string filepath = @"Assets\\Texts\\flatTutorial.txt";
+        string tutorial = File.ReadAllText(filepath);
+        string[] tutorialSteps = tutorial.Split(new string[] { "<br>" }, StringSplitOptions.None);
+        for (int i=0; i<tutorialSteps.Length; i++)
+        {
+            tutorials[(State)i] = tutorialSteps[i];
+        }
+    }
+
+    public void InitialStateHack()
+    {
+        if (curState == State.DEFAULT)
+        {
+            NextState();
+        }
     }
 }
