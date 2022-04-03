@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,10 +61,10 @@ public class UIController : MonoBehaviour
         endGame.gameObject.SetActive(true);
         if (error_count != 0)
         {
-            endGame.text = "?? ?? ?????. ?????????? ?????? = " + error_count.ToString();
+            endGame.text = "Вы не сдали. Количество ошибок = " + error_count.ToString();
         } else
         {
-            endGame.text = "?? ?????.";
+            endGame.text = "Вы сдали.";
         }
     }
 

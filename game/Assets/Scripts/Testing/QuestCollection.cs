@@ -6,6 +6,8 @@ using UnityEngine;
 public class QuestCollection : MonoBehaviour
 {
     public QuizQuestion[] allQuestions;
+    bool isShufle = false;
+    int questionIndex = 0;
 
     private void Start()
     {
@@ -25,15 +27,20 @@ public class QuestCollection : MonoBehaviour
 
     public QuizQuestion GetUnaskedQuestion()
     {
-        ResetQuestions();
-
-        var question = allQuestions
-            .Where(t => t.Asked == false)
-            .OrderBy(t => UnityEngine.Random.Range(0, int.MaxValue))
-            .FirstOrDefault();
-
-        question.Asked = true;
-        return question;
+        ResetQuestionsIfAllHaveBeenAsked();
+        if (!isShufle)
+        {
+            for (int k = 0; k < allQuestions.Length; k++)
+            {
+                QuizQuestion temp = allQuestions[k];
+                int randomIndex = UnityEngine.Random.Range(0, allQuestions.Length);
+                allQuestions[k] = allQuestions[randomIndex];
+                allQuestions[randomIndex] = temp;
+            }
+            isShufle = true;
+        }
+        allQuestions[questionIndex].Asked = true;
+        return allQuestions[questionIndex++];
     }
 
     private void ResetQuestionsIfAllHaveBeenAsked()
@@ -77,7 +84,7 @@ public class QuestCollection : MonoBehaviour
 
             if (allQuestions[i].Type == (int)AnswerType.Sequence)
             {
-                allQuestions[i].CorrectAnswer = new_seq_answer.ToString();
+                allQuestions[i].CorrectAnswer = new_seq_answer.ToString(); // fix shit with strings in sharp
             }
             else
             {
