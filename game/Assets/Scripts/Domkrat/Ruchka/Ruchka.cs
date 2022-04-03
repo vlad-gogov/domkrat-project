@@ -40,10 +40,10 @@ public class Ruchka : Selectable
         {
             boxCollider.enabled = true;
         }
-        if (boxCollider.enabled && Singleton.Instance.StateManager.GetState() == State.CHECK_TURING_MACHANISM)
-        {
-            boxCollider.enabled = false;
-        }
+        //if (boxCollider.enabled && Singleton.Instance.StateManager.GetState() == State.CHECK_TURING_MACHANISM)
+        //{
+        //    boxCollider.enabled = false;
+        //}
     }
 
     public override void Deselect()
