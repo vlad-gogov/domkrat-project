@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2867,9 +2867,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pointer: {fileID: 1934156814}
+  speedRotation: 50
   LeftWheel: {fileID: 797409727}
   RightWheel: {fileID: 578925988}
   BackWheel: {fileID: 1824990491}
+  scrollView: {fileID: 0}
 --- !u!1 &289900861
 GameObject:
   m_ObjectHideFlags: 0
@@ -14358,6 +14360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pointer: {fileID: 1934156814}
+  speedRotation: 50
   LeftWheel: {fileID: 1075404865}
   RightWheel: {fileID: 142209927}
   BackWheel: {fileID: 601308043}
@@ -17955,6 +17958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pointer: {fileID: 1934156814}
+  speedRotation: 50
   LeftWheel: {fileID: 1795093063}
   RightWheel: {fileID: 993330168}
   BackWheel: {fileID: 1453357914}
@@ -22536,6 +22540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pointer: {fileID: 1934156814}
+  speedRotation: 50
   LeftWheel: {fileID: 1532630610}
   RightWheel: {fileID: 760741235}
   BackWheel: {fileID: 132428147}
