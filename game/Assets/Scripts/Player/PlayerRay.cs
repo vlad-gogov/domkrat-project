@@ -16,7 +16,6 @@ public class PlayerRay : MonoBehaviour
     private MovingSelect moving;
     private PlayerMove PlayerMove;
     private PlaceForSet placeForSet;
-
     public BoxCollider wall;
 
     void Start()
@@ -67,9 +66,8 @@ public class PlayerRay : MonoBehaviour
             }
             checkSelectable();
         }
-        else
+        else if (_selectedObject.tag == "Ruchka")
         {
-            moving.Moving();
             if (Physics.Raycast(ray, out hit, Distance, 1 << PlaceForItem.value))
             {
                 placeForSet = hit.collider.GetComponent<PlaceForSet>();
@@ -88,6 +86,11 @@ public class PlayerRay : MonoBehaviour
                 Singleton.Instance.UIManager.ClearEnterText();
                 placeForSet = null;
             }
+        }
+
+        if (moving)
+        {
+            moving.Moving();
         }
 
         //selectable = null;

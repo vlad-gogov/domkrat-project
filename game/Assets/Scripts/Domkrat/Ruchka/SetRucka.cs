@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +18,6 @@ public class SetRucka : PlaceForSet
             if (anim)
             {
                 anim.SetTrigger("Push");
-                Debug.Log("PUSH");
             }
             StartCoroutine(WaitForSet(TimeWait, other));
         }
@@ -30,6 +29,9 @@ public class SetRucka : PlaceForSet
         {
             if (t >= time / 2 && !isSet)
             {
+
+                // TODO
+                // Установка ручки под правильным углом
                 down_ruchka.GetComponent<BoxCollider>().enabled = true;
                 other.transform.position = Pointer.transform.position;
                 other.transform.rotation = Pointer.transform.rotation;
@@ -45,6 +47,6 @@ public class SetRucka : PlaceForSet
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("������� ���, ����� ���������� �����");
+        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы установить ручку");
     }
 }
