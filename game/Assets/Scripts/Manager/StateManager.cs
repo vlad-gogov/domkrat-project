@@ -139,9 +139,9 @@ public class StateManager : MonoBehaviour
     public void ChangeTextHelper()
     {
         int index = (int)curState;
-        Singleton.Instance.UIManager.SetHelperText(string.Copy(states[curState]));
+        Singleton.Instance.UIManager.SetHelperText(string.Copy(SafeGetFromDict(states)));
         // InitialStateHack();
-        Singleton.Instance.UIManager.OpenTutorial(string.Copy(tutorials[curState]));
+        Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
     }
 
     public void onError(Error error)
@@ -213,5 +213,15 @@ public class StateManager : MonoBehaviour
         {
             NextState();
         }
+    }
+
+    public string SafeGetFromDict(Dictionary<State, string> dict)
+    {
+        string value;
+        if (!dict.TryGetValue(curState, out value))
+        {
+            value = $"Для состояния {curState} ещё не написаны подсказки...";
+        }
+        return value;
     }
 }
