@@ -42,7 +42,6 @@ public class QuizController : MonoBehaviour
 
     public void SubmitAnswer(int answerNumber)
     {
-        Debug.Log("curr " + currentQuestion.CorrectAnswer.ToString());
         if (currentQuestion.Type == (int)AnswerType.Single)
         {
             bool isCorrect = answerNumber.ToString().Equals(currentQuestion.CorrectAnswer);
@@ -57,13 +56,11 @@ public class QuizController : MonoBehaviour
         {
             answer[currentSeqLenght] = answerNumber;
             currentSeqLenght++;
-            Debug.Log("corr " + currentSeqLenght);
             if (currentSeqLenght == currentQuestion.Answers.Length)
             {
                 bool isCorrect = true;
                 for (int i = 0; i < answer.Length; i++)
                 {
-                    Debug.Log("ans " + answer[i].ToString()[0] + " " + currentQuestion.CorrectAnswer[i].ToString()[0] + " " + (!answer[i].ToString()[0].Equals(currentQuestion.CorrectAnswer[i])));
                     if (!answer[i].ToString()[0].Equals(currentQuestion.CorrectAnswer[i]))
                     {
                         isCorrect = false;

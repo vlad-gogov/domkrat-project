@@ -78,7 +78,6 @@ public class QuestCollection : MonoBehaviour
                     char tmp = new_seq_answer[k];
                     new_seq_answer[k] = new_seq_answer[randomIndex];
                     new_seq_answer[randomIndex] = tmp;
-                    Debug.Log("In reset " + tmp);
                 }
 
             }
@@ -89,11 +88,8 @@ public class QuestCollection : MonoBehaviour
                 foreach(char temp in new_seq_answer)
                 {
                     tmp += temp;
-                    Debug.Log("for " + tmp);
                 }
-                allQuestions[i].CorrectAnswer = tmp; // fix shit with strings in sharp
-                Debug.Log("also reset" + allQuestions[i].CorrectAnswer[0]);
-                Debug.Log("also reset" + tmp[0]);
+                allQuestions[i].CorrectAnswer = tmp;
             }
             else
             {
