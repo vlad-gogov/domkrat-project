@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +21,8 @@ public class TestScript : MonoBehaviour
             "ajferjkhtbhjkehjtyrbthryhkbjjrhytb" +
             "tierbtrtybjtrybjk <img>C:\\Users\\rp-re\\Videos\\test.jpg</img>" +
             "asdsdteitv <button>suka blyat</button><button>suka blyat suka blyat suka blyat suka blyat suka blyat suka blyat suka blyat suka blyat suka blyat suka blyat</button>");
+        // после того как пользователь ответил:
+        // pg.Clear();
     }
 
     // Update is called once per frame

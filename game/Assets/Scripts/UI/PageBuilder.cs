@@ -72,6 +72,10 @@ public class PageBuilder : MonoBehaviour
     {
         offsets.Clear();
         offsets.Add(topPadding);
+        foreach (Transform child in parent.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
     }
 
     public float Heigth { get => offsets[offsets.Count - 1]; }
