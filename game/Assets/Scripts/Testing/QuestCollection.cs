@@ -45,7 +45,7 @@ public class QuestCollection : MonoBehaviour
 
     private void ResetQuestionsIfAllHaveBeenAsked()
     {
-        if (allQuestions.Any(t => t.Asked == false) == true)
+        if (questionIndex == 0)
         {
             ResetQuestions();
         }
@@ -78,13 +78,22 @@ public class QuestCollection : MonoBehaviour
                     char tmp = new_seq_answer[k];
                     new_seq_answer[k] = new_seq_answer[randomIndex];
                     new_seq_answer[randomIndex] = tmp;
+                    Debug.Log("In reset " + tmp);
                 }
 
             }
 
             if (allQuestions[i].Type == (int)AnswerType.Sequence)
             {
-                allQuestions[i].CorrectAnswer = new_seq_answer.ToString(); // fix shit with strings in sharp
+                string tmp = null;
+                foreach(char temp in new_seq_answer)
+                {
+                    tmp += temp;
+                    Debug.Log("for " + tmp);
+                }
+                allQuestions[i].CorrectAnswer = tmp; // fix shit with strings in sharp
+                Debug.Log("also reset" + allQuestions[i].CorrectAnswer[0]);
+                Debug.Log("also reset" + tmp[0]);
             }
             else
             {
