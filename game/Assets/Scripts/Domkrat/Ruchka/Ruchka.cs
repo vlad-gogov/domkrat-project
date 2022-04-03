@@ -25,6 +25,7 @@ public class Ruchka : Selectable
 
     [SerializeField] private Switch left, right;
     [SerializeField] private Selectable han;
+    private Animator anim;
 
     [SerializeField] BoxCollider push;
 
@@ -35,6 +36,7 @@ public class Ruchka : Selectable
     void Start()
     {
         curPosition = PositionRuchka.UP;
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -195,11 +197,13 @@ public class Ruchka : Selectable
                 {
                     if (state.direction == Makes.UP)
                     {
+                        anim.SetTrigger("Up");
                         actualDomkratDownPart.rotation_down_part.RotateDownPart(90f, true);
                         isRight = true;
                     }
                     else if (state.direction == Makes.DOWN)
                     {
+                        anim.SetTrigger("Up");
                         actualDomkratDownPart.rotation_down_part.RotateDownPart(-90f, true);
                         isLeft = true;
                     }
