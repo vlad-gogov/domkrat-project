@@ -57,7 +57,7 @@ public class StateManager : MonoBehaviour
     public int counterMistaks = 0;
     public GameObject player;
 
-    public List<Domkrat> domkrats = new List<Domkrat>();
+    private List<Domkrat> domkrats = new List<Domkrat>();
 
     public bool OnPause { get; private set; }
     private Dictionary<State, string> states = new Dictionary<State, string>();
@@ -68,6 +68,20 @@ public class StateManager : MonoBehaviour
 
     public int countPerehodnick = 0;
     public int countDomkrats = 0;
+
+    public bool isTuringMech = false;
+    public int ruchkaIsUp = 0;
+
+    void Awake()
+    {
+        GameObject[] ObjDomkrats = GameObject.FindGameObjectsWithTag("Domkrat");
+
+        foreach (GameObject obj in ObjDomkrats)
+        {
+            domkrats.Add(obj.GetComponent<Domkrat>());
+            obj.SetActive(false);
+        }
+    }
 
     void Start()
     {
@@ -81,7 +95,7 @@ public class StateManager : MonoBehaviour
         states.Add(State.CHECK_DOMKRATS, "Выполнить проверку подъема и опускание домкарата в разных режимах");
         states.Add(State.SET_DOMKRATS, "Подкатите и установите домкраты");
         
-        states.Add(State.CHECK_TURING_MACHANISM, "Проверьте работу механизма поворота домкрата");
+        states.Add(State.CHECK_TURING_MACHANISM, "Проверьте работу механизма поворота домкрата и верните ручку домкрата в исходное положение");
         
         states.Add(State.UP_TPK, "Поднимите ТПК");
         LoadTutorial();

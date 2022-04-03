@@ -63,7 +63,12 @@ public class Up_part : MonoBehaviour
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим подъема домкрата", Weight = ErrorWeight.HIGH });
                 return;
             }
-            
+            if (Singleton.Instance.StateManager.ruchkaIsUp < 4)
+            {
+                // Ручки не в исходном положении
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Верните все ручки в исхоодное положение", Weight = ErrorWeight.MEDIUM });
+                return;
+            }
             RealUp();
         }
         else

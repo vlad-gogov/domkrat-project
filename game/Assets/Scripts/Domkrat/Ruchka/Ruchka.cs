@@ -32,6 +32,7 @@ public class Ruchka : Selectable
     // Переменные для проверки поворотного механизма
     private bool isRight = false;
     private bool isLeft = false;
+    private bool isCount = false;
 
     void Start()
     {
@@ -47,14 +48,22 @@ public class Ruchka : Selectable
             {
                 push.enabled = true;
             }
-            if (isLeft && isRight)
+            if (push.enabled && isLeft && isRight && curPosition == PositionRuchka.UP)
             {
+                push.enabled = false;
                 Singleton.Instance.StateManager.NextState();
+                Singleton.Instance.StateManager.ruchkaIsUp++;
+                isCount = true;
             }
         }
-        if (push.enabled && Singleton.Instance.StateManager.GetState() == State.UP_TPK && curPosition == PositionRuchka.UP)
+        else if (!isCount && Singleton.Instance.StateManager.GetState() > State.CHECK_TURING_MACHANISM)
         {
-            push.enabled = false;
+            if (curPosition == PositionRuchka.UP)
+            {
+                push.enabled = false;
+                Singleton.Instance.StateManager.ruchkaIsUp++;
+                isCount = true;
+            }
         }
     }
 
@@ -104,15 +113,24 @@ public class Ruchka : Selectable
         return result;
     }
 
+    public void StartAnim()
+    {
+        isSelected = true;
+    }
+
     public override void Select()
     {
+        if (isSelected)
+        {
+            return;
+        }
         var state = ComputeState();
         if (!state.isValidState)
         {
             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Конфликтующие режимы работы домкрата", Weight = ErrorWeight.LOW });
+            Deselect();
             return;
         }
-
         if (han.isSelected)
         {
             if (curPosition == PositionRuchka.UP)
@@ -169,7 +187,6 @@ public class Ruchka : Selectable
                             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем как опускать ТПК", Weight = ErrorWeight.HIGH });
                             return;
                         }
-                        isSelected = true;
                         actualDomkratUpPart.Down(state.activeSwitcher == ModeSwitch.LOADED); // Анимация опускания верхней части домкрата
                     }
                     //else if (actualDomkratUpPart.curPosition == Makes.DOWN && state.direction == Makes.DOWN)
@@ -198,13 +215,13 @@ public class Ruchka : Selectable
                     if (state.direction == Makes.UP)
                     {
                         anim.SetTrigger("Up");
-                        actualDomkratDownPart.rotation_down_part.RotateDownPart(90f, true);
+                        actualDomkratDownPart.rotation_down_part.RotateDownPart(90f, true, 0.5f);
                         isRight = true;
                     }
                     else if (state.direction == Makes.DOWN)
                     {
                         anim.SetTrigger("Up");
-                        actualDomkratDownPart.rotation_down_part.RotateDownPart(-90f, true);
+                        actualDomkratDownPart.rotation_down_part.RotateDownPart(-90f, true, 0.5f);
                         isLeft = true;
                     }
                 }
