@@ -41,7 +41,7 @@ public class Down_part_rotation : MonoBehaviour
             gameObject.transform.Rotate(temp, 0f, 0f);
             if (isGear)
             {
-                gear.transform.Rotate(0f, temp, 0f);
+                gear.transform.Rotate(temp, 0, 0f);
             }
             yield return null;
         }
