@@ -42,6 +42,14 @@ public class PageBuilder : MonoBehaviour
             owner.AddImage(content);
         }
     }
+    class DButton : Drawable
+    {
+        public DButton(string content) : base(content) { }
+        public override void Execute(PageBuilder owner)
+        {
+            owner.AddButton(content);
+        }
+    }
 
     GameObject parent;
     float topPadding = 10f;
@@ -49,13 +57,14 @@ public class PageBuilder : MonoBehaviour
     List<float> offsets = new List<float>();
     float viewWidth = 1000;
 
-    string videoReg, imgReg;
+    string videoReg, imgReg, butReg;
 
     public PageBuilder(GameObject parent) : base()
     {
         this.parent = parent;
         videoReg = @"<video>(.*?)</video>";
         imgReg = @"<img>(.*?)</img>";
+        butReg = @"<button>(.*?)</button>";
         offsets.Add(topPadding);
     }
 
@@ -136,16 +145,48 @@ public class PageBuilder : MonoBehaviour
         AddObject(go);
     }
 
+    public void AddButton(string text)
+    {
+        var go = new GameObject($"but{offsets.Count}");
+        var vid = go.AddComponent<UnityEngine.UI.Button>();
+        go.AddComponent<RectTransform>();
+        go.AddComponent<UnityEngine.UI.Image>();
+
+        var txt = new GameObject($"abcd{offsets.Count}");
+        Text myText = txt.AddComponent<Text>();
+        myText.text = text;
+        myText.font = UnityEngine.Font.CreateDynamicFontFromOSFont("Arial", 14);
+        myText.color = Color.black;
+        myText.fontSize = 36;
+        myText.transform.SetParent(go.transform);
+
+        txt.GetComponent<RectTransform>().sizeDelta = new Vector2(600f, 0);
+        var cnt = txt.AddComponent<ContentSizeFitter>();
+        cnt.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        // cnt.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        Canvas.ForceUpdateCanvases();
+        Debug.Log(txt.GetComponent<RectTransform>().rect.height);
+
+        go.GetComponent<RectTransform>().sizeDelta = new Vector2(txt.GetComponent<RectTransform>().rect.width, txt.GetComponent<RectTransform>().rect.height);
+
+        AddObject(go);
+    }
+
     public void ParseAndAdd(string text)
     {
         List<Drawable> toDraw = new List<Drawable>() { new DText(text) };
         toDraw = subdivide<DVideo>(toDraw, videoReg);
         toDraw = subdivide<DImage>(toDraw, imgReg);
+        toDraw = subdivide<DButton>(toDraw, butReg);
         // Debug.Log(toDraw);
         foreach (var d in toDraw)
         {
             Debug.Log($"{d} : {d.content}");
-            d.Execute(this);
+            if (d.content.Trim() != "")
+            {
+                d.Execute(this);
+            }
+            
         }
     }
 
