@@ -11,14 +11,14 @@ public class Switch : MonoBehaviour
     public ModeSwitch mode;
     public TypeMode curType = TypeMode.Off;
     public float[] rotate;
-    private float step = 40f;
+    private float speedRotation = 40f;
 
     public IEnumerator RotateSwitch(float angel)
     {
         float temp = angel >= 0 ? -1 : 1;
-        for(float t = 0; t <= Mathf.Abs(angel); t += step * Time.deltaTime)
+        for(float t = 0; t <= Mathf.Abs(angel); t += speedRotation * Time.deltaTime)
         {
-            gameObject.transform.Rotate(0f, 0f, step * temp * Time.deltaTime);
+            gameObject.transform.Rotate(0f, 0f, speedRotation * temp * Time.deltaTime);
             yield return null;
         }
     }

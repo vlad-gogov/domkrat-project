@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PositionRuchka
+{
+    UP = 0,
+    DOWN = 1
+}
+
 public class Ruchka : Selectable
 {
     struct StateProperties
@@ -11,6 +17,8 @@ public class Ruchka : Selectable
         public Makes direction;
     }
 
+    public PositionRuchka curPosition;
+
     [SerializeField] TechStand TechStand;
     public Up_part actualDomkratUpPart;
     public Down_part actualDomkratDownPart;
@@ -18,6 +26,25 @@ public class Ruchka : Selectable
     [SerializeField] private Switch left, right;
     [SerializeField] private Selectable han;
 
+    private BoxCollider boxCollider;
+
+    void Start()
+    {
+        boxCollider = gameObject.GetComponent<BoxCollider>();
+        curPosition = PositionRuchka.UP;
+    }
+
+    void Update()
+    {
+        if (!boxCollider.enabled && Singleton.Instance.StateManager.GetState() == State.UP_TPK)
+        {
+            boxCollider.enabled = true;
+        }
+        if (boxCollider.enabled && Singleton.Instance.StateManager.GetState() == State.CHECK_TURING_MACHANISM)
+        {
+            boxCollider.enabled = false;
+        }
+    }
 
     public override void Deselect()
     {
@@ -67,6 +94,10 @@ public class Ruchka : Selectable
 
     public override void Select()
     {
+        if (PlayerRay.playerRay.GetSelected())
+        {
+            return;
+        }
         var state = ComputeState();
         if (!state.isValidState)
         {
@@ -76,68 +107,75 @@ public class Ruchka : Selectable
 
         if (han.isSelected)
         {
-            // Нижняя часть домкарата
-            if (TPK.TPKObj.state == StateTPK.UP && state.activeSwitcher == ModeSwitch.WITHOUTLOAD)
+            if (curPosition == PositionRuchka.UP)
             {
-                BoxCollider boxCol = TechStand.gameObject.GetComponent<BoxCollider>();
-                if (
-                        actualDomkratUpPart.curPosition == Makes.UP
-                        && actualDomkratDownPart.curPosition == Makes.DOWN
-                        && state.direction == Makes.DOWN
-                )
+                // Нижняя часть домкарата
+                if (TPK.TPKObj.state == StateTPK.UP && state.activeSwitcher == ModeSwitch.WITHOUTLOAD)
                 {
-                    Debug.Log("1");
-                    if (actualDomkratDownPart.Up(TechStand.isSelected)) // Анимация подъема нижней части домкрата
-                        boxCol.enabled = false;
-                }
-                else if (
-                        actualDomkratUpPart.curPosition == Makes.UP
-                        && actualDomkratDownPart.curPosition == Makes.UP
-                        && state.direction == Makes.UP
-                )
-                {
-                    Debug.Log("2");
-                    if (actualDomkratDownPart.Down(TechStand.isSelected)) // Анимация опускания нижней части домкрата
-                        boxCol.enabled = true;
-                }
-
-            }
-
-            // Верхняя часть домкарата
-            if (actualDomkratDownPart.curPosition == Makes.DOWN)
-            {
-                if (
-                      actualDomkratUpPart.curPosition == Makes.DOWN
-                      && state.direction == Makes.UP
-                )
-                {
-                    Debug.Log("Up part UP");
-                    actualDomkratUpPart.Up(state.activeSwitcher == ModeSwitch.LOADED); // Анимация подъема верхней части домкрата
-                }
-                else if (
-                        actualDomkratUpPart.curPosition == Makes.UP
-                        && state.direction == Makes.DOWN
-                )
-                {
-                    Debug.Log("Up part DOWN");
-                    if (TechStand.isSelected)
+                    BoxCollider boxCol = TechStand.gameObject.GetComponent<BoxCollider>();
+                    if (
+                            actualDomkratUpPart.curPosition == Makes.UP
+                            && actualDomkratDownPart.curPosition == Makes.DOWN
+                            && state.direction == Makes.DOWN
+                    )
                     {
-                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем как опускать ТПК", Weight = ErrorWeight.HIGH });
-                        return;
+                        Debug.Log("1");
+                        if (actualDomkratDownPart.Up(TechStand.isSelected)) // Анимация подъема нижней части домкрата
+                            boxCol.enabled = false;
                     }
-                    isSelected = true;
-                    actualDomkratUpPart.Down(state.activeSwitcher == ModeSwitch.LOADED); // Анимация опускания верхней части домкрата
+                    else if (
+                            actualDomkratUpPart.curPosition == Makes.UP
+                            && actualDomkratDownPart.curPosition == Makes.UP
+                            && state.direction == Makes.UP
+                    )
+                    {
+                        Debug.Log("2");
+                        if (actualDomkratDownPart.Down(TechStand.isSelected)) // Анимация опускания нижней части домкрата
+                            boxCol.enabled = true;
+                    }
+
                 }
-                //else if (actualDomkratUpPart.curPosition == Makes.DOWN && state.direction == Makes.DOWN)
-                //{
-                //    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя опустить домкрат: он и так в нижнем положении.", Weight = ErrorWeight.MINOR });
-                //    return;
-                //}
-                //else if (actualDomkratUpPart.curPosition == Makes.UP && state.direction == Makes.UP)
-                //{
-                //    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя поднять домкрат: он и так в верхнем положении.", Weight = ErrorWeight.MINOR });
-                //    return;
-                //}
+
+                // Верхняя часть домкарата
+                if (actualDomkratDownPart.curPosition == Makes.DOWN)
+                {
+                    if (
+                          actualDomkratUpPart.curPosition == Makes.DOWN
+                          && state.direction == Makes.UP
+                    )
+                    {
+                        Debug.Log("Up part UP");
+                        actualDomkratUpPart.Up(state.activeSwitcher == ModeSwitch.LOADED); // Анимация подъема верхней части домкрата
+                    }
+                    else if (
+                            actualDomkratUpPart.curPosition == Makes.UP
+                            && state.direction == Makes.DOWN
+                    )
+                    {
+                        Debug.Log("Up part DOWN");
+                        if (TechStand.isSelected)
+                        {
+                            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем как опускать ТПК", Weight = ErrorWeight.HIGH });
+                            return;
+                        }
+                        isSelected = true;
+                        actualDomkratUpPart.Down(state.activeSwitcher == ModeSwitch.LOADED); // Анимация опускания верхней части домкрата
+                    }
+                    //else if (actualDomkratUpPart.curPosition == Makes.DOWN && state.direction == Makes.DOWN)
+                    //{
+                    //    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя опустить домкрат: он и так в нижнем положении.", Weight = ErrorWeight.MINOR });
+                    //    return;
+                    //}
+                    //else if (actualDomkratUpPart.curPosition == Makes.UP && state.direction == Makes.UP)
+                    //{
+                    //    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя поднять домкрат: он и так в верхнем положении.", Weight = ErrorWeight.MINOR });
+                    //    return;
+                    //}
+                }
+            }
+            else if (curPosition == PositionRuchka.DOWN)
+            {
+
             }
         }
         else

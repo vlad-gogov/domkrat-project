@@ -4,9 +4,21 @@ using UnityEngine;
 
 public class TakeRuchka : Selectable
 {
-     [SerializeField] GameObject down_ruchka;
+    public PositionRuchka curPos;
+
+    [SerializeField] GameObject down_ruchka;
+    [SerializeField] RuckaMoving RuckaMoving;
+
+    Animator anim;
+
+    void Start()
+    {
+        anim = gameObject.GetComponent<Animator>();
+    }
+
     public override void Deselect()
     {
+        anim.SetTrigger("Idle");
         isSelected = false;
     }
 
@@ -23,7 +35,14 @@ public class TakeRuchka : Selectable
     public override void Select()
     {
         isSelected = true;
+        anim.SetTrigger("Take");
+        RuckaMoving.isMoving = false;
         down_ruchka.GetComponent<Collider>().enabled = false;
+
     }
 
+    public void ChangeIsMoving()
+    {
+        RuckaMoving.isMoving = true;
+    }
 }

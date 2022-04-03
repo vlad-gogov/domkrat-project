@@ -25,10 +25,13 @@ public class DomkratMoving : MovingSelect
         RotateWheel(Input.GetAxis("Vertical") * speedRotation * Time.deltaTime);
     }
 
-    public void RotateWheel(float angle)
+    public void RotateWheel(float angle, bool backWheel = true)
     {
         LeftWheel.transform.Rotate(Vector3.up, -angle);
         RightWheel.transform.Rotate(Vector3.up, -angle);
-        BackWheel.transform.Rotate(Vector3.forward, angle);
+        if (backWheel)
+        {
+            BackWheel.transform.Rotate(Vector3.forward, angle);
+        }
     }
 }

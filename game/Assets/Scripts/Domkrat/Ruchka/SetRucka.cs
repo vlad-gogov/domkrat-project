@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,13 +6,47 @@ public class SetRucka : PlaceForSet
 {
     [SerializeField] GameObject Pointer;
     [SerializeField] GameObject down_ruchka;
-    public override void SetItem(GameObject gameObject)
+    public PositionRuchka pos;
+    public float TimeWait;
+    private bool isSet = false;
+    [SerializeField] Animator anim;
+
+    public override void SetItem(GameObject other)
     {
-        if (gameObject.tag == "Ruchka")
+        if (other.tag == "Ruchka")
         {
-            down_ruchka.GetComponent<Collider>().enabled = true;
-            gameObject.transform.position = Pointer.transform.position;
-            gameObject.transform.rotation = Pointer.transform.rotation;
+            if (anim)
+            {
+                anim.SetTrigger("Push");
+            }
+            StartCoroutine(WaitForSet(TimeWait, other));
         }
+    }
+
+    IEnumerator WaitForSet(float time, GameObject other)
+    {
+        for (float t = 0; t <= time; t += Time.deltaTime)
+        {
+            if (t >= time / 2 && !isSet)
+            {
+
+                // TODO
+                // Установка ручки под правильным углом
+                down_ruchka.GetComponent<BoxCollider>().enabled = true;
+                other.transform.position = Pointer.transform.position;
+                other.transform.rotation = Pointer.transform.rotation;
+                other.GetComponent<Ruchka>().curPosition = pos;
+                isSet = true;
+            }
+            yield return null;
+        }
+        isSet = false;
+        if (anim)
+            anim.SetTrigger("Idle");
+    }
+
+    public override void GetInfoMouse()
+    {
+        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы установить ручку");
     }
 }
