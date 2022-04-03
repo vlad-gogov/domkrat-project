@@ -26,24 +26,34 @@ public class Ruchka : Selectable
     [SerializeField] private Switch left, right;
     [SerializeField] private Selectable han;
 
-    private BoxCollider boxCollider;
+    [SerializeField] BoxCollider push;
+
+    // Переменные для проверки поворотного механизма
+    private bool isRight = false;
+    private bool isLeft = false;
 
     void Start()
     {
-        boxCollider = gameObject.GetComponent<BoxCollider>();
         curPosition = PositionRuchka.UP;
     }
 
     void Update()
     {
-        if (!boxCollider.enabled && Singleton.Instance.StateManager.GetState() == State.UP_TPK)
+        if (Singleton.Instance.StateManager.GetState() == State.CHECK_TURING_MACHANISM)
         {
-            boxCollider.enabled = true;
+            if (!push.enabled)
+            {
+                push.enabled = true;
+            }
+            if (isLeft && isRight)
+            {
+                Singleton.Instance.StateManager.NextState();
+            }
         }
-        //if (boxCollider.enabled && Singleton.Instance.StateManager.GetState() == State.CHECK_TURING_MACHANISM)
-        //{
-        //    boxCollider.enabled = false;
-        //}
+        if (push.enabled && Singleton.Instance.StateManager.GetState() == State.UP_TPK && curPosition == PositionRuchka.UP)
+        {
+            push.enabled = false;
+        }
     }
 
     public override void Deselect()
@@ -94,10 +104,6 @@ public class Ruchka : Selectable
 
     public override void Select()
     {
-        if (PlayerRay.playerRay.GetSelected())
-        {
-            return;
-        }
         var state = ComputeState();
         if (!state.isValidState)
         {
@@ -109,6 +115,11 @@ public class Ruchka : Selectable
         {
             if (curPosition == PositionRuchka.UP)
             {
+                if (Singleton.Instance.StateManager.GetState() == State.CHECK_TURING_MACHANISM)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Перед подъемом ТПК необходимо проверить поворотный механизм домкрата", Weight = ErrorWeight.LOW });
+                    return;
+                }
                 // Нижняя часть домкарата
                 if (TPK.TPKObj.state == StateTPK.UP && state.activeSwitcher == ModeSwitch.WITHOUTLOAD)
                 {
@@ -119,7 +130,6 @@ public class Ruchka : Selectable
                             && state.direction == Makes.DOWN
                     )
                     {
-                        Debug.Log("1");
                         if (actualDomkratDownPart.Up(TechStand.isSelected)) // Анимация подъема нижней части домкрата
                             boxCol.enabled = false;
                     }
@@ -129,7 +139,6 @@ public class Ruchka : Selectable
                             && state.direction == Makes.UP
                     )
                     {
-                        Debug.Log("2");
                         if (actualDomkratDownPart.Down(TechStand.isSelected)) // Анимация опускания нижней части домкрата
                             boxCol.enabled = true;
                     }
@@ -173,9 +182,28 @@ public class Ruchka : Selectable
                     //}
                 }
             }
+
+            //Нужно проверить
             else if (curPosition == PositionRuchka.DOWN)
             {
-
+                if (
+                        TPK.TPKObj.state == StateTPK.DOWN 
+                        && state.activeSwitcher == ModeSwitch.LOADED 
+                        && actualDomkratUpPart.curPosition == Makes.DOWN
+                        && actualDomkratDownPart.curPosition == Makes.DOWN
+                )
+                {
+                    if (state.direction == Makes.UP)
+                    {
+                        actualDomkratDownPart.rotation_down_part.RotateDownPart(90f, true);
+                        isRight = true;
+                    }
+                    else if (state.direction == Makes.DOWN)
+                    {
+                        actualDomkratDownPart.rotation_down_part.RotateDownPart(-90f, true);
+                        isLeft = true;
+                    }
+                }
             }
         }
         else

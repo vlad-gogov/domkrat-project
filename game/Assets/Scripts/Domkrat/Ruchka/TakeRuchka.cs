@@ -29,7 +29,7 @@ public class TakeRuchka : Selectable
 
     public override GameObject GetSelectObject()
     {
-        return gameObject.transform.parent.gameObject;
+        return gameObject.transform.parent.transform.parent.gameObject;
     }
 
     public override void Select()

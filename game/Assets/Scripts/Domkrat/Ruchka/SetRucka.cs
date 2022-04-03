@@ -29,13 +29,10 @@ public class SetRucka : PlaceForSet
         {
             if (t >= time / 2 && !isSet)
             {
-
-                // TODO
-                // Установка ручки под правильным углом
                 down_ruchka.GetComponent<BoxCollider>().enabled = true;
                 other.transform.position = Pointer.transform.position;
-                other.transform.rotation = Pointer.transform.rotation;
-                other.GetComponent<Ruchka>().curPosition = pos;
+                other.transform.localRotation = Pointer.transform.localRotation;
+                other.GetComponentInChildren<Ruchka>().curPosition = pos;
                 isSet = true;
             }
             yield return null;

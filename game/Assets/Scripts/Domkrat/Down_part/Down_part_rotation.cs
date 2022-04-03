@@ -22,21 +22,27 @@ public class Down_part_rotation : MonoBehaviour
     private float step = 40f;
     public Direction dir = Direction.FORWARD;
     public WheelState currentWheelState = WheelState.SOOS;
+    [SerializeField] GameObject gear;
 
-    public void RotateDownPart(float angle)
+    public void RotateDownPart(float angle, bool isGear = false)
     {
-        StartCoroutine(Rotate(angle));
+        StartCoroutine(Rotate(angle, isGear));
     }
 
-    public IEnumerator Rotate(float angle)
+    public IEnumerator Rotate(float angle, bool isGear)
     {
-        float temp = angle >= 0 ? 1 : -1;
+        float signed = angle >= 0 ? 1 : -1;
         isRotate = true;
         float prevState = gameObject.transform.localEulerAngles.y;
 
         for (float t = 0; t <= Mathf.Abs(angle); t += step * Time.deltaTime)
         {
-            gameObject.transform.Rotate(step * temp * Time.deltaTime, 0f, 0f);
+            float temp = step * signed * Time.deltaTime;
+            gameObject.transform.Rotate(temp, 0f, 0f);
+            if (isGear)
+            {
+                gear.transform.Rotate(0f, temp, 0f);
+            }
             yield return null;
         }
         isRotate = false;
