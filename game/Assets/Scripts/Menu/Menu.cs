@@ -24,7 +24,7 @@ public partial class Menu : MonoBehaviour
 
     public void onClickTest()
     {
-        SceneManager.LoadScene("Flat");
+        SceneManager.LoadScene("Testing");
     }
 
     public void onClickExit()

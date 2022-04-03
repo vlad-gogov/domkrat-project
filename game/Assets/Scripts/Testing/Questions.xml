@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfQuizQuestion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <QuizQuestion>
+    <name />
+    <hideFlags>None</hideFlags>
+    <Question>Положение колесного хода домкратов при движении по ровной поверхности</Question>
+	<QuestionImage></QuestionImage>
+    <Answers>
+      <string>Передние домкраты в рояльном положении с отключенными тормозными механизмами и фиксаторами поворота колесного хода. На задних домкратах колесные ходы в любом положении с отключенными тормозными механизмами и с включенными фиксаторами поворота колес.</string>
+      <string>На передних домкратах в соосном положении с включенными фиксаторами поворота колес. На задних домкратах колесные ходы в соосном положении с включенными фиксаторами поворота колес. На передних домкратах тормозные механизмы должны быть включены, а на задних выключенным.</string>
+      <string>На передних домкратах в соосном положении с включенными фиксаторами поворота колес. На задних домкратах колесные ходы в соосном положении с включенными фиксаторами поворота колес. На передних домкратах тормозные механизмы должны быть отключенны, а на задних включены.</string>
+      <string>Передние домкраты в в любом положении с отключенными тормозными механизмами и фиксаторами поворота колесного хода. На задних домкратах колесные ходы в любом положении с отключенными тормозными механизмами и с включенными фиксаторами поворота колес.</string>
+    </Answers>
+	<Type>0</Type>
+    <CorrectAnswer>0</CorrectAnswer>
+    <Asked>false</Asked>
+  </QuizQuestion>
+  <QuizQuestion>
+  	<name />
+  	<hideFlags>None</hideFlags>
+  	<Question>Какое давление должно быть в камерах колес домкрата?</Question>
+	<QuestionImage></QuestionImage>
+  	<Answers>
+  		<string>784,5+4,9 кПа</string>
+  		<string>678,5+6,7 кПа</string>
+  		<string>739,5+7,7 кПа</string>
+  		<string>712,5+3,3 кПа</string>
+  	</Answers>
+	<Type>0</Type>
+  	<CorrectAnswer>0</CorrectAnswer>
+  	<Asked>false</Asked>
+  </QuizQuestion>
+	<QuizQuestion>
+		<name />
+		<hideFlags>None</hideFlags>
+		<Question>Какое положение колес сейчас на домкрате?</Question>
+		<QuestionImage>.//Assets//Scripts//Testing//Images//1.png</QuestionImage>
+		<Answers>
+			<string>Рояльное</string>
+			<string>Соосное</string>
+		</Answers>
+		<Type>0</Type>
+		<CorrectAnswer>0</CorrectAnswer>
+		<Asked>false</Asked>
+	</QuizQuestion>
+	<QuizQuestion>
+		<name />
+		<hideFlags>None</hideFlags>
+		<Question>Составьте верную последовательность подключение тормозного механизма</Question>
+		<QuestionImage></QuestionImage>
+		<Answers>
+			<string>Вставить штырь привода в кнопку тормозного механизма.</string>
+			<string>Нажать на рукоятку тормоза и прижать ее к корпусу.</string>
+			<string>Произвести торможение, опустив рукоятку тормоза.</string>
+		</Answers>
+		<Type>1</Type>
+		<CorrectAnswer>012</CorrectAnswer>
+		<Asked>false</Asked>
+	</QuizQuestion>
+	
+</ArrayOfQuizQuestion>
