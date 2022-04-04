@@ -13,7 +13,8 @@ public class PlayerRay : MonoBehaviour
     private LayerMask Interaction;
     private LayerMask PlaceForItem;
     private Selectable selectable;
-    private MovingSelect moving;
+    MovingSelect mv_obj;
+    private List<MovingSelect> moving = new List<MovingSelect>();
     private PlayerMove PlayerMove;
     private PlaceForSet placeForSet;
     public BoxCollider wall;
@@ -32,9 +33,19 @@ public class PlayerRay : MonoBehaviour
         selectable.Deselect();
         selectable = null;
         _selectedObject = null;
-        moving = null;
+        moving.Remove(mv_obj);
         PlayerMove.isDomkrat = false;
         wall.enabled = false;
+    }
+
+    public void Add(MovingSelect movable)
+    {
+        moving.Add(movable);
+    }
+
+    public void Remove(MovingSelect movable)
+    {
+        moving.Remove(movable);
     }
 
     void Update()
@@ -88,9 +99,9 @@ public class PlayerRay : MonoBehaviour
             }
         }
 
-        if (moving)
+        foreach (var movable in moving)
         {
-            moving.Moving();
+            movable.Moving();
         }
 
         //selectable = null;
@@ -108,7 +119,8 @@ public class PlayerRay : MonoBehaviour
                 if (hitObject.layer == PickUp)
                 {
                     _selectedObject = selectable.GetSelectObject();
-                    moving = _selectedObject.GetComponent<MovingSelect>();
+                    mv_obj = _selectedObject.GetComponent<MovingSelect>();
+                    moving.Add(mv_obj);
                     Singleton.Instance.UIManager.ClearEnterText();
                     if (_selectedObject.tag == "Domkrat")
                     {

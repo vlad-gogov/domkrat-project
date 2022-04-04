@@ -34,6 +34,7 @@ public class Domkrat : MonoBehaviour
 
     void Start()
     {
+        boxHand.enabled = true;
         GameObject child = gameObject.transform.GetChild(0).gameObject;
         up_part = child.GetComponent<Animator>();
         move_mech = child.transform.GetChild(0).gameObject.GetComponent<Animator>();

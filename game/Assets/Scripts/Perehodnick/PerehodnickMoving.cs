@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PerehodnickMoving : MovingSelect
 {
-
     public override void Moving()
     {
         transform.position = Pointer.transform.position;
