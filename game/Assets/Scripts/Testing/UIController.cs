@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
@@ -19,6 +20,15 @@ public class UIController : MonoBehaviour
     private GameObject correctAnswerPopup;
     [SerializeField]
     private GameObject wrongAnswerPopup;
+    private bool isExit = false;
+
+    void Update()
+    {
+        if (isExit && Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Menu");
+        }
+    }
 
     public void SetupUIForQuestion(QuizQuestion question)
     {
@@ -66,6 +76,7 @@ public class UIController : MonoBehaviour
         {
             endGame.text = "Вы сдали.";
         }
+        isExit = true;
     }
 
     public void HandleSubmittedAnswer(bool isCorrect)
