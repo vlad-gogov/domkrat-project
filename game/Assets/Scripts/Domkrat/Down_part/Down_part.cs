@@ -11,6 +11,8 @@ public class Down_part : MonoBehaviour
     public Makes curPosition;
     public Rotate_fixator fixator;
 
+    BoxCollider boxFixator;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -18,6 +20,8 @@ public class Down_part : MonoBehaviour
         // should always be `DOWN` at Start
         curPosition = Makes.DOWN;
         rotation_down_part = transform.GetChild(transform.childCount - 1).GetComponent<Down_part_rotation>();
+        boxFixator = fixator.gameObject.GetComponent<BoxCollider>();
+        boxFixator.enabled = false;
     }
 
     public bool Up(bool isTechStand = false)
@@ -68,6 +72,11 @@ public class Down_part : MonoBehaviour
 
     void Update()
     {
+        if (!boxFixator.enabled && Singleton.Instance.StateManager.GetState() == State.CONFIG_DOMKRAT_TO_FORWARD)
+        {
+            boxFixator.enabled = true;
+        }
+
         if (curPosition == Makes.UP)
         {
 
