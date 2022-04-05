@@ -2,13 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Это надо опрокинуть в домкрат и проверять при перемещении
+/// </summary>
+
 public class TormozSwitcher : Selectable
 {
     Animator downPartAnim;
+    BoxCollider boxCol;
 
     public void Start()
     {
         downPartAnim = transform.parent.GetComponent<Animator>();
+        boxCol = gameObject.GetComponent<BoxCollider>();
+        boxCol.enabled = false;
+    }
+
+    void Update()
+    {
+        if (Singleton.Instance.StateManager.GetState() == NameState.CHECK_BREAK_MECHANISM)
+        {
+            boxCol.enabled = true;
+        }
     }
 
     public override void Deselect()
@@ -22,11 +37,11 @@ public class TormozSwitcher : Selectable
     {
         if (!isSelected)
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы активировать пипку тормоза");
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы включить тормозной механизм");
         }
         else
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы деактивировать пипку тормоза");
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы отключить тормозной механзим");
         }
     }
 

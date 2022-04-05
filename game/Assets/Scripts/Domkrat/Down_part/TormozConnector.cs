@@ -8,21 +8,32 @@ public class TormozConnector : Selectable
 
     [SerializeField] GameObject pointForTormoz;
     [SerializeField] GameObject pointerToAdapter;
-    DomkratMoving domkratMove;
+    Down_part down_part;
 
-    bool isForwardWithoutStop, isBackWithoutStop, isForwardWithStop, isBackdWithStop;
+    DomkratMoving domkratMove;
+    BoxCollider boxCol;
+
+    TormozMoving tormozMoving;
+    Tormoz tormoz;
+
+    bool isForwardWithoutStop = false, isBackWithoutStop = false, isForwardWithStop = false, isBackdWithStop = false;
 
     public void Start()
     {
         type = transform.parent.parent.parent.parent.parent.gameObject.GetComponent<Domkrat>().type;
         domkratMove = gameObject.transform.parent.parent.parent.parent.parent.GetComponent<DomkratMoving>();
-        Debug.Log("MOVE: " + domkratMove);
+        tormozMoving = Tormoz.tormoz.gameObject.GetComponent<TormozMoving>();
+        tormoz = Tormoz.tormoz.GetComponent<Tormoz>();
+        boxCol = GetComponent<BoxCollider>();
+        boxCol.enabled = false;
+        down_part = gameObject.transform.parent.parent.parent.parent.GetComponent<Down_part>();
     }
 
     public override void Deselect()
     {
         Debug.Log("Deselecting pipka...");
-        Tormoz.tormoz.gameObject.GetComponent<TormozMoving>().Disconnect(type);
+        tormozMoving.Disconnect(type);
+        tormoz.gameObject.SetActive(false);
         isSelected = false;
     }
 
@@ -45,14 +56,31 @@ public class TormozConnector : Selectable
 
     public override void Select()
     {
-        GameObject tormz = Tormoz.tormoz.gameObject;
-        tormz.GetComponent<TormozMoving>().ConnectTo(pointerToAdapter, type, pointForTormoz);
-        isSelected = true;
+        if (Singleton.Instance.StateManager.GetState() == NameState.CHECK_BREAK_MECHANISM)
+        {
+            if (down_part.curPosition == Makes.UP)
+            {
+                if (!tormoz.isUse)
+                {
+                    tormoz.gameObject.SetActive(true);
+                    tormozMoving.ConnectTo(pointerToAdapter, type, pointForTormoz);
+                    isSelected = true;
+                }
+                else
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормозной механизм уже занят, отключите его от другого домкрата", Weight = ErrorWeight.MINOR });
+                }
+            }
+            else
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Необходимо вывесить домкрат перед подключением тормозного механизма", Weight = ErrorWeight.LOW });
+            }
+        }
     }
 
     void Update()
     {
-        if (true)//Singleton.Instance.StateManager.GetState() == NameState.CHECK_BREAK_MECHANISM)
+        if (Singleton.Instance.StateManager.GetState() == NameState.CHECK_BREAK_MECHANISM)
         {
             if (isSelected) 
             {
@@ -85,14 +113,13 @@ public class TormozConnector : Selectable
                     }
                 }
             }
-            else
+            if (isBackdWithStop && isForwardWithStop && isBackWithoutStop && isForwardWithoutStop && !isSelected)
             {
-                // Подключите тормоз
+                Singleton.Instance.StateManager.NextState();
+                tormozMoving.Disconnect(type);
+                tormoz.gameObject.SetActive(false);
+                boxCol.enabled = false;
             }
-        }
-        if (isBackdWithStop && isForwardWithStop && isBackWithoutStop && isForwardWithoutStop)
-        {
-            Debug.Log("Проверка тормозного механизма завершена");
         }
     }
 }

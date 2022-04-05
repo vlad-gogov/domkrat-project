@@ -8,12 +8,12 @@ public class Tormoz : MonoBehaviour
 
     public TormozMovingHand tormozMovingHand;
 
-    // in Progress
-    //public bool isUse = false;
+    public bool isUse = false;
 
     void Start()
     {
         tormoz = this;
+        tormoz.gameObject.SetActive(false);
     }
     
 

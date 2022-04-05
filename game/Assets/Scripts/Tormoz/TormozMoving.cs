@@ -21,7 +21,7 @@ public class TormozMoving : MovingSelect
 
         rightAdapter = transform.GetChild(0).GetChild(2).gameObject;
         defaultRightAdapter = rightAdapter.transform.position;
-        rightWire = transform.GetChild(0).GetChild(3).GetComponent<WireBuilder.Wire>();
+        rightWire = transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<WireBuilder.Wire>();
     }
 
     public override void Moving()

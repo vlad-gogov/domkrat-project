@@ -14,11 +14,13 @@ public enum NameState
     UP_TPK = 5,
     CHECK_BREAK_MECHANISM = 6,
     // Flat
-    MOVE_TPK_FLAT = 7,
+    MOVE_TPK_FLAT = 7, // Перемещение в точку
     // Up
     LOAD_TPK = 8,
     // Down
-    ROLLING_TPK = 9
+    CHECK_CONFIG = 9,
+    SET_TORMOZ = 10,
+    ROLLING_TPK = 11
 }
 
 public struct State
@@ -90,7 +92,7 @@ public class StateManager : MonoBehaviour
         foreach (GameObject obj in ObjDomkrats)
         {
             domkrats.Add(obj.GetComponent<Domkrat>());
-            obj.SetActive(true);
+            obj.SetActive(false);
         }
     }
 
@@ -106,8 +108,8 @@ public class StateManager : MonoBehaviour
         states.Add(new State() { state = NameState.SET_DOMKRATS, disctiption = "Подкатите и установите домкраты" });
         states.Add(new State() { state = NameState.CHECK_TURING_MACHANISM, disctiption = "Проверьте работу механизма поворота домкрата и верните ручку домкрата в исходное положение" });
         states.Add(new State() { state = NameState.UP_TPK, disctiption = "Поднимите ТПК" });
+        states.Add(new State() { state = NameState.CHECK_BREAK_MECHANISM, disctiption = "Проверьте работу тормозного механизма и отключите тормоз" });
 
-        //states.Add(State.CHECK_BREAK_MECHANISM, "Проверьте работу тормозного механизма");
         LoadTutorial();
 
         if (typeArea == TypeArea.FLAT)

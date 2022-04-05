@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,11 +21,11 @@ public class TormozMovingHand : Selectable
     {
         if (!isSelected)
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтоб прижать ручку к корпусу");
+            Singleton.Instance.UIManager.SetEnterText("РќР°Р¶РјРёС‚Рµ Р›РљРњ, С‡С‚РѕР± РїСЂРёР¶Р°С‚СЊ СЂСѓС‡РєСѓ Рє РєРѕСЂРїСѓСЃСѓ");
         }
         else
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтоб отжать ручку от корпуса");
+            Singleton.Instance.UIManager.SetEnterText("РќР°Р¶РјРёС‚Рµ Р›РљРњ, С‡С‚РѕР± РѕС‚Р¶Р°С‚СЊ СЂСѓС‡РєСѓ РѕС‚ РєРѕСЂРїСѓСЃР°");
         }
     }
 
