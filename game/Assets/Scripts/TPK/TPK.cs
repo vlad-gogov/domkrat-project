@@ -67,7 +67,7 @@ public class TPK : MonoBehaviour
             col.enabled = flag;
         }
         tpkObj.GetComponent<Rigidbody>().useGravity = flag;
-        GetComponent<BoxCollider>().enabled = !flag;
+        // GetComponent<BoxCollider>().enabled = !flag;
         GetComponent<Rigidbody>().useGravity = !flag;
     }
 

@@ -79,7 +79,8 @@ public class TormozConnector : Selectable
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Необходимо вывесить домкрат перед подключением тормозного механизма", Weight = ErrorWeight.LOW });
             }
         }
-        else if (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_DOWN)
+        else
+        // else if (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_DOWN)
         {
             tormoz.gameObject.SetActive(true);
             tormozMoving.ConnectTo(pointerToAdapter, type, pointForTormoz);
