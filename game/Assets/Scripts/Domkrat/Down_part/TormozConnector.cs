@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TormozConnector : Selectable
 {
-    bool isActivated = false;
     DomkratType type;
 
     public void Start()
@@ -15,12 +14,13 @@ public class TormozConnector : Selectable
     public override void Deselect()
     {
         Debug.Log("Deselecting pipka...");
+        Tormoz.tormoz.gameObject.GetComponent<TormozMoving>().Disconnect(type);
         isSelected = false;
     }
 
     public override void GetInfoMouse()
     {
-        if (!isActivated)
+        if (!isSelected)
         {
             Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы подключить тормоз");
         }
@@ -37,17 +37,7 @@ public class TormozConnector : Selectable
 
     public override void Select()
     {
-        if (!isActivated)
-        {
-            Tormoz.tormoz.gameObject.GetComponent<TormozMoving>().ConnectTo(gameObject, type);
-            isActivated = true;
-        }
-        else
-        {
-            Tormoz.tormoz.gameObject.GetComponent<TormozMoving>().Disconnect(type);
-            isActivated = false;
-        }
-        
+        Tormoz.tormoz.gameObject.GetComponent<TormozMoving>().ConnectTo(gameObject, type);
         isSelected = true;
     }
 }

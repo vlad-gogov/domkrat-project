@@ -13,7 +13,12 @@ public enum NameState
     CHECK_TURING_MACHANISM = 4,
     UP_TPK = 5,
     CHECK_BREAK_MECHANISM = 6,
-    MOVE_TPK = 7,
+    // Flat
+    MOVE_TPK_FLAT = 7,
+    // Up
+    LOAD_TPK = 8,
+    // Down
+    ROLLING_TPK = 9
 }
 
 public struct State
@@ -107,7 +112,7 @@ public class StateManager : MonoBehaviour
 
         if (typeArea == TypeArea.FLAT)
         {
-            states.Add(new State() { state = NameState.MOVE_TPK, disctiption = "Переместите ТПК" });
+            states.Add(new State() { state = NameState.MOVE_TPK_FLAT, disctiption = "Переместите ТПК" });
         }
         else if (typeArea == TypeArea.UP)
         {

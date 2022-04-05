@@ -5,24 +5,22 @@ using UnityEngine;
 public class TormozSwitcher : Selectable
 {
     Animator downPartAnim;
-    GameObject tormozConnector;
-    bool isActivated = false;
 
     public void Start()
     {
         downPartAnim = transform.parent.GetComponent<Animator>();
-        tormozConnector = transform.parent.GetChild(3).GetChild(0).GetChild(0).gameObject;
     }
 
     public override void Deselect()
     {
-        Debug.Log("Deselecting pipka...");
+        Debug.Log("disable PIPKA!!!");
+        downPartAnim.SetTrigger("disableTormozPipka");
         isSelected = false;
     }
 
     public override void GetInfoMouse()
     {
-        if (!isActivated)
+        if (!isSelected)
         {
             Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы активировать пипку тормоза");
         }
@@ -39,20 +37,8 @@ public class TormozSwitcher : Selectable
 
     public override void Select()
     {
-        if (!isActivated)
-        {
-            Debug.Log("enable PIPKA!!!");
-            downPartAnim.SetTrigger("enableTormozPipka");
-            tormozConnector.GetComponent<BoxCollider>().enabled = true;
-            isActivated = true;
-        }
-        else
-        {
-            Debug.Log("disable PIPKA!!!");
-            downPartAnim.SetTrigger("disableTormozPipka");
-            tormozConnector.GetComponent<BoxCollider>().enabled = false;
-            isActivated = false;
-        }
+        Debug.Log("enable PIPKA!!!");
+        downPartAnim.SetTrigger("enableTormozPipka");
         isSelected = true;
     }
 }

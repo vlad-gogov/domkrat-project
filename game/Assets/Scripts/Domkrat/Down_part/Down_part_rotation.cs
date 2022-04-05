@@ -23,6 +23,12 @@ public class Down_part_rotation : MonoBehaviour
     public Direction dir = Direction.FORWARD;
     public WheelState currentWheelState = WheelState.SOOS;
     [SerializeField] GameObject gear;
+    [SerializeField] BoxCollider tormozConnector;
+
+    void Start()
+    {
+        tormozConnector.enabled = false;
+    }
 
     public void RotateDownPart(float angle, bool isGear = false, float k = 1.0f)
     {
@@ -74,5 +80,10 @@ public class Down_part_rotation : MonoBehaviour
                 dir = Direction.LEFT;
             }
         }
+    }
+
+    public void SwitchBoxColliderTormozConnector()
+    {
+        tormozConnector.enabled = !tormozConnector.enabled;
     }
 }
