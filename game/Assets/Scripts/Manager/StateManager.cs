@@ -79,7 +79,7 @@ public class StateManager : MonoBehaviour
         foreach (GameObject obj in ObjDomkrats)
         {
             domkrats.Add(obj.GetComponent<Domkrat>());
-            obj.SetActive(false);
+            obj.SetActive(true);
         }
     }
 
@@ -138,7 +138,7 @@ public class StateManager : MonoBehaviour
             return;
         }
         curState = (State)((int)curState + 1);
-        Debug.LogError(curState);
+        Debug.Log(curState);
         if (curState == State.SET_DOMKRATS)
         {
             NotifyAllDomkrats(curState);
