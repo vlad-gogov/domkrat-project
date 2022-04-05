@@ -155,6 +155,12 @@ public class StateManager : MonoBehaviour
             return;
         }
         Debug.Log(states[indexCurState].state);
+
+        if (states[indexCurState].state > NameState.CHECK_BREAK_MECHANISM)
+        {
+            TPK.TPKObj.SwitchMovingThings(true);
+        }
+
         if (states[indexCurState].state == NameState.SET_DOMKRATS)
         {
             NotifyAllDomkrats(states[indexCurState].state);
