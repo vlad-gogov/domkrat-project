@@ -25,6 +25,13 @@ public class TPKMoving : MonoBehaviour
     {
         Moving();
 
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            StartCoroutine(MoveTpk(TPKDirection.FORWARD));
+            return;
+        }
+       
+
         if (domkratMovings.Count == 0 && Singleton.Instance.StateManager.GetState() == NameState.UP_TPK)
         {
             foreach (var domkrat in TPK.TPKObj.attachedDomkrats)

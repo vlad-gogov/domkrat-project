@@ -11,6 +11,7 @@ TagManager:
   - SetRuchka
   - SetDomkrat
   - SetPerehodnickDomkrat
+  - Tpk2
   layers:
   - Default
   - TransparentFX
