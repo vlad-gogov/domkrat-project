@@ -25,7 +25,7 @@ public class TPKMoving : MonoBehaviour
     {
         Moving();
 
-        if (domkratMovings.Count == 0 && Singleton.Instance.StateManager.GetState() == State.UP_TPK)
+        if (domkratMovings.Count == 0 && Singleton.Instance.StateManager.GetState() == NameState.UP_TPK)
         {
             foreach (var domkrat in TPK.TPKObj.attachedDomkrats)
                 domkratMovings.Add(domkrat.GetComponent<DomkratMoving>());

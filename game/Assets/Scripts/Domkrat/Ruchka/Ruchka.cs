@@ -42,7 +42,7 @@ public class Ruchka : Selectable
 
     void Update()
     {
-        if (Singleton.Instance.StateManager.GetState() == State.CHECK_TURING_MACHANISM)
+        if (Singleton.Instance.StateManager.GetState() == NameState.CHECK_TURING_MACHANISM)
         {
             if (!push.enabled)
             {
@@ -56,7 +56,7 @@ public class Ruchka : Selectable
                 isCount = true;
             }
         }
-        else if (!isCount && Singleton.Instance.StateManager.GetState() > State.CHECK_TURING_MACHANISM)
+        else if (!isCount && Singleton.Instance.StateManager.GetState() > NameState.CHECK_TURING_MACHANISM)
         {
             if (curPosition == PositionRuchka.UP)
             {
@@ -135,7 +135,7 @@ public class Ruchka : Selectable
         {
             if (curPosition == PositionRuchka.UP)
             {
-                if (Singleton.Instance.StateManager.GetState() == State.CHECK_TURING_MACHANISM)
+                if (Singleton.Instance.StateManager.GetState() == NameState.CHECK_TURING_MACHANISM)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Перед подъемом ТПК необходимо проверить поворотный механизм домкрата", Weight = ErrorWeight.LOW });
                     return;

@@ -72,7 +72,7 @@ public class Down_part : MonoBehaviour
 
     void Update()
     {
-        if (!boxFixator.enabled && Singleton.Instance.StateManager.GetState() == State.CONFIG_DOMKRAT_TO_FORWARD)
+        if (!boxFixator.enabled && Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK)
         {
             boxFixator.enabled = true;
         }

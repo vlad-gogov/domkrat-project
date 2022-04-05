@@ -130,13 +130,13 @@ public class Domkrat : MonoBehaviour
         }
     }
 
-    public void Notify(State state)
+    public void Notify(NameState state)
     {
-        if (state == State.SET_DOMKRATS)
+        if (state == NameState.SET_DOMKRATS)
         {
             boxHand.enabled = true;
         }
-        else if (state == State.CHECK_DOMKRATS)
+        else if (state == NameState.CHECK_DOMKRATS)
         {
             gameObject.SetActive(true);
         }

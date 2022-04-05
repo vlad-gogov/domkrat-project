@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public enum State
+public enum NameState
 {
     DEFAULT = 0,
     SET_PEREHODNICK = 1,
@@ -12,8 +12,14 @@ public enum State
     SET_DOMKRATS = 3,
     CHECK_TURING_MACHANISM = 4,
     UP_TPK = 5,
-    CONFIG_DOMKRAT_TO_FORWARD = 6,
-    CONFIG_DOMKRAT_TO_RIGHT = 7
+    CHECK_BREAK_MECHANISM = 6,
+    MOVE_TPK = 7,
+}
+
+public struct State
+{
+    public NameState state;
+    public string disctiption;
 }
 
 public enum GameMode
@@ -60,9 +66,9 @@ public class StateManager : MonoBehaviour
     private List<Domkrat> domkrats = new List<Domkrat>();
 
     public bool OnPause { get; private set; }
-    private Dictionary<State, string> states = new Dictionary<State, string>();
-    Dictionary<State, string> tutorials = new Dictionary<State, string>();
-    private State curState;
+    private List<State> states = new List<State>();
+    Dictionary<NameState, string> tutorials = new Dictionary<NameState, string>();
+    private int indexCurState;
     // Переменная, проверяющая завершили ли мы сценарий
     bool finished = false;
 
@@ -89,21 +95,19 @@ public class StateManager : MonoBehaviour
         typeArea = CrossScenesStorage.typeArea;
         Debug.Log($"Current mode is: {gameMode} | {typeArea}");
 
-        states.Add(State.DEFAULT, "");
-        states.Add(State.SET_PEREHODNICK, "Установите переходники на пакет");
+        states.Add(new State() { state = NameState.DEFAULT, disctiption = "" });
+        states.Add(new State() { state = NameState.SET_PEREHODNICK, disctiption = "Установите переходники на пакет" });
+        states.Add(new State() { state = NameState.CHECK_DOMKRATS, disctiption = "Выполнить проверку подъема и опускание домкарата в разных режимах" });
+        states.Add(new State() { state = NameState.SET_DOMKRATS, disctiption = "Подкатите и установите домкраты" });
+        states.Add(new State() { state = NameState.CHECK_TURING_MACHANISM, disctiption = "Проверьте работу механизма поворота домкрата и верните ручку домкрата в исходное положение" });
+        states.Add(new State() { state = NameState.UP_TPK, disctiption = "Поднимите ТПК" });
 
-        states.Add(State.CHECK_DOMKRATS, "Выполнить проверку подъема и опускание домкарата в разных режимах");
-        states.Add(State.SET_DOMKRATS, "Подкатите и установите домкраты");
-        
-        states.Add(State.CHECK_TURING_MACHANISM, "Проверьте работу механизма поворота домкрата и верните ручку домкрата в исходное положение");
-        
-        states.Add(State.UP_TPK, "Поднимите ТПК");
+        //states.Add(State.CHECK_BREAK_MECHANISM, "Проверьте работу тормозного механизма");
         LoadTutorial();
 
         if (typeArea == TypeArea.FLAT)
         {
-            states.Add(State.CONFIG_DOMKRAT_TO_FORWARD, "Установите домкарты для перемещения вперед и нажмите стрелку вверх");
-            states.Add(State.CONFIG_DOMKRAT_TO_RIGHT, "Установите домкарты для перемещения вправо и нажмите стрелку вправо");
+            states.Add(new State() { state = NameState.MOVE_TPK, disctiption = "Переместите ТПК" });
         }
         else if (typeArea == TypeArea.UP)
         {
@@ -114,12 +118,12 @@ public class StateManager : MonoBehaviour
 
         }
 
-        curState = State.DEFAULT;
+        indexCurState = 0;
 
         if ( gameMode == GameMode.FREEPLAY)
         {
-            NotifyAllDomkrats(State.CHECK_DOMKRATS);
-            NotifyAllDomkrats(State.SET_DOMKRATS);
+            NotifyAllDomkrats(NameState.CHECK_DOMKRATS);
+            NotifyAllDomkrats(NameState.SET_DOMKRATS);
             // Переходим в самое последнее состояние, чтобы открыть все части для свободной игры
             for (int i = 0; i < states.Count - 1; i++)
             {
@@ -132,16 +136,21 @@ public class StateManager : MonoBehaviour
 
     public void NextState()
     {
+        indexCurState++;
+        if (indexCurState >= states.Count)
+        {
+            finished = true;
+        }
+
         if (finished)
         {
             Debug.Log("Calling 'NextState' when 'finished' flag is set to 'true', ignoring this call...");
             return;
         }
-        curState = (State)((int)curState + 1);
-        Debug.Log(curState);
-        if (curState == State.SET_DOMKRATS)
+        Debug.Log(states[indexCurState].state);
+        if (states[indexCurState].state == NameState.SET_DOMKRATS)
         {
-            NotifyAllDomkrats(curState);
+            NotifyAllDomkrats(states[indexCurState].state);
         }
         if (gameMode == GameMode.TRAIN)
         {
@@ -151,8 +160,7 @@ public class StateManager : MonoBehaviour
 
     public void ChangeTextHelper()
     {
-        int index = (int)curState;
-        Singleton.Instance.UIManager.SetHelperText(string.Copy(SafeGetFromDict(states)));
+        Singleton.Instance.UIManager.SetHelperText(string.Copy(states[indexCurState].disctiption));
         // InitialStateHack();
         Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
     }
@@ -164,7 +172,7 @@ public class StateManager : MonoBehaviour
         counterMistaks += (int)error.Weight;
     }
 
-    void NotifyAllDomkrats(State state)
+    void NotifyAllDomkrats(NameState state)
     {
         foreach(Domkrat domkrat in domkrats)
         {
@@ -178,7 +186,7 @@ public class StateManager : MonoBehaviour
         {
             NextState();
             countPerehodnick++;
-            NotifyAllDomkrats(curState);
+            NotifyAllDomkrats(states[indexCurState].state);
         }
         if (countDomkrats == 4)
         {
@@ -187,9 +195,9 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    public State GetState()
+    public NameState GetState()
     {
-        return curState;
+        return states[indexCurState].state;
     }
 
     public void Pause()
@@ -216,24 +224,24 @@ public class StateManager : MonoBehaviour
         string[] tutorialSteps = tutorial.Split(new string[] { "<br>" }, StringSplitOptions.None);
         for (int i=0; i<tutorialSteps.Length; i++)
         {
-            tutorials[(State)i] = tutorialSteps[i];
+            tutorials[(NameState)i] = tutorialSteps[i];
         }
     }
 
     public void InitialStateHack()
     {
-        if (curState == State.DEFAULT)
+        if (states[indexCurState].state == NameState.DEFAULT)
         {
             NextState();
         }
     }
 
-    public string SafeGetFromDict(Dictionary<State, string> dict)
+    public string SafeGetFromDict(Dictionary<NameState, string> dict)
     {
         string value;
-        if (!dict.TryGetValue(curState, out value))
+        if (!dict.TryGetValue(states[indexCurState].state, out value))
         {
-            value = $"Для состояния {curState} ещё не написаны подсказки...";
+            value = $"Для состояния {states[indexCurState].state} ещё не написаны подсказки...";
         }
         return value;
     }
