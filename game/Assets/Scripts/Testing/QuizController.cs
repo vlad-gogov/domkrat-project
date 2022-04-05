@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,7 +50,7 @@ public class QuizController : MonoBehaviour
             {
                 errors_cout++;
             } 
-            uiController.HandleSubmittedAnswer(isCorrect);
+            uiController.HandleSubmittedAnswer(isCorrect, Int32.Parse(currentQuestion.CorrectAnswer), answerNumber);
 
             StartCoroutine(ShowNextQuestionAfterDelay());
         } else
@@ -70,7 +71,7 @@ public class QuizController : MonoBehaviour
                 {
                     errors_cout++;
                 }
-                uiController.HandleSubmittedAnswer(isCorrect);
+                uiController.HandleSubmittedAnswer(isCorrect, currentQuestion.CorrectAnswer, answer);
 
                 StartCoroutine(ShowNextQuestionAfterDelay());
             }
@@ -82,6 +83,7 @@ public class QuizController : MonoBehaviour
     {
         currentSeqLenght = 0;
         answer = null;
+        //uiController.ShowCorrectButton(Int32.Parse(currentQuestion.CorrectAnswer));
         yield return new WaitForSeconds(delayBetweenQuestions);
         if (count_question == questionCollection.allQuestions.Length)
         {
