@@ -14,22 +14,25 @@ public class TormozConnector : Selectable
     Domkrat batya;
     BoxCollider boxCol;
 
-    TormozMoving tormozMoving;
-    Tormoz tormoz;
-
     bool isForwardWithoutStop = false, isBackWithoutStop = false, isForwardWithStop = false, isBackdWithStop = false;
 
     public void Start()
     {
         batya = transform.parent.parent.parent.parent.parent.gameObject.GetComponent<Domkrat>();
-        type = transform.parent.parent.parent.parent.parent.gameObject.GetComponent<Domkrat>().type;
+        type = batya.type;
         domkratMove = gameObject.transform.parent.parent.parent.parent.parent.GetComponent<DomkratMoving>();
-        tormozMoving = Tormoz.tormoz.gameObject.GetComponent<TormozMoving>();
-        tormoz = Tormoz.tormoz.GetComponent<Tormoz>();
         boxCol = GetComponent<BoxCollider>();
-        boxCol.enabled = false;
+        boxCol.enabled = true;
         down_part = gameObject.transform.parent.parent.parent.parent.GetComponent<Down_part>();
+        if (down_part == null)
+        {
+            Debug.LogError("pizdec");
+        }
     }
+
+    // так надо: инача в некоторых сценах ломается порядок конструирования объектов
+    TormozMoving tormozMoving { get => Tormoz.tormoz.gameObject.GetComponent<TormozMoving>(); }
+    Tormoz tormoz { get => Tormoz.tormoz.GetComponent<Tormoz>(); }
 
     public override void Deselect()
     {
