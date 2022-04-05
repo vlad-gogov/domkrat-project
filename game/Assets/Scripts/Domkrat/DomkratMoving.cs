@@ -22,16 +22,39 @@ public class DomkratMoving : MovingSelect
     {
         Vector3 position = new Vector3(Pointer.transform.position.x, transform.position.y, Pointer.transform.position.z);
         transform.position = position;
-        RotateWheel(Input.GetAxis("Vertical") * speedRotation * Time.deltaTime);
+        RotateWheelForUpdate(Input.GetAxis("Vertical") * speedRotation * Time.deltaTime);
     }
 
-    public void RotateWheel(float angle, bool backWheel = true)
+    public void RotateWheelForUpdate(float angle, bool backWheel = true)
     {
         LeftWheel.transform.Rotate(Vector3.up, -angle);
         RightWheel.transform.Rotate(Vector3.up, -angle);
         if (backWheel)
         {
             BackWheel.transform.Rotate(Vector3.forward, angle);
+        }
+    }
+
+    public IEnumerator RotateWheel(float angle, float speed, bool isBack = false)
+    {
+        float signed = angle >= 0 ? 1 : -1;
+
+        for (float t = 0; t <= Mathf.Abs(angle); t += speed * Time.deltaTime)
+        {
+            float temp = speed * signed * Time.deltaTime;
+            LeftWheel.transform.Rotate(Vector3.up, -temp);
+            RightWheel.transform.Rotate(Vector3.up, -temp);
+            yield return null;
+        }
+        if (isBack)
+        {
+            for (float t = 0; t <= Mathf.Abs(angle); t += speed * Time.deltaTime)
+            {
+                float temp = speed * signed * Time.deltaTime;
+                LeftWheel.transform.Rotate(Vector3.up, temp);
+                RightWheel.transform.Rotate(Vector3.up, temp);
+                yield return null;
+            }
         }
     }
 }

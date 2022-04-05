@@ -5,6 +5,7 @@ using WireBuilder;
 
 public class TormozMoving : MovingSelect
 {
+    Vector3 defaultLeftAdapter, defaultRightAdapter;
     GameObject leftConnector, rightConnector;
     GameObject leftAdapter, rightAdapter;
     Wire leftWire, rightWire;
@@ -15,9 +16,11 @@ public class TormozMoving : MovingSelect
     {
         // мдаааа.....
         leftAdapter = transform.GetChild(0).GetChild(1).gameObject;
+        defaultLeftAdapter = leftAdapter.transform.position;
         leftWire = transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<WireBuilder.Wire>();
 
         rightAdapter = transform.GetChild(0).GetChild(2).gameObject;
+        defaultRightAdapter = rightAdapter.transform.position;
         rightWire = transform.GetChild(0).GetChild(3).GetComponent<WireBuilder.Wire>();
     }
 
@@ -29,34 +32,57 @@ public class TormozMoving : MovingSelect
         {
             leftAdapter.transform.position = leftConnector.transform.position;
             leftWire.UpdateWire(true);
-        } else
+        }
+        else
         {
             leftAdapter.transform.position = Pointer.transform.position;
         }
+
         if (rightConnector != null)
         {
             rightAdapter.transform.position = rightConnector.transform.position;
             rightWire.UpdateWire(true);
-        } else
+        }
+        else
         {
             rightAdapter.transform.position = Pointer.transform.position;
         }
     }
 
-    public void ConnectTo(GameObject obj, DomkratType orient)
+    public void ConnectTo(GameObject obj, DomkratType orient, GameObject pointToTormoz)
     {
+        // TODO
+        if (!isConnected)
+        {
+            NameState curState = Singleton.Instance.StateManager.GetState();
+            if (curState == NameState.ROLLING_TPK)
+            {
+                PlayerRay.playerRay.Add(Tormoz.tormoz.gameObject.GetComponent<TormozMoving>());
+            }
+            else // if (curState == NameState.CHECK_BREAK_MECHANISM)
+            {
+                isConnected = true;
+                Tormoz.tormoz.gameObject.transform.position = pointToTormoz.transform.position;
+                Tormoz.tormoz.gameObject.transform.rotation = pointToTormoz.transform.rotation;
+            }
+        }
+        else
+        {
+            // ЗАНЯТ УЖЕ
+        }
         if (orient == DomkratType.LEFT)
         {
             leftConnector = obj;
+            defaultLeftAdapter = leftAdapter.transform.position;
+            leftAdapter.transform.position = leftConnector.transform.position;
+            leftWire.UpdateWire(true);
         }
         else if (orient == DomkratType.RIGHT)
         {
             rightConnector = obj;
-        }
-        if (!isConnected)
-        {
-            PlayerRay.playerRay.Add(Tormoz.tormoz.gameObject.GetComponent<TormozMoving>());
-            isConnected = true;
+            defaultRightAdapter = rightAdapter.transform.position;
+            rightAdapter.transform.position = rightConnector.transform.position;
+            rightWire.UpdateWire(true);
         }
     }
 
@@ -65,10 +91,14 @@ public class TormozMoving : MovingSelect
         if (orient == DomkratType.LEFT)
         {
             leftConnector = null;
+            leftAdapter.transform.position = defaultLeftAdapter;
+            leftWire.UpdateWire(true);
         }
         else if (orient == DomkratType.RIGHT)
         {
             rightConnector = null;
+            rightAdapter.transform.position = defaultRightAdapter;
+            rightWire.UpdateWire(true);
         }
 
         if (leftConnector == null && rightConnector == null)

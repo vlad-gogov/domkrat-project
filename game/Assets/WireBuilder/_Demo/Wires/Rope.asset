@@ -15,7 +15,7 @@ MonoBehaviour:
   geometryType: 1
   pointsPerMeter: 0.63
   radialSegments: 5
-  weight: 6.39
+  weight: 5.79
   diameter: 0.01
   material: {fileID: 2100000, guid: 4b88254a8562f7744ad4539ab482eb74, type: 2}
   textureMode: 1

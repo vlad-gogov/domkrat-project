@@ -7,6 +7,22 @@ public class SwitchRoyal : Selectable
     public Up_part actualDomkratUpPart;
     public Down_part actualDomkratDownPart;
 
+    private BoxCollider box;
+
+    void Start()
+    {
+        box = gameObject.GetComponent<BoxCollider>();
+        box.enabled = false;
+    }
+
+    void Update()
+    {
+        if (!box.enabled && Singleton.Instance.StateManager.GetState() > NameState.CHECK_BREAK_MECHANISM)
+        {
+            box.enabled = true;
+        }
+    }
+
     public override void Deselect()
     {
         isSelected = false;

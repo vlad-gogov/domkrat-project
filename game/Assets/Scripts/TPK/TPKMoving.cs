@@ -34,22 +34,26 @@ public class TPKMoving : MonoBehaviour
 
     void Moving()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            curDirection = TPKDirection.FORWARD;
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_FLAT)
         {
-            curDirection = TPKDirection.RIGHT;
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                curDirection = TPKDirection.FORWARD;
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                curDirection = TPKDirection.RIGHT;
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                curDirection = TPKDirection.LEFT;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                curDirection = TPKDirection.BACK;
+            }
+            MovingTPK(curDirection);
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            curDirection = TPKDirection.LEFT;
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            curDirection = TPKDirection.BACK;
-        }
-        MovingTPK(curDirection);
     }
 
     void MovingTPK(TPKDirection tpkDir)
@@ -330,7 +334,7 @@ public class TPKMoving : MonoBehaviour
             }
             foreach (var domkrat in domkratMovings)
             {
-                domkrat.RotateWheel(speedRotation * Time.deltaTime, false);
+                domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
             }
             gameObject.transform.Translate(vector * shift * Time.deltaTime);
             yield return null;
