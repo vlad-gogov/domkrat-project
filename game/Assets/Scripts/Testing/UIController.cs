@@ -52,6 +52,7 @@ public class UIController : MonoBehaviour
         for (int i = 0; i < question.Answers.Length; i++)
         {
             answerButtons[i].GetComponentInChildren<Text>().text = question.Answers[i];
+            answerButtons[i].gameObject.GetComponent<Image>().color = Color.white;
             answerButtons[i].gameObject.SetActive(true);
         }
 
@@ -79,18 +80,22 @@ public class UIController : MonoBehaviour
         isExit = true;
     }
 
-    public void HandleSubmittedAnswer(bool isCorrect)
+    public void HandleSubmittedAnswer(bool isCorrect, int correctButton, int uncorrectButton)
     {
         ToggleAnswerButtons(false);
         ToggleImage(false);
-        if (isCorrect)
-        {
-            ShowCorrectAnswerPopup();
-        }
-        else
-        {
-            ShowWrongAnswerPopup();
-        }
+            if (!isCorrect)
+            {
+                ShowWrongAnswerPopup(uncorrectButton);
+            }
+            ShowCorrectButton(correctButton);
+    }
+
+    public void HandleSubmittedAnswer(bool isCorrect, string correctButton, int[] uncorrectButton)
+    {
+        ToggleAnswerButtons(false);
+        ToggleImage(false);
+        ShowCorrectButtonSeq(correctButton, uncorrectButton);
     }
 
     private void ToggleAnswerButtons(bool value)
@@ -111,13 +116,39 @@ public class UIController : MonoBehaviour
         questionImage.gameObject.SetActive(value);
     }
 
-    private void ShowCorrectAnswerPopup()
+    public void ShowCorrectButton(int correctButton)
     {
-        correctAnswerPopup.SetActive(true);
+        answerButtons[correctButton].gameObject.SetActive(true);
+        answerButtons[correctButton].gameObject.GetComponent<Image>().color = Color.green; 
+    }
+    public void ShowCorrectButtonSeq(string correctButton, int[] uncorrectButton)
+    {
+        Debug.Log("correct " + correctButton + " unn " + uncorrectButton[0] + uncorrectButton[1] + uncorrectButton[2]);
+        for (int i = 0; i < correctButton.Length; i++)
+        {
+            if (uncorrectButton[i].ToString()[0].Equals(correctButton[i]))
+            {
+                answerButtons[i].gameObject.SetActive(true);
+                answerButtons[i].gameObject.GetComponent<Image>().color = Color.green;
+            } else
+            {
+                answerButtons[i].gameObject.SetActive(true);
+                answerButtons[i].gameObject.GetComponent<Image>().color = Color.red;
+            }
+        }
+        
     }
 
-    private void ShowWrongAnswerPopup()
+    private void ShowCorrectAnswerPopup(int correctButton)
     {
-        wrongAnswerPopup.SetActive(true);
+        
+        //correctAnswerPopup.SetActive(true);
+    }
+
+    private void ShowWrongAnswerPopup(int uncorrectButton)
+    {
+        answerButtons[uncorrectButton].gameObject.SetActive(true);
+        answerButtons[uncorrectButton].gameObject.GetComponent<Image>().color = Color.red;
+        //wrongAnswerPopup.SetActive(true);
     }
 }

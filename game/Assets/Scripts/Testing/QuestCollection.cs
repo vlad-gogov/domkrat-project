@@ -65,6 +65,7 @@ public class QuestCollection : MonoBehaviour
             string[] new_question = allQuestions[i].Answers;
             char[] new_seq_answer = allQuestions[i].CorrectAnswer.ToArray();
 
+            Debug.Log("seq " + allQuestions[i].CorrectAnswer);
 
             for (int k = 0; k < new_question.Length; k++)
             {
@@ -82,14 +83,18 @@ public class QuestCollection : MonoBehaviour
 
             }
 
+            
             if (allQuestions[i].Type == (int)AnswerType.Sequence)
             {
+                Debug.Log("after for " + new_seq_answer[0] + new_seq_answer[1] + new_seq_answer[2]);
+
                 string tmp = null;
                 foreach(char temp in new_seq_answer)
                 {
                     tmp += temp;
                 }
                 allQuestions[i].CorrectAnswer = tmp;
+                Debug.Log("tmp " + tmp);
             }
             else
             {
@@ -102,8 +107,6 @@ public class QuestCollection : MonoBehaviour
                     }
                 }
             }
-
-            
 
             allQuestions[i].Answers = new_question;
             allQuestions[i].Asked = false;
