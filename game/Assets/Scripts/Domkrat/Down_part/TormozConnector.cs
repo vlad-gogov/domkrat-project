@@ -22,7 +22,17 @@ public class TormozConnector : Selectable
         type = batya.type;
         domkratMove = gameObject.transform.parent.parent.parent.parent.parent.GetComponent<DomkratMoving>();
         boxCol = GetComponent<BoxCollider>();
-        boxCol.enabled = true;
+        boxCol.enabled = false;
+        tormozMoving = Tormoz.tormoz.gameObject.GetComponent<TormozMoving>();
+        tormoz = Tormoz.tormoz.GetComponent<Tormoz>();
+        if (tormozMoving == null)
+        {
+            Debug.LogError("blyat!!!");
+        }
+        if (tormoz == null)
+        {
+            Debug.Log("SUKA!!!!!");
+        }
         down_part = gameObject.transform.parent.parent.parent.parent.GetComponent<Down_part>();
         if (down_part == null)
         {
@@ -31,8 +41,10 @@ public class TormozConnector : Selectable
     }
 
     // так надо: инача в некоторых сценах ломается порядок конструирования объектов
-    TormozMoving tormozMoving { get => Tormoz.tormoz.gameObject.GetComponent<TormozMoving>(); }
-    Tormoz tormoz { get => Tormoz.tormoz.GetComponent<Tormoz>(); }
+    // TormozMoving tormozMoving { get => Tormoz.tormoz.gameObject.GetComponent<TormozMoving>(); }
+    // Tormoz tormoz { get => Tormoz.tormoz.GetComponent<Tormoz>(); }
+    TormozMoving tormozMoving;
+    Tormoz tormoz;
 
     public override void Deselect()
     {
