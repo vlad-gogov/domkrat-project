@@ -26,6 +26,7 @@ public class Domkrat : MonoBehaviour
     Animator up_part;
     Animator move_mech;
     Up_part childRuchka;
+    public bool isTormozConnected = false;
 
     int id = -1;
 

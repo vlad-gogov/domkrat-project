@@ -16,7 +16,8 @@ public enum NameState
     // Flat
     MOVE_TPK_FLAT = 7, // Перемещение в точку
     // Up
-    LOAD_TPK = 8,
+    MOVE_TPK_UP = 8,
+    MOVE_TPK_DOWN = 12,
     // Down
     CHECK_CONFIG = 9,
     SET_TORMOZ = 10,
@@ -92,14 +93,15 @@ public class StateManager : MonoBehaviour
         foreach (GameObject obj in ObjDomkrats)
         {
             domkrats.Add(obj.GetComponent<Domkrat>());
-            obj.SetActive(false);
+            obj.SetActive(true);
         }
     }
 
     void Start()
     {
         gameMode = CrossScenesStorage.gameMode;
-        typeArea = CrossScenesStorage.typeArea;
+        // typeArea = CrossScenesStorage.typeArea;
+        typeArea = TypeArea.UP;
         Debug.Log($"Current mode is: {gameMode} | {typeArea}");
 
         states.Add(new State() { state = NameState.DEFAULT, disctiption = "" });
@@ -114,11 +116,11 @@ public class StateManager : MonoBehaviour
 
         if (typeArea == TypeArea.FLAT)
         {
-            states.Add(new State() { state = NameState.MOVE_TPK_FLAT, disctiption = "Переместите ТПК" });
+            states.Add(new State() { state = NameState.MOVE_TPK_FLAT, disctiption = "Переместите ТПК в красную точку" });
         }
         else if (typeArea == TypeArea.UP)
         {
-
+            states.Add(new State() { state = NameState.MOVE_TPK_UP, disctiption = "Переместите ТПК по наклонной поверхности вверх" });
         }
         else if (typeArea == TypeArea.DOWN)
         {

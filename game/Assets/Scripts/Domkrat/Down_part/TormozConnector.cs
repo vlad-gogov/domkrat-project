@@ -11,6 +11,7 @@ public class TormozConnector : Selectable
     Down_part down_part;
 
     DomkratMoving domkratMove;
+    Domkrat batya;
     BoxCollider boxCol;
 
     TormozMoving tormozMoving;
@@ -20,6 +21,7 @@ public class TormozConnector : Selectable
 
     public void Start()
     {
+        batya = transform.parent.parent.parent.parent.parent.gameObject.GetComponent<Domkrat>();
         type = transform.parent.parent.parent.parent.parent.gameObject.GetComponent<Domkrat>().type;
         domkratMove = gameObject.transform.parent.parent.parent.parent.parent.GetComponent<DomkratMoving>();
         tormozMoving = Tormoz.tormoz.gameObject.GetComponent<TormozMoving>();
@@ -33,8 +35,8 @@ public class TormozConnector : Selectable
     {
         Debug.Log("Deselecting pipka...");
         tormozMoving.Disconnect(type);
-        tormoz.gameObject.SetActive(false);
         isSelected = false;
+        batya.isTormozConnected = false;
     }
 
     public override void GetInfoMouse()
@@ -65,6 +67,7 @@ public class TormozConnector : Selectable
                     tormoz.gameObject.SetActive(true);
                     tormozMoving.ConnectTo(pointerToAdapter, type, pointForTormoz);
                     isSelected = true;
+                    batya.isTormozConnected = true;
                 }
                 else
                 {
@@ -75,6 +78,13 @@ public class TormozConnector : Selectable
             {
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Необходимо вывесить домкрат перед подключением тормозного механизма", Weight = ErrorWeight.LOW });
             }
+        }
+        else if (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_DOWN)
+        {
+            tormoz.gameObject.SetActive(true);
+            tormozMoving.ConnectTo(pointerToAdapter, type, pointForTormoz);
+            isSelected = true;
+            batya.isTormozConnected = true;
         }
     }
 
@@ -118,7 +128,7 @@ public class TormozConnector : Selectable
                 Singleton.Instance.StateManager.NextState();
                 tormozMoving.Disconnect(type);
                 tormoz.gameObject.SetActive(false);
-                boxCol.enabled = false;
+                // boxCol.enabled = false;
             }
         }
     }

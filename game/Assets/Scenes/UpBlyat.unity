@@ -306,6 +306,7 @@ MonoBehaviour:
   RightWheel: {fileID: 2003025888}
   BackWheel: {fileID: 46762437}
   boxHand: {fileID: 1682516877}
+  isTormozConnected: 0
   isAttachedToTPK: 0
 --- !u!114 &2837412
 MonoBehaviour:
@@ -607,6 +608,7 @@ MonoBehaviour:
   RightWheel: {fileID: 1110831002}
   BackWheel: {fileID: 1458475879}
   boxHand: {fileID: 1997901789}
+  isTormozConnected: 0
   isAttachedToTPK: 0
 --- !u!114 &23902372
 MonoBehaviour:
@@ -649,7 +651,7 @@ Transform:
   m_GameObject: {fileID: 24061894}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.049, y: 0.36, z: -22.36}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.6759, y: 1, z: 1}
   m_Children:
   - {fileID: 1537159978}
   - {fileID: 1337108769}
@@ -1099,6 +1101,10 @@ PrefabInstance:
       propertyPath: Pointer
       value: 
       objectReference: {fileID: 984117731}
+    - target: {fileID: 4211262208570072530, guid: d3ca7add4212c3d4980dc17531a16a09, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4211262208570072531, guid: d3ca7add4212c3d4980dc17531a16a09, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -2065,6 +2071,7 @@ MonoBehaviour:
   RightWheel: {fileID: 1388734324}
   BackWheel: {fileID: 205945680}
   boxHand: {fileID: 806313083}
+  isTormozConnected: 0
   isAttachedToTPK: 0
 --- !u!114 &62741164
 MonoBehaviour:
@@ -3296,7 +3303,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151958159}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.13, y: 0.642, z: -18.66}
+  m_LocalPosition: {x: -2.19, y: 1.71, z: -24.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -14216,7 +14223,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732374924}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2.06, y: 2.59, z: 3.24}
@@ -18294,7 +18301,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1005737382}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2.06, y: 2.59, z: 3.24}
@@ -21183,7 +21190,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137731138}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2.06, y: 2.59, z: 3.24}
@@ -22577,8 +22584,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1253657369}
   m_HandleRect: {fileID: 1253657368}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.99999976
+  m_Value: 0.115384616
+  m_Size: 0.999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -26113,6 +26120,7 @@ MonoBehaviour:
   RightWheel: {fileID: 588284932}
   BackWheel: {fileID: 2127656248}
   boxHand: {fileID: 1040340578}
+  isTormozConnected: 0
   isAttachedToTPK: 0
 --- !u!114 &1456748390
 MonoBehaviour:
