@@ -47,14 +47,15 @@ public class UIManager : MonoBehaviour
     public void OpenTutorial(string tutor)
     {
         scrollView.SetActive(true);
-        tutorial.Show(tutor);
-        Singleton.Instance.StateManager.Pause();
+        Debug.Log(tutorial);
+        // tutorial.Show(tutor);
+        // Singleton.Instance.StateManager.Pause();
     }
 
     public void CloseTutorial()
     {
         scrollView.SetActive(false);
-        tutorial.Hide();
+        // tutorial.Hide();
         Singleton.Instance.StateManager.Resume();
         Singleton.Instance.StateManager.InitialStateHack();
     }
