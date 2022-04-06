@@ -109,7 +109,7 @@
 		<name />
 		<hideFlags>None</hideFlags>
 		<Question>Какое положение колес сейчас на домкрате?</Question>
-		<QuestionImage>.//Assets//Scripts//Testing//Images//R.png</QuestionImage>
+		<QuestionImage>.//Images//R.png</QuestionImage>
 		<Answers>
 			<string>Рояльное</string>
 			<string>Соосное</string>
@@ -122,7 +122,7 @@
 		<name />
 		<hideFlags>None</hideFlags>
 		<Question>Какое положение колес сейчас на домкрате?</Question>
-		<QuestionImage>.//Assets//Scripts//Testing//Images//S.png</QuestionImage>
+		<QuestionImage>.//Images//S.png</QuestionImage>
 		<Answers>
 			<string>Рояльное</string>
 			<string>Соосное</string>
