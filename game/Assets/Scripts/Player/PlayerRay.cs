@@ -89,8 +89,10 @@ public class PlayerRay : MonoBehaviour
                     placeForSet.GetInfoMouse();
                     if (Input.GetMouseButtonDown(0))
                     {
-                        placeForSet.SetItem(_selectedObject);
-                        UnSelectable();
+                        if (placeForSet.SetItem(_selectedObject))
+                        {
+                            UnSelectable();
+                        }
                     }
                 }
             }

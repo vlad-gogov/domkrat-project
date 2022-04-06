@@ -16,6 +16,5 @@ public class Tormoz : MonoBehaviour
         // акърэ йрн щрн пюяйнллемрхпсер с рнцн люрэ слп╗р!!!
         // tormoz.gameObject.SetActive(false);
     }
-    
 
 }

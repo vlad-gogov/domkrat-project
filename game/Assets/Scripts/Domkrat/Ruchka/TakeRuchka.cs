@@ -10,10 +10,12 @@ public class TakeRuchka : Selectable
     [SerializeField] RuckaMoving RuckaMoving;
 
     Animator anim;
+    Domkrat domkrat;
 
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();
+        domkrat = gameObject.transform.parent.parent.parent.parent.parent.GetComponent<Domkrat>();
     }
 
     public override void Deselect()
@@ -34,6 +36,7 @@ public class TakeRuchka : Selectable
 
     public override void Select()
     {
+        domkrat.isRuchka = false;
         isSelected = true;
         anim.SetTrigger("Take");
         RuckaMoving.isMoving = false;

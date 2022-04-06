@@ -16,6 +16,8 @@ public class Domkrat : MonoBehaviour
     public Down_part_rotation downPartRotation;
     public Rotate_fixator rotateFixator;
     public TechStand techStand;
+    public TormozSwitcher tormozSwitch;
+    public bool isRuchka = true;
     private float SpeedMove = 0.007f;
     private MovingHand moveHand;
     [SerializeField] private GameObject LeftWheel;
@@ -41,6 +43,7 @@ public class Domkrat : MonoBehaviour
         move_mech = child.transform.GetChild(0).gameObject.GetComponent<Animator>();
         childRuchka = transform.GetChild(0).gameObject.GetComponent<Up_part>();
         moveHand = boxHand.gameObject.GetComponent<MovingHand>();
+        tormozSwitch = gameObject.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent<TormozSwitcher>();
     }
 
     private void OnTriggerEnter(Collider collider)

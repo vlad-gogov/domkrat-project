@@ -93,7 +93,7 @@ public class StateManager : MonoBehaviour
         foreach (GameObject obj in ObjDomkrats)
         {
             domkrats.Add(obj.GetComponent<Domkrat>());
-            obj.SetActive(true);
+            obj.SetActive(false);
         }
     }
 
@@ -101,7 +101,6 @@ public class StateManager : MonoBehaviour
     {
         gameMode = CrossScenesStorage.gameMode;
         // typeArea = CrossScenesStorage.typeArea;
-        typeArea = TypeArea.UP;
         Debug.Log($"Current mode is: {gameMode} | {typeArea}");
 
         states.Add(new State() { state = NameState.DEFAULT, disctiption = "" });
@@ -158,7 +157,7 @@ public class StateManager : MonoBehaviour
         }
         Debug.Log(states[indexCurState].state);
 
-        if (states[indexCurState].state > NameState.CHECK_BREAK_MECHANISM)
+        if (typeArea != TypeArea.FLAT && states[indexCurState].state > NameState.CHECK_BREAK_MECHANISM)
         {
             TPK.TPKObj.SwitchMovingThings(true);
         }
