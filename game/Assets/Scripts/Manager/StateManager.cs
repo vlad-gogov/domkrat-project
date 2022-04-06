@@ -97,7 +97,7 @@ public class StateManager : MonoBehaviour
     void Start()
     {
         gameMode = CrossScenesStorage.gameMode;
-        // typeArea = CrossScenesStorage.typeArea;
+        typeArea = CrossScenesStorage.typeArea;
         Debug.Log($"Current mode is: {gameMode} | {typeArea}");
 
         states.Add(new State() { state = NameState.DEFAULT, disctiption = "" });

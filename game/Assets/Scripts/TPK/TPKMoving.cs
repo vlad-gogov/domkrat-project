@@ -392,7 +392,50 @@ public class TPKMoving : MonoBehaviour
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите все технологические подставки", Weight = ErrorWeight.LOW });
                 return false;
             }
+            //Debug.Log($"{domkrat.curV} | {domkrat.downPartRotation.currentWheelState} | {domkrat.downPartRotation.dir} | {domkrat.rotateFixator.isSelected}");
+            if (domkrat.curV == OrientationVertical.Up)
+            {
+                if (domkrat.tormozSwitch.isSelected)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормозной механизм на передных домкратах должен быть выключен", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (domkrat.isTormozConnected)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормоза должны быть подключены к задним домкратам", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir == Direction.BACK || domkrat.rotateFixator.isSelected)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния передних домкратов для заката вверх", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+            }
+            else if (domkrat.curV == OrientationVertical.Down)
+            {
+                if (!domkrat.tormozSwitch.isSelected)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормозной механизм на задних домкратах должен быть включен", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (!domkrat.isTormozConnected)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя скатывать домкрат по наклонной поверхности без подключенного тормоза", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir == Direction.FORWARD || domkrat.rotateFixator.isSelected)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния задних домкратов для заката вверх", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+            }
         }
+        // Надо подумать
+        //if (Tormoz.tormoz.tormozMovingHand.isSelected)
+        //{
+        //    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Ручка тормоза не отжата (тпк не тормозит)", Weight = ErrorWeight.LOW });
+        //    return false;
+        //}
         return true;
     }
 
