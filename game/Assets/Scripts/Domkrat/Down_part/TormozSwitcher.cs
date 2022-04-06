@@ -16,15 +16,19 @@ public class TormozSwitcher : Selectable
 
     void Update()
     {
-        if (Singleton.Instance.StateManager.GetState() == NameState.CHECK_BREAK_MECHANISM)
+        NameState curState = Singleton.Instance.StateManager.GetState();
+        if (curState == NameState.CHECK_BREAK_MECHANISM || curState == NameState.SET_TORMOZ)
         {
             boxCol.enabled = true;
+        }
+        else
+        {
+            boxCol.enabled = false;
         }
     }
 
     public override void Deselect()
     {
-        Debug.Log("disable PIPKA!!!");
         downPartAnim.SetTrigger("disableTormozPipka");
         isSelected = false;
     }
@@ -48,7 +52,6 @@ public class TormozSwitcher : Selectable
 
     public override void Select()
     {
-        Debug.Log("enable PIPKA!!!");
         downPartAnim.SetTrigger("enableTormozPipka");
         isSelected = true;
     }

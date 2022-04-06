@@ -48,7 +48,6 @@ public class TormozConnector : Selectable
 
     public override void Deselect()
     {
-        Debug.Log("Deselecting pipka...");
         tormozMoving.Disconnect(type);
         isSelected = false;
         batya.isTormozConnected = false;
@@ -106,7 +105,8 @@ public class TormozConnector : Selectable
 
     void Update()
     {
-        if (Singleton.Instance.StateManager.GetState() == NameState.CHECK_BREAK_MECHANISM)
+        NameState curState = Singleton.Instance.StateManager.GetState();
+        if (curState == NameState.CHECK_BREAK_MECHANISM)
         {
             if (isSelected) 
             {
@@ -144,7 +144,6 @@ public class TormozConnector : Selectable
                 Singleton.Instance.StateManager.NextState();
                 tormozMoving.Disconnect(type);
                 tormoz.gameObject.SetActive(false);
-                // boxCol.enabled = false;
             }
         }
     }

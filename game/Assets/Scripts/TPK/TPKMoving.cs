@@ -158,7 +158,7 @@ public class TPKMoving : MonoBehaviour
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Отключите тормозной механизм на всех домкратах", Weight = ErrorWeight.LOW });
                 return false;
             }
-            Debug.Log($"{domkrat.curV} | {domkrat.downPartRotation.currentWheelState} | {domkrat.downPartRotation.dir} | {domkrat.rotateFixator.isSelected}");
+            //Debug.Log($"{domkrat.curV} | {domkrat.downPartRotation.currentWheelState} | {domkrat.downPartRotation.dir} | {domkrat.rotateFixator.isSelected}");
             if (domkrat.curV == OrientationVertical.Up)
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.BACK || !domkrat.rotateFixator.isSelected)
@@ -345,7 +345,7 @@ public class TPKMoving : MonoBehaviour
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите все технологические подставки", Weight = ErrorWeight.LOW });
                 return false;
             }
-            Debug.Log($"{domkrat.curV} | {domkrat.downPartRotation.currentWheelState} | {domkrat.downPartRotation.dir} | {domkrat.rotateFixator.isSelected}");
+            //Debug.Log($"{domkrat.curV} | {domkrat.downPartRotation.currentWheelState} | {domkrat.downPartRotation.dir} | {domkrat.rotateFixator.isSelected}");
             if (domkrat.curV == OrientationVertical.Up)
             {
                 if (!domkrat.tormozSwitch.isSelected)
