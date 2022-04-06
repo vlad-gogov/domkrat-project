@@ -33,8 +33,10 @@ public class PlayerRay : MonoBehaviour
         selectable.Deselect();
         selectable = null;
         _selectedObject = null;
+        GetComponent<Rigidbody>().mass = 0;
         moving.Remove(mv_obj);
         PlayerMove.isDomkrat = false;
+
         wall.enabled = false;
     }
 
@@ -87,8 +89,10 @@ public class PlayerRay : MonoBehaviour
                     placeForSet.GetInfoMouse();
                     if (Input.GetMouseButtonDown(0))
                     {
-                        placeForSet.SetItem(_selectedObject);
-                        UnSelectable();
+                        if (placeForSet.SetItem(_selectedObject))
+                        {
+                            UnSelectable();
+                        }
                     }
                 }
             }
@@ -124,7 +128,8 @@ public class PlayerRay : MonoBehaviour
                     Singleton.Instance.UIManager.ClearEnterText();
                     if (_selectedObject.tag == "Domkrat")
                     {
-                        PlayerMove.isDomkrat = true; 
+                        PlayerMove.isDomkrat = true;
+                        GetComponent<Rigidbody>().mass = 60;
                         PlayerMove.PickUpDomkrat(_selectedObject);
                     }
                     if (_selectedObject.tag == "Domkrat" || _selectedObject.tag == "Perehodnick")

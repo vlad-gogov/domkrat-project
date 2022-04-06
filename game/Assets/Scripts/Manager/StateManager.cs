@@ -15,12 +15,13 @@ public enum NameState
     CHECK_BREAK_MECHANISM = 6,
     // Flat
     MOVE_TPK_FLAT = 7, // Перемещение в точку
+    // Up or Down
+    CHECK_CONFIG = 8,
+    SET_TORMOZ = 9,
     // Up
-    LOAD_TPK = 8,
+    MOVE_TPK_UP = 10,
     // Down
-    CHECK_CONFIG = 9,
-    SET_TORMOZ = 10,
-    ROLLING_TPK = 11
+    MOVE_TPK_DOWN = 11,
 }
 
 public struct State
@@ -99,7 +100,7 @@ public class StateManager : MonoBehaviour
     void Start()
     {
         gameMode = CrossScenesStorage.gameMode;
-        typeArea = CrossScenesStorage.typeArea;
+        // typeArea = CrossScenesStorage.typeArea;
         Debug.Log($"Current mode is: {gameMode} | {typeArea}");
 
         states.Add(new State() { state = NameState.DEFAULT, disctiption = "" });
@@ -114,15 +115,19 @@ public class StateManager : MonoBehaviour
 
         if (typeArea == TypeArea.FLAT)
         {
-            states.Add(new State() { state = NameState.MOVE_TPK_FLAT, disctiption = "Переместите ТПК" });
+            states.Add(new State() { state = NameState.MOVE_TPK_FLAT, disctiption = "Переместите ТПК в красную точку" });
         }
         else if (typeArea == TypeArea.UP)
         {
-
+            states.Add(new State() { state = NameState.CHECK_CONFIG, disctiption = "Настройте домкраты для закатывания по наклонной поверхности" });
+            states.Add(new State() { state = NameState.SET_TORMOZ, disctiption = "Подключите тормоз к задним домкратам" });
+            states.Add(new State() { state = NameState.MOVE_TPK_UP, disctiption = "Переместите ТПК по наклонной поверхности вверх" });
         }
         else if (typeArea == TypeArea.DOWN)
         {
-
+            states.Add(new State() { state = NameState.CHECK_CONFIG, disctiption = "Настройте домкраты для скатывания по наклонной поверхности" });
+            states.Add(new State() { state = NameState.SET_TORMOZ, disctiption = "Подключите тормоз к задним домкратам" });
+            states.Add(new State() { state = NameState.MOVE_TPK_DOWN, disctiption = "Переместите ТПК по наклонной поверхности вниз" });
         }
 
         indexCurState = 0;
@@ -155,6 +160,12 @@ public class StateManager : MonoBehaviour
             return;
         }
         Debug.Log(states[indexCurState].state);
+
+        if (typeArea != TypeArea.FLAT && states[indexCurState].state > NameState.CHECK_BREAK_MECHANISM)
+        {
+            TPK.TPKObj.SwitchMovingThings(true);
+        }
+
         if (states[indexCurState].state == NameState.SET_DOMKRATS)
         {
             NotifyAllDomkrats(states[indexCurState].state);

@@ -55,15 +55,15 @@ public class TormozMoving : MovingSelect
         if (!isConnected)
         {
             NameState curState = Singleton.Instance.StateManager.GetState();
-            if (curState == NameState.ROLLING_TPK)
-            {
-                PlayerRay.playerRay.Add(Tormoz.tormoz.gameObject.GetComponent<TormozMoving>());
-            }
-            else // if (curState == NameState.CHECK_BREAK_MECHANISM)
+            if (curState == NameState.CHECK_BREAK_MECHANISM)
             {
                 isConnected = true;
                 Tormoz.tormoz.gameObject.transform.position = pointToTormoz.transform.position;
                 Tormoz.tormoz.gameObject.transform.rotation = pointToTormoz.transform.rotation;
+            }
+            else if (curState == NameState.SET_TORMOZ)
+            {
+                PlayerRay.playerRay.Add(Tormoz.tormoz.gameObject.GetComponent<TormozMoving>());
             }
         }
         else
@@ -105,6 +105,7 @@ public class TormozMoving : MovingSelect
         {
             PlayerRay.playerRay.Remove(Tormoz.tormoz.gameObject.GetComponent<TormozMoving>());
             isConnected = false;
+            Tormoz.tormoz.gameObject.SetActive(false);
         }
     }
 }

@@ -12,13 +12,18 @@ public class UIManager : MonoBehaviour
     public GameObject scrollView;
     TutorialBar tutorial;
 
+    void Awake()
+    {
+        Debug.Log("starting UI manager...");
+        tutorial = new TutorialBar(scrollView);
+    }
+
     void Start()
     {
         if (Singleton.Instance.StateManager.gameMode == GameMode.EXAM)
         {
             helper.GetComponentInParent<UnityEngine.UI.Image>().gameObject.SetActive(false);
         }
-        tutorial = new TutorialBar(scrollView);
     }
 
 
@@ -47,6 +52,7 @@ public class UIManager : MonoBehaviour
     public void OpenTutorial(string tutor)
     {
         scrollView.SetActive(true);
+        Debug.Log(tutorial);
         tutorial.Show(tutor);
         Singleton.Instance.StateManager.Pause();
     }

@@ -38,8 +38,6 @@ public class TPK : MonoBehaviour
                 techStands.Add(techSand.techStand);
             }
         }
-
-
     }
 
     public void LiftUp()
@@ -59,6 +57,18 @@ public class TPK : MonoBehaviour
         {
             domkrat.LiftDown(/*liftTPK=*/false);
         }
+    }
+
+    public void SwitchMovingThings(bool flag)
+    {
+        var tpkObj = transform.parent.parent.gameObject;
+        foreach (var col in tpkObj.GetComponents<BoxCollider>())
+        {
+            col.enabled = flag;
+        }
+        tpkObj.GetComponent<Rigidbody>().useGravity = flag;
+        // GetComponent<BoxCollider>().enabled = !flag;
+        GetComponent<Rigidbody>().useGravity = !flag;
     }
 
     public int AddDomkrat(Domkrat domkrat)

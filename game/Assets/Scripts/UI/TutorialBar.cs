@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TutorialBar : MonoBehaviour
+public class TutorialBar
 {
     GameObject scrollView;
     GameObject content;
@@ -12,6 +12,7 @@ public class TutorialBar : MonoBehaviour
     public TutorialBar(GameObject scrollView)
     {
         this.scrollView = scrollView;
+        Debug.Log($"scrollView: {scrollView}");
         content = scrollView.transform.GetChild(0).GetChild(0).gameObject;
         builder = new PageBuilder(content);
     }

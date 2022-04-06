@@ -16,6 +16,8 @@ public class Domkrat : MonoBehaviour
     public Down_part_rotation downPartRotation;
     public Rotate_fixator rotateFixator;
     public TechStand techStand;
+    public TormozSwitcher tormozSwitch;
+    public bool isRuchka = true;
     private float SpeedMove = 0.007f;
     private MovingHand moveHand;
     [SerializeField] private GameObject LeftWheel;
@@ -26,6 +28,7 @@ public class Domkrat : MonoBehaviour
     Animator up_part;
     Animator move_mech;
     Up_part childRuchka;
+    public bool isTormozConnected = false;
 
     int id = -1;
 
@@ -40,12 +43,18 @@ public class Domkrat : MonoBehaviour
         move_mech = child.transform.GetChild(0).gameObject.GetComponent<Animator>();
         childRuchka = transform.GetChild(0).gameObject.GetComponent<Up_part>();
         moveHand = boxHand.gameObject.GetComponent<MovingHand>();
+        tormozSwitch = gameObject.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent<TormozSwitcher>();
     }
 
     private void OnTriggerEnter(Collider collider)
     {
         GameObject trigger = collider.gameObject;
-        if (trigger.GetComponent<PointToSet>().isPerehodnick && trigger.tag == "SetPerehodnickDomkrat")
+        var p = trigger.GetComponent<PointToSet>();
+        if (p == null)
+        {
+            return;
+        }
+        if (p.isPerehodnick && trigger.tag == "SetPerehodnickDomkrat")
         {
             Singleton.Instance.UIManager.SetEnterText("Нажмите E чтобы установить домкрат в переходник");
         }
@@ -60,6 +69,10 @@ public class Domkrat : MonoBehaviour
     {
         GameObject trigger = collider.gameObject;
         PointToSet p = trigger.GetComponent<PointToSet>();
+        if (p == null)
+        {
+            return;
+        }
         if (!p.isPerehodnick || p.isDomkrat)
         {
             return;

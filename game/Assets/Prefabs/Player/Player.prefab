@@ -116,9 +116,9 @@ GameObject:
   - component: {fileID: 388278372219599266}
   - component: {fileID: 388278372219599267}
   - component: {fileID: 800199198}
-  - component: {fileID: 800199200}
   - component: {fileID: 800199197}
   - component: {fileID: 800199199}
+  - component: {fileID: 1959481051}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -210,19 +210,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 3
---- !u!65 &800199200
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 388278372219599271}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.0000001, y: 1.9999999, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &800199197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +243,20 @@ MonoBehaviour:
   isDomkrat: 0
   Pointer: {fileID: 1301571849}
   SpeedRotation: 20
+--- !u!136 &1959481051
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388278372219599271}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5000001
+  m_Height: 2.28
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &388278372953040766
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,10 +363,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4842081828954177104}
-  m_LocalRotation: {x: -0, y: 0.1177095, z: -0, w: 0.9930481}
-  m_LocalPosition: {x: 0.18499954, y: 0.7650002, z: 0.5750001}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0.185, y: 0.7650002, z: 0.694}
   m_LocalScale: {x: 1.1893811, y: 1.1893814, z: 1.1893811}
   m_Children: []
   m_Father: {fileID: 388278372219599265}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 13.52, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}

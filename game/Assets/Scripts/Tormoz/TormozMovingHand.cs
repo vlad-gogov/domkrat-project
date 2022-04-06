@@ -14,6 +14,7 @@ public class TormozMovingHand : Selectable
     public override void Deselect()
     {
         isSelected = false;
+        Debug.Log("Triggering 'Stop'");
         anim.SetTrigger("Stop");
     }
 
@@ -37,6 +38,7 @@ public class TormozMovingHand : Selectable
     public override void Select()
     {
         isSelected = true;
+        Debug.Log("Triggering 'Continue'");
         anim.SetTrigger("Continue");
     }
 }

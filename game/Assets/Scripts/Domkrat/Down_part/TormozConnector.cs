@@ -11,30 +11,47 @@ public class TormozConnector : Selectable
     Down_part down_part;
 
     DomkratMoving domkratMove;
+    Domkrat batya;
     BoxCollider boxCol;
-
-    TormozMoving tormozMoving;
-    Tormoz tormoz;
 
     bool isForwardWithoutStop = false, isBackWithoutStop = false, isForwardWithStop = false, isBackdWithStop = false;
 
     public void Start()
     {
-        type = transform.parent.parent.parent.parent.parent.gameObject.GetComponent<Domkrat>().type;
+        batya = transform.parent.parent.parent.parent.parent.gameObject.GetComponent<Domkrat>();
+        type = batya.type;
         domkratMove = gameObject.transform.parent.parent.parent.parent.parent.GetComponent<DomkratMoving>();
-        tormozMoving = Tormoz.tormoz.gameObject.GetComponent<TormozMoving>();
-        tormoz = Tormoz.tormoz.GetComponent<Tormoz>();
         boxCol = GetComponent<BoxCollider>();
         boxCol.enabled = false;
+        tormozMoving = Tormoz.tormoz.gameObject.GetComponent<TormozMoving>();
+        tormoz = Tormoz.tormoz.GetComponent<Tormoz>();
+        if (tormozMoving == null)
+        {
+            Debug.LogError("blyat!!!");
+        }
+        if (tormoz == null)
+        {
+            Debug.Log("SUKA!!!!!");
+        }
         down_part = gameObject.transform.parent.parent.parent.parent.GetComponent<Down_part>();
+        if (down_part == null)
+        {
+            Debug.LogError("pizdec");
+        }
     }
+
+    // так надо: инача в некоторых сценах ломается порядок конструирования объектов
+    // TormozMoving tormozMoving { get => Tormoz.tormoz.gameObject.GetComponent<TormozMoving>(); }
+    // Tormoz tormoz { get => Tormoz.tormoz.GetComponent<Tormoz>(); }
+    TormozMoving tormozMoving;
+    Tormoz tormoz;
 
     public override void Deselect()
     {
         Debug.Log("Deselecting pipka...");
         tormozMoving.Disconnect(type);
-        tormoz.gameObject.SetActive(false);
         isSelected = false;
+        batya.isTormozConnected = false;
     }
 
     public override void GetInfoMouse()
@@ -65,6 +82,7 @@ public class TormozConnector : Selectable
                     tormoz.gameObject.SetActive(true);
                     tormozMoving.ConnectTo(pointerToAdapter, type, pointForTormoz);
                     isSelected = true;
+                    batya.isTormozConnected = true;
                 }
                 else
                 {
@@ -75,6 +93,14 @@ public class TormozConnector : Selectable
             {
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Необходимо вывесить домкрат перед подключением тормозного механизма", Weight = ErrorWeight.LOW });
             }
+        }
+        else
+        // else if (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_DOWN)
+        {
+            tormoz.gameObject.SetActive(true);
+            tormozMoving.ConnectTo(pointerToAdapter, type, pointForTormoz);
+            isSelected = true;
+            batya.isTormozConnected = true;
         }
     }
 
@@ -118,7 +144,7 @@ public class TormozConnector : Selectable
                 Singleton.Instance.StateManager.NextState();
                 tormozMoving.Disconnect(type);
                 tormoz.gameObject.SetActive(false);
-                boxCol.enabled = false;
+                // boxCol.enabled = false;
             }
         }
     }

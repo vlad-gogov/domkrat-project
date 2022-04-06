@@ -10,11 +10,11 @@ public class Tormoz : MonoBehaviour
 
     public bool isUse = false;
 
-    void Start()
+    void Awake()
     {
         tormoz = this;
-        tormoz.gameObject.SetActive(false);
+        // ¡Àﬂ“‹  “Œ ›“Œ –¿— ŒÃÃ≈Õ“»–”≈“ ” “Œ√Œ Ã¿“‹ ”Ã–®“!!!
+        // tormoz.gameObject.SetActive(false);
     }
-    
 
 }
