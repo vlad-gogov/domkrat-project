@@ -20,11 +20,10 @@ public class UIController : MonoBehaviour
     private GameObject correctAnswerPopup;
     [SerializeField]
     private GameObject wrongAnswerPopup;
-    private bool isExit = false;
 
     void Update()
     {
-        if (isExit && Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.Escape))
         {
             SceneManager.LoadScene("Menu");
         }
@@ -43,7 +42,7 @@ public class UIController : MonoBehaviour
             questionText.rectTransform.localPosition = new Vector2(-174, 220);
             questionImage.gameObject.SetActive(true);
             var txtr = new Texture2D(400, 400);
-            txtr.LoadImage(File.ReadAllBytes(question.QuestionImage));
+            txtr.LoadImage(File.ReadAllBytes(Path.Combine(Application.streamingAssetsPath, "Testing", question.QuestionImage)));
             questionImage.texture = txtr;
         }
 
@@ -77,7 +76,6 @@ public class UIController : MonoBehaviour
         {
             endGame.text = "Вы сдали.";
         }
-        isExit = true;
     }
 
     public void HandleSubmittedAnswer(bool isCorrect, int correctButton, int uncorrectButton)

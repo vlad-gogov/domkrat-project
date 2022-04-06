@@ -11,7 +11,7 @@ public class QuestCollection : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(Path.GetFullPath(".\\Assets\\Scripts\\Testing\\Questions.xml"));
+        Debug.Log(Path.Combine(Application.streamingAssetsPath, "Questions.xml"));
 
         LoadAllQuestions();
     }
@@ -19,7 +19,8 @@ public class QuestCollection : MonoBehaviour
     private void LoadAllQuestions()
     {
         XmlSerializer serializer = new XmlSerializer(typeof(QuizQuestion[]));
-        using (StreamReader streamReader = new StreamReader(".\\Assets\\Scripts\\Testing\\Questions.xml"))
+        //".\\Assets\\Scripts\\Testing\\Questions.xml"
+        using (StreamReader streamReader = new StreamReader(Path.Combine(Application.streamingAssetsPath, "Testing", "Questions.xml")))
         {
             allQuestions = (QuizQuestion[])serializer.Deserialize(streamReader);
         }
