@@ -76,63 +76,62 @@ public class TPKMoving : MonoBehaviour
             {
                 Singleton.Instance.StateManager.onError(new Error(){ ErrorText = "Поднимите ТПК перед тем как его перемещать", Weight = ErrorWeight.CRITICAL});
             }
-            TypeArea type = Singleton.Instance.StateManager.typeArea;
-
             if (isMoving)
             {
                 return;
             }
+
+            TypeArea type = Singleton.Instance.StateManager.typeArea;
+            NameState curState = Singleton.Instance.StateManager.GetState();
             // Ровная поверхность
             if (type == TypeArea.FLAT)
             {
                 if (tpkDir == TPKDirection.FORWARD && isForward(attachedDomkrats))
                 {
-                    StartCoroutine(MoveTpk(TPKDirection.FORWARD));
+                    StartCoroutine(MoveTpk(tpkDir));
                 }
                 else if (tpkDir == TPKDirection.RIGHT && isRight(attachedDomkrats))
                 {
-                    StartCoroutine(MoveTpk(TPKDirection.RIGHT));
+                    StartCoroutine(MoveTpk(tpkDir));
                 }
                 else if (tpkDir == TPKDirection.LEFT && isLeft(attachedDomkrats))
                 {
-                    StartCoroutine(MoveTpk(TPKDirection.LEFT));
+                    StartCoroutine(MoveTpk(tpkDir));
                 }
                 else if (tpkDir == TPKDirection.BACK && isBack(attachedDomkrats))
                 {
-                    StartCoroutine(MoveTpk(TPKDirection.BACK));
+                    StartCoroutine(MoveTpk(tpkDir));
                 }
             }
-
             // Закатывание
             else if (type == TypeArea.UP)
             {
                 if (tpkDir == TPKDirection.FORWARD)
                 {
-                    if ((Singleton.Instance.StateManager.GetState() == NameState.CHECK_CONFIG && isUp(attachedDomkrats)) || (Singleton.Instance.StateManager.GetState() == NameState.SET_TORMOZ && Tormoz.tormoz.isSet))
+                    if ((curState == NameState.CHECK_CONFIG_TPK && isUp(attachedDomkrats)) || (curState == NameState.SET_TORMOZ && Tormoz.tormoz.isSet))
                     {
                         Singleton.Instance.StateManager.NextState();
                     }
-                    if (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP)
+                    if (curState == NameState.MOVE_TPK_UP)
                     {
-                        StartCoroutine(MoveTpk(TPKDirection.FORWARD));
+                        StartCoroutine(MoveTpk(tpkDir));
                     }
                 }
             }
 
 
             // Скатывание
-
             else if (type == TypeArea.DOWN)
             {
                 if (tpkDir == TPKDirection.FORWARD)
                 {
-                    if ((Singleton.Instance.StateManager.GetState() == NameState.CHECK_CONFIG && isDown(attachedDomkrats)) || (Singleton.Instance.StateManager.GetState() == NameState.SET_TORMOZ && Tormoz.tormoz.isSet))
+                    if ((curState == NameState.CHECK_CONFIG_TPK && isDown(attachedDomkrats)) || (curState == NameState.SET_TORMOZ && Tormoz.tormoz.isSet))
                     {
                         Singleton.Instance.StateManager.NextState();
                     }
-                    if (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP)
+                    if (curState == NameState.MOVE_TPK_DOWN)
                     {
-                        StartCoroutine(MoveTpk(TPKDirection.FORWARD));
+                        StartCoroutine(MoveTpk(tpkDir));
                     }
                 }
             }

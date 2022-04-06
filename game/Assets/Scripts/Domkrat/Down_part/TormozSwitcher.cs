@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 1. Надо выключить переключатель после подключение тормоза
+/// </summary>
+
 public class TormozSwitcher : Selectable
 {
     Animator downPartAnim;
@@ -17,11 +21,11 @@ public class TormozSwitcher : Selectable
     void Update()
     {
         NameState curState = Singleton.Instance.StateManager.GetState();
-        if (curState == NameState.CHECK_BREAK_MECHANISM || curState == NameState.SET_TORMOZ)
+        if (curState == NameState.CHECK_BREAK_MECHANISM || curState == NameState.CHECK_CONFIG_TPK)
         {
             boxCol.enabled = true;
         }
-        else
+        else if (curState == NameState.MOVE_TPK_FLAT || curState > NameState.CHECK_CONFIG_TPK)
         {
             boxCol.enabled = false;
         }
