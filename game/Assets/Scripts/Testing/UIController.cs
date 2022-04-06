@@ -40,7 +40,7 @@ public class UIController : MonoBehaviour
 
         if (question.QuestionImage != "")
         {
-            questionText.rectTransform.localPosition = new Vector2(0, 500);
+            questionText.rectTransform.localPosition = new Vector2(-174, 220);
             questionImage.gameObject.SetActive(true);
             var txtr = new Texture2D(400, 400);
             txtr.LoadImage(File.ReadAllBytes(question.QuestionImage));
