@@ -235,7 +235,8 @@ public class StateManager : MonoBehaviour
 
     void LoadTutorial()
     {
-        string filepath = @"Assets\\Texts\\flatTutorial.txt";
+        string filepath = @"Texts\\flatTutorial.txt";
+        filepath = Path.Combine(Application.streamingAssetsPath, filepath);
         string tutorial = File.ReadAllText(filepath);
         string[] tutorialSteps = tutorial.Split(new string[] { "<br>" }, StringSplitOptions.None);
         for (int i=0; i<tutorialSteps.Length; i++)
