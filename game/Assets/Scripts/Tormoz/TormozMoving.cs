@@ -61,7 +61,7 @@ public class TormozMoving : MovingSelect
                 Tormoz.tormoz.gameObject.transform.position = pointToTormoz.transform.position;
                 Tormoz.tormoz.gameObject.transform.rotation = pointToTormoz.transform.rotation;
             }
-            else
+            else if (curState == NameState.SET_TORMOZ)
             {
                 PlayerRay.playerRay.Add(Tormoz.tormoz.gameObject.GetComponent<TormozMoving>());
             }
