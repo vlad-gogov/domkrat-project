@@ -106,7 +106,7 @@ public class TPKMoving : MonoBehaviour
             // Закатывание
             else if (type == TypeArea.UP)
             {
-                if (isUp(attachedDomkrats))
+                if (tpkDir == TPKDirection.FORWARD && isUp(attachedDomkrats))
                 {
                     StartCoroutine(MoveTpk(TPKDirection.FORWARD));
                 }
@@ -117,7 +117,7 @@ public class TPKMoving : MonoBehaviour
 
             else if (type == TypeArea.DOWN)
             {
-                if (isDown(attachedDomkrats))
+                if (tpkDir == TPKDirection.FORWARD && isDown(attachedDomkrats))
                 {
                     StartCoroutine(MoveTpk(TPKDirection.FORWARD));
                 }
