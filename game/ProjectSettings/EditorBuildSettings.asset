@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UpBlyat.unity
     guid: 88efdb572372c3049a07ae1ee0ad34ed
+  - enabled: 1
+    path: Assets/Scenes/DownScene.unity
+    guid: 77945e2ae007e45458662aff2414b976
   m_configObjects: {}

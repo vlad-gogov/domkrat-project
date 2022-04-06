@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public GameObject scrollView;
     TutorialBar tutorial;
     bool finished = false;
+    bool isOpen = false;
 
     void Awake()
     {
@@ -53,6 +54,11 @@ public class UIManager : MonoBehaviour
 
     public void OpenTutorial(string tutor, bool finished=false)
     {
+        if (isOpen)
+        {
+            return;
+        }
+        isOpen = true;
         scrollView.SetActive(true);
         Debug.Log(tutorial);
         this.finished = finished;
@@ -66,6 +72,7 @@ public class UIManager : MonoBehaviour
         {
             SceneManager.LoadScene("Menu");
         }
+        isOpen = false;
         scrollView.SetActive(false);
         tutorial.Hide();
         Singleton.Instance.StateManager.Resume();
