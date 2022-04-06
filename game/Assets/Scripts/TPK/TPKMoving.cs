@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,19 +19,14 @@ public class TPKMoving : MonoBehaviour
     TPKDirection curDirection = TPKDirection.STAY;
     bool isMoving = false;
 
+    const float EPS = 10e-4f;
+
     float speedRotation = 100f;
     List<DomkratMoving> domkratMovings = new List<DomkratMoving>();
 
     void Update()
     {
         Moving();
-
-        //if (Input.GetKeyDown(KeyCode.DownArrow))
-        //{
-        //    StartCoroutine(MoveTpk(TPKDirection.FORWARD));
-        //    return;
-        //}
-       
 
         if (domkratMovings.Count == 0 && Singleton.Instance.StateManager.GetState() == NameState.UP_TPK)
         {
@@ -375,11 +371,11 @@ public class TPKMoving : MonoBehaviour
             }
         }
         // Надо подумать
-        if (Tormoz.tormoz.tormozMovingHand.isSelected)
-        {
-            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Ручка тормоза не отжата (тпк не тормозит)", Weight = ErrorWeight.LOW });
-            return false;
-        }
+        //if (Tormoz.tormoz.tormozMovingHand.isSelected)
+        //{
+        //    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Ручка тормоза не отжата (тпк не тормозит)", Weight = ErrorWeight.LOW });
+        //    return false;
+        //}
         return true;
     }
 
@@ -431,11 +427,11 @@ public class TPKMoving : MonoBehaviour
             }
         }
         // Надо подумать
-        //if (Tormoz.tormoz.tormozMovingHand.isSelected)
-        //{
-        //    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Ручка тормоза не отжата (тпк не тормозит)", Weight = ErrorWeight.LOW });
-        //    return false;
-        //}
+        if (!Tormoz.tormoz.tormozMovingHand.isSelected)
+        {
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Ручка тормоза отжата (тпк не может поехать вперед)", Weight = ErrorWeight.LOW });
+            return false;
+        }
         return true;
     }
 
@@ -465,17 +461,50 @@ public class TPKMoving : MonoBehaviour
                 vector = new Vector3(0, 0, delta);
                 break;
         }
+        float a = 0.01f;
+        float maxSpeed = 0.8f;
+        delta = 300f;
         for (float i = 0; i <= Mathf.Abs(delta); i += shift * Time.deltaTime)
         {
             if (Input.GetKeyDown(KeyCode.T))
             {
                 break;
             }
-            if (Tormoz.tormoz.tormozMovingHand.isSelected)
+            Debug.Log($"{transform.rotation.x} | {Tormoz.tormoz.tormozMovingHand.isSelected}");
+            if (transform.rotation.x > 0.02f) // поднимаемся в горку, тормоз должен быть отжат
             {
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормоз должен быть отжат, иначе ТПК не тормозит", Weight = ErrorWeight.LOW });
-                break;
+                if (Tormoz.tormoz.tormozMovingHand.isSelected)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормоз должен быть отжат, иначе ТПК не тормозит", Weight = ErrorWeight.LOW });
+                    StartCoroutine(FailLift(TPKDirection.BACK));
+                    break;
+                }
             }
+            if (transform.rotation.x < -0.02f) // спускаемся с горки, тормоз должен быть то отжат то нажат
+            {
+                if (Tormoz.tormoz.tormozMovingHand.isSelected)
+                {
+                    shift += a;
+                    //Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормоз должен быть отжат, иначе ТПК не тормозит", Weight = ErrorWeight.LOW });
+                    //StartCoroutine(FailLift(TPKDirection.BACK));
+                    //break;
+                }
+                else
+                {
+                    shift -= a;
+                    if (shift < 0)
+                    {
+                        shift = 0;
+                    }
+                }
+                if (shift > maxSpeed)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормоз должен быть отжат, иначе ТПК не тормозит", Weight = ErrorWeight.LOW });
+                    StartCoroutine(FailLift(TPKDirection.BACK));
+                    break;
+                }
+            }
+
             foreach (var domkrat in domkratMovings)
             {
                 domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
@@ -484,5 +513,62 @@ public class TPKMoving : MonoBehaviour
             yield return null;
         }
         isMoving = false;
+    }
+
+    IEnumerator FailLift(TPKDirection direction)
+    {
+        float shift = 0f;
+        // right : минус по х
+        // left : плюс по х
+        // forward : минус по z
+        // daun blyat : плюс по z
+        isMoving = true;
+        Vector3 vector = new Vector3(0, 0, 0);
+        float delta = 3f;
+
+        switch (direction)
+        {
+            case TPKDirection.RIGHT:
+                vector = new Vector3(-delta, 0, 0);
+                break;
+            case TPKDirection.LEFT:
+                vector = new Vector3(delta, 0, 0);
+                break;
+            case TPKDirection.FORWARD:
+                vector = new Vector3(0, 0, -delta);
+                break;
+            case TPKDirection.BACK:
+                vector = new Vector3(0, 0, delta);
+                break;
+        }
+
+        float a = 0.01f;
+        float speed = shift;
+        float maxSpeed = 1.2f;
+
+        while(Math.Abs(transform.rotation.x) > EPS)
+        {
+            foreach (var domkrat in domkratMovings)
+            {
+                domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
+            }
+            if (speed < maxSpeed)
+            {
+                speed += a;
+            }
+            gameObject.transform.Translate(vector * speed * Time.deltaTime);
+            yield return null;
+        }
+
+        while (speed > 0)
+        {
+            speed -= a;
+            foreach (var domkrat in domkratMovings)
+            {
+                domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
+            }
+            gameObject.transform.Translate(vector * speed * Time.deltaTime);
+            yield return null;
+        }
     }
 }

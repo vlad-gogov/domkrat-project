@@ -85,6 +85,7 @@ public class StateManager : MonoBehaviour
 
     void Awake()
     {
+        Application.targetFrameRate = 60;
         GameObject[] ObjDomkrats = GameObject.FindGameObjectsWithTag("Domkrat");
 
         foreach (GameObject obj in ObjDomkrats)

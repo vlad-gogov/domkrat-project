@@ -69,6 +69,7 @@ public class TPK : MonoBehaviour
         tpkObj.GetComponent<Rigidbody>().useGravity = flag;
         // GetComponent<BoxCollider>().enabled = !flag;
         GetComponent<Rigidbody>().useGravity = !flag;
+        // GetComponent<Rigidbody>().isKinematic = flag;
     }
 
     public int AddDomkrat(Domkrat domkrat)
