@@ -77,7 +77,6 @@ public class PlayerRay : MonoBehaviour
                 Singleton.Instance.UIManager.ClearEnterText();
                 selectable = null;
             }
-            checkSelectable();
         }
         else if (_selectedObject.tag == "Ruchka")
         {
@@ -102,6 +101,8 @@ public class PlayerRay : MonoBehaviour
                 placeForSet = null;
             }
         }
+
+        checkSelectable();
 
         foreach (var movable in moving)
         {

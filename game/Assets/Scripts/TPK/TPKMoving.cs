@@ -108,11 +108,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (tpkDir == TPKDirection.FORWARD)
                 {
-                    if ((curState == NameState.CHECK_CONFIG_TPK && isUp(attachedDomkrats)) || (curState == NameState.SET_TORMOZ && Tormoz.tormoz.isSet))
-                    {
-                        Singleton.Instance.StateManager.NextState();
-                    }
-                    if (curState == NameState.MOVE_TPK_UP)
+                    if (curState == NameState.MOVE_TPK_UP && isUp(attachedDomkrats)) //  добавить что тормоз подключен
                     {
                         StartCoroutine(MoveTpk(tpkDir));
                     }
@@ -125,11 +121,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (tpkDir == TPKDirection.FORWARD)
                 {
-                    if ((curState == NameState.CHECK_CONFIG_TPK && isDown(attachedDomkrats)) || (curState == NameState.SET_TORMOZ && Tormoz.tormoz.isSet))
-                    {
-                        Singleton.Instance.StateManager.NextState();
-                    }
-                    if (curState == NameState.MOVE_TPK_DOWN)
+                    if (curState == NameState.MOVE_TPK_DOWN && isDown(attachedDomkrats)) //  добавить что тормоз подключен
                     {
                         StartCoroutine(MoveTpk(tpkDir));
                     }

@@ -21,13 +21,9 @@ public class TormozSwitcher : Selectable
     void Update()
     {
         NameState curState = Singleton.Instance.StateManager.GetState();
-        if (curState == NameState.CHECK_BREAK_MECHANISM || curState == NameState.CHECK_CONFIG_TPK)
+        if (!boxCol.enabled && curState == NameState.CHECK_BREAK_MECHANISM)
         {
             boxCol.enabled = true;
-        }
-        else if (curState == NameState.MOVE_TPK_FLAT || curState > NameState.CHECK_CONFIG_TPK)
-        {
-            boxCol.enabled = false;
         }
     }
 

@@ -14,10 +14,7 @@ public enum NameState
     UP_TPK = 5,
     CHECK_BREAK_MECHANISM = 6,
     // Flat
-    MOVE_TPK_FLAT = 7, // Перемещение в точку
-    // Up or Down
-    CHECK_CONFIG_TPK = 8,
-    SET_TORMOZ = 9,
+    MOVE_TPK_FLAT = 7,
     // Up
     MOVE_TPK_UP = 10,
     // Down
@@ -119,15 +116,11 @@ public class StateManager : MonoBehaviour
         }
         else if (typeArea == TypeArea.UP)
         {
-            states.Add(new State() { state = NameState.CHECK_CONFIG_TPK, disctiption = "Настройте домкраты для закатывания по наклонной поверхности" });
-            states.Add(new State() { state = NameState.SET_TORMOZ, disctiption = "Подключите тормоз к задним домкратам" });
-            states.Add(new State() { state = NameState.MOVE_TPK_UP, disctiption = "Переместите ТПК по наклонной поверхности вверх" });
+            states.Add(new State() { state = NameState.MOVE_TPK_UP, disctiption = "Закатите ТПК по наклонной поверхности до красной точки" });
         }
         else if (typeArea == TypeArea.DOWN)
         {
-            states.Add(new State() { state = NameState.CHECK_CONFIG_TPK, disctiption = "Настройте домкраты для скатывания по наклонной поверхности" });
-            states.Add(new State() { state = NameState.SET_TORMOZ, disctiption = "Подключите тормоз к задним домкратам" });
-            states.Add(new State() { state = NameState.MOVE_TPK_DOWN, disctiption = "Переместите ТПК по наклонной поверхности вниз" });
+            states.Add(new State() { state = NameState.MOVE_TPK_DOWN, disctiption = "Скатите ТПК по наклонной поверхности до красной точки" });
         }
 
         indexCurState = 0;
@@ -161,7 +154,7 @@ public class StateManager : MonoBehaviour
         }
         Debug.Log(states[indexCurState].state);
 
-        if (typeArea != TypeArea.FLAT && states[indexCurState].state > NameState.SET_TORMOZ)
+        if (typeArea != TypeArea.FLAT && states[indexCurState].state > NameState.CHECK_BREAK_MECHANISM)
         {
             TPK.TPKObj.SwitchMovingThings(true);
         }
