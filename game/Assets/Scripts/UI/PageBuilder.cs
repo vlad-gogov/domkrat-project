@@ -106,6 +106,7 @@ public class PageBuilder : MonoBehaviour
         // 16:9 480p
         img.rectTransform.sizeDelta = new Vector2(853f, 480f);
         var txtt = new Texture2D(853, 480);
+        imgPath = Path.Combine(Application.streamingAssetsPath, imgPath);
         try
         {
             txtt.LoadImage(File.ReadAllBytes(imgPath));
@@ -126,6 +127,8 @@ public class PageBuilder : MonoBehaviour
         var img = go.AddComponent<RawImage>();
         // 16:9 480p
         img.rectTransform.sizeDelta = new Vector2(853f, 480f);
+        // Videos\VivesitDomkrat.mp4
+        vidPath = Path.Combine(Application.streamingAssetsPath, vidPath);
         if (File.Exists(vidPath))
         {
             vid.url = vidPath;
