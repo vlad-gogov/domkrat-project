@@ -14818,7 +14818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   errorMessage: {fileID: 83805840}
   gameMode: 0
-  typeArea: 0
+  typeArea: 1
   counterMistaks: 0
   player: {fileID: 984117734}
   countPerehodnick: 0
@@ -22453,7 +22453,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1253657368}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.9999993
+  m_Size: 0.9999997
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
