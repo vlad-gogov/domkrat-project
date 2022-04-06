@@ -161,7 +161,7 @@ public class StateManager : MonoBehaviour
         }
         Debug.Log(states[indexCurState].state);
 
-        if (typeArea != TypeArea.FLAT && states[indexCurState].state > NameState.CHECK_BREAK_MECHANISM)
+        if (typeArea != TypeArea.FLAT && states[indexCurState].state > NameState.SET_TORMOZ)
         {
             TPK.TPKObj.SwitchMovingThings(true);
         }
