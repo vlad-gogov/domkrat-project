@@ -49,7 +49,7 @@ public class TormozMoving : MovingSelect
         }
     }
 
-    public void ConnectTo(GameObject obj, DomkratType orient, GameObject pointToTormoz)
+    public bool ConnectTo(GameObject obj, DomkratType orient, GameObject pointToTormoz)
     {
         // TODO
         if (!isConnected)
@@ -72,6 +72,10 @@ public class TormozMoving : MovingSelect
         }
         if (orient == DomkratType.LEFT)
         {
+            if (leftConnector != null)
+            {
+                return false;
+            }
             leftConnector = obj;
             defaultLeftAdapter = leftAdapter.transform.position;
             leftAdapter.transform.position = leftConnector.transform.position;
@@ -79,11 +83,17 @@ public class TormozMoving : MovingSelect
         }
         else if (orient == DomkratType.RIGHT)
         {
+            if (rightConnector != null)
+            {
+                return false;
+            }
             rightConnector = obj;
             defaultRightAdapter = rightAdapter.transform.position;
             rightAdapter.transform.position = rightConnector.transform.position;
             rightWire.UpdateWire(true);
         }
+
+        return true;
     }
 
     public void Disconnect(DomkratType orient)

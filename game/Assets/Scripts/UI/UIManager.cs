@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -11,6 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject enterBox;
     public GameObject scrollView;
     TutorialBar tutorial;
+    bool finished = false;
 
     void Awake()
     {
@@ -49,16 +51,21 @@ public class UIManager : MonoBehaviour
         enter.text = "";
     }
 
-    public void OpenTutorial(string tutor)
+    public void OpenTutorial(string tutor, bool finished=false)
     {
         scrollView.SetActive(true);
         Debug.Log(tutorial);
+        this.finished = finished;
         tutorial.Show(tutor);
         Singleton.Instance.StateManager.Pause();
     }
 
     public void CloseTutorial()
     {
+        if (finished)
+        {
+            SceneManager.LoadScene("Menu");
+        }
         scrollView.SetActive(false);
         tutorial.Hide();
         Singleton.Instance.StateManager.Resume();

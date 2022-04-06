@@ -375,13 +375,11 @@ public class TPKMoving : MonoBehaviour
             }
         }
         // Надо подумать
-        /*
         if (Tormoz.tormoz.tormozMovingHand.isSelected)
         {
             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Ручка тормоза не отжата (тпк не тормозит)", Weight = ErrorWeight.LOW });
             return false;
         }
-        */
         return true;
     }
 
@@ -428,6 +426,11 @@ public class TPKMoving : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.T))
             {
+                break;
+            }
+            if (Tormoz.tormoz.tormozMovingHand.isSelected)
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормоз должен быть отжат, иначе ТПК не тормозит", Weight = ErrorWeight.LOW });
                 break;
             }
             foreach (var domkrat in domkratMovings)

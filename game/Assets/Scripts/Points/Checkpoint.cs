@@ -20,7 +20,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (collider.gameObject.tag == "Tpk2")
         {
-            Singleton.Instance.StateManager.NextState();
+            Singleton.Instance.UIManager.OpenTutorial("Ура!!!!", /*finished=*/true);
         }
     }
 }

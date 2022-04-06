@@ -78,10 +78,7 @@ public class TormozConnector : Selectable
             {
                 if (!tormoz.isUse)
                 {
-                    tormoz.gameObject.SetActive(true);
-                    tormozMoving.ConnectTo(pointerToAdapter, type, pointForTormoz);
-                    isSelected = true;
-                    batya.isTormozConnected = true;
+                    ConnectTormoz();
                 }
                 else
                 {
@@ -96,11 +93,21 @@ public class TormozConnector : Selectable
         else
         // else if (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_DOWN)
         {
-            tormoz.gameObject.SetActive(true);
-            tormozMoving.ConnectTo(pointerToAdapter, type, pointForTormoz);
-            isSelected = true;
-            batya.isTormozConnected = true;
+            ConnectTormoz();
         }
+    }
+
+    void ConnectTormoz()
+    {
+        var result = tormozMoving.ConnectTo(pointerToAdapter, type, pointForTormoz);
+        if (!result)
+        {
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Сначала отключить тормоз от другого домкрата", Weight = ErrorWeight.LOW });
+            return;
+        }
+        tormoz.gameObject.SetActive(true);
+        isSelected = true;
+        batya.isTormozConnected = true;
     }
 
     void Update()
