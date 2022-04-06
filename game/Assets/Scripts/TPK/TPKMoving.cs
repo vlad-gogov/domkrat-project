@@ -21,8 +21,6 @@ public class TPKMoving : MonoBehaviour
     float speedRotation = 100f;
     List<DomkratMoving> domkratMovings = new List<DomkratMoving>();
 
-    public bool isSetTormoz = false;
-
     void Update()
     {
         Moving();
@@ -110,7 +108,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (tpkDir == TPKDirection.FORWARD)
                 {
-                    if ((Singleton.Instance.StateManager.GetState() == NameState.CHECK_CONFIG && isUp(attachedDomkrats)) || (Singleton.Instance.StateManager.GetState() == NameState.SET_TORMOZ && isSetTormoz))
+                    if ((Singleton.Instance.StateManager.GetState() == NameState.CHECK_CONFIG && isUp(attachedDomkrats)) || (Singleton.Instance.StateManager.GetState() == NameState.SET_TORMOZ && Tormoz.tormoz.isSet))
                     {
                         Singleton.Instance.StateManager.NextState();
                     }
@@ -128,7 +126,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (tpkDir == TPKDirection.FORWARD)
                 {
-                    if ((Singleton.Instance.StateManager.GetState() == NameState.CHECK_CONFIG && isDown(attachedDomkrats)) || (Singleton.Instance.StateManager.GetState() == NameState.SET_TORMOZ && isSetTormoz))
+                    if ((Singleton.Instance.StateManager.GetState() == NameState.CHECK_CONFIG && isDown(attachedDomkrats)) || (Singleton.Instance.StateManager.GetState() == NameState.SET_TORMOZ && Tormoz.tormoz.isSet))
                     {
                         Singleton.Instance.StateManager.NextState();
                     }

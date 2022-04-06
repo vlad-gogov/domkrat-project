@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Это надо опрокинуть в домкрат и проверять при перемещении
-/// </summary>
-
 public class TormozSwitcher : Selectable
 {
     Animator downPartAnim;

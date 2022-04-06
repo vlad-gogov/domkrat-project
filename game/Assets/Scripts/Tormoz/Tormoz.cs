@@ -9,6 +9,7 @@ public class Tormoz : MonoBehaviour
     public TormozMovingHand tormozMovingHand;
 
     public bool isUse = false;
+    public bool isSet = false;
 
     void Awake()
     {
