@@ -16,6 +16,7 @@ public class TakeRuchka : Selectable
     {
         anim = gameObject.GetComponent<Animator>();
         domkrat = gameObject.transform.parent.parent.parent.parent.parent.GetComponent<Domkrat>();
+        Unselect = false;
     }
 
     public override void Deselect()

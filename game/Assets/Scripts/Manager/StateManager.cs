@@ -205,6 +205,10 @@ public class StateManager : MonoBehaviour
             NextState();
             countDomkrats++;
         }
+        if (Input.GetKey(KeyCode.F1))
+        {
+            Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
+        }
     }
 
     public NameState GetState()

@@ -36,7 +36,6 @@ public class Down_part : MonoBehaviour
             }
             RealUp();
         }
-        // curPosition = Makes.UP;
         return true;
     }
 
@@ -52,7 +51,6 @@ public class Down_part : MonoBehaviour
             }
             RealDown();
         }
-        // curPosition = Makes.DOWN;
         return true;
     }
 
@@ -70,6 +68,16 @@ public class Down_part : MonoBehaviour
         ruchka.GetComponent<Animator>().SetTrigger("Down"); // анимация вращения ручки
     }
 
+    void SetUp()
+    {
+        curPosition = Makes.UP;
+    }
+
+    void SetDown()
+    {
+        curPosition = Makes.DOWN;
+    }
+
     void Update()
     {
         if (!boxFixator.enabled && (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_FLAT || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_DOWN))
@@ -79,22 +87,30 @@ public class Down_part : MonoBehaviour
 
         if (curPosition == Makes.UP)
         {
-
-            if (!rotation_down_part.isRotate && fixator.isSelected)
-            {
+            if (!rotation_down_part.isRotate) {
                 if (Input.GetKey(KeyCode.E)) // 200$ c Vladika
                 {
-                    rotation_down_part.RotateDownPart(90f);
+                    if (fixator.isSelected)
+                    {
+                        rotation_down_part.RotateDownPart(90f);
+                    }
+                    else
+                    {
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Разблокируйте фиксатор поворота", Weight = ErrorWeight.LOW });
+                    }
                 }
                 else if (Input.GetKey(KeyCode.Q))
                 {
-                    rotation_down_part.RotateDownPart(-90f);
+                    if (fixator.isSelected)
+                    {
+                        rotation_down_part.RotateDownPart(-90f);
+                    }
+                    else
+                    {
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Разблокируйте фиксатор поворота", Weight = ErrorWeight.LOW });
+                    }
                 }
-            } else
-            {
-                //Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Разблокируйте фиксатор поворота", Weight = ErrorWeight.LOW });
-                
-            }
+            } 
 
         }
     }

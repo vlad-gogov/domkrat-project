@@ -27,6 +27,13 @@ public class MovingHand : Selectable
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы взять домкрат");
+        if (!isSelected)
+        {
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы взять домкрат");
+        }
+        else
+        {
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы отпустить домкрат");
+        }
     }
 }
