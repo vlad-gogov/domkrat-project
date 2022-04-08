@@ -104,7 +104,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (tpkDir == TPKDirection.FORWARD)
                 {
-                    if (curState == NameState.MOVE_TPK_UP && isUp(attachedDomkrats)) //  добавить что тормоз подключен
+                    if (curState == NameState.MOVE_TPK_UP && isUp(attachedDomkrats))
                     {
                         StartCoroutine(MoveTpk(tpkDir));
                     }
@@ -117,7 +117,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (tpkDir == TPKDirection.FORWARD)
                 {
-                    if (curState == NameState.MOVE_TPK_DOWN && isDown(attachedDomkrats)) //  добавить что тормоз подключен
+                    if (curState == NameState.MOVE_TPK_DOWN && isDown(attachedDomkrats))
                     {
                         StartCoroutine(MoveTpk(tpkDir));
                     }
@@ -145,20 +145,93 @@ public class TPKMoving : MonoBehaviour
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Отключите тормозной механизм на всех домкратах", Weight = ErrorWeight.LOW });
                 return false;
             }
-            //Debug.Log($"{domkrat.curV} | {domkrat.downPartRotation.currentWheelState} | {domkrat.downPartRotation.dir} | {domkrat.rotateFixator.isSelected}");
             if (domkrat.curV == OrientationVertical.Up)
             {
-                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.FORWARD || !domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния передних домкратов для движения вперед", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы передних домкрат в рояльное положение", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (!domkrat.rotateFixator.isSelected)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Отключите поворотный механизм на передних домкратах", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (domkrat.downPartRotation.dir != Direction.FORWARD)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на передних домкратах должно быть направлено по ходу движения", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }
             else if (domkrat.curV == OrientationVertical.Down)
             {
-                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.BACK || domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS )
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния задних домкратов для движения вперед", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы задних домкрат в соосное положение", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (domkrat.rotateFixator.isSelected)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Включите поворотный механизм на задних домкратах", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (domkrat.downPartRotation.dir != Direction.BACK)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на задних домкратах должно быть направлено по ходу движения", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    bool isBack(List<Domkrat> attachedDomkrats)
+    {
+        foreach (var domkrat in attachedDomkrats)
+        {
+            if (domkrat.techStand.isSelected)
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите все технологические подставки", Weight = ErrorWeight.LOW });
+                return false;
+            }
+            if (domkrat.tormozSwitch.isSelected)
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Отключите тормозной механизм на всех домкратах", Weight = ErrorWeight.LOW });
+                return false;
+            }
+            if (domkrat.curV == OrientationVertical.Down)
+            {
+                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы задних домкрат в рояльное положение", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (!domkrat.rotateFixator.isSelected)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Отключите поворотный механизм на задних домкратах", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (domkrat.downPartRotation.dir != Direction.FORWARD)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на задних домкратах должно быть направлено по ходу движения", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+            }
+            else if (domkrat.curV == OrientationVertical.Up)
+            {
+                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы передних домкрат в соосное положение", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (domkrat.rotateFixator.isSelected)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Включите поворотный механизм на передних домкратах", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (domkrat.downPartRotation.dir != Direction.FORWARD)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на передних домкратах должно быть направлено по ходу движения", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }
@@ -182,43 +255,39 @@ public class TPKMoving : MonoBehaviour
             }
             if (domkrat.curH == OrientationHorizontal.Right)
             {
-                if (domkrat.downPartRotation.currentWheelState == WheelState.ROYAL && domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL)
                 {
-                    if (domkrat.curV == OrientationVertical.Up && domkrat.downPartRotation.dir != Direction.LEFT)
-                    {
-                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
-                        return false;
-                    }
-                    else if (domkrat.curV == OrientationVertical.Down && domkrat.downPartRotation.dir != Direction.RIGHT)
-                    {
-                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
-                        return false;
-                    }
-                } else
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы правых домкрат в рояльное положение ", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (!domkrat.rotateFixator.isSelected)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния правых домкратов для движения вправо", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Отключите поворотный механизм на правых домкратах", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+
+                if (domkrat.curV == OrientationVertical.Up && domkrat.downPartRotation.dir != Direction.LEFT || domkrat.curV == OrientationVertical.Down && domkrat.downPartRotation.dir != Direction.RIGHT)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на правых домкратах должно быть направлено по ходу движения", Weight = ErrorWeight.LOW });
                     return false;
                 }
                
             }
             else if (domkrat.curH == OrientationHorizontal.Left)
             {
-                if (domkrat.downPartRotation.currentWheelState == WheelState.SOOS && !domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS)
                 {
-                    if (domkrat.curV == OrientationVertical.Up && domkrat.downPartRotation.dir != Direction.LEFT)
-                    {
-                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
-                        return false;
-                    }
-                    else if (domkrat.curV == OrientationVertical.Down && domkrat.downPartRotation.dir != Direction.RIGHT)
-                    {
-                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
-                        return false;
-                    }
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы левых домкрат в соосное положение ", Weight = ErrorWeight.LOW });
+                    return false;
                 }
-                else
+                if (domkrat.rotateFixator.isSelected)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния левых домкратов для движения вправо", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Включите поворотный механизм на левых домкратах", Weight = ErrorWeight.LOW });
+                    return false;
+                }
+                if (domkrat.curV == OrientationVertical.Up && domkrat.downPartRotation.dir != Direction.LEFT || domkrat.curV == OrientationVertical.Down && domkrat.downPartRotation.dir != Direction.RIGHT)
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на левых домкратах должно быть направлено по ходу движения", Weight = ErrorWeight.LOW });
                     return false;
                 }
 
@@ -284,40 +353,6 @@ public class TPKMoving : MonoBehaviour
                     return false;
                 }
 
-            }
-        }
-        return true;
-    }
-
-    bool isBack(List<Domkrat> attachedDomkrats)
-    {
-        foreach (var domkrat in attachedDomkrats)
-        {
-            if (domkrat.techStand.isSelected)
-            {
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите все технологические подставки", Weight = ErrorWeight.LOW });
-                return false;
-            }
-            if (domkrat.tormozSwitch.isSelected)
-            {
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Отключите тормозной механизм на всех домкратах", Weight = ErrorWeight.LOW });
-                return false;
-            }
-            if (domkrat.curV == OrientationVertical.Down)
-            {
-                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.LEFT || !domkrat.rotateFixator.isSelected)
-                {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния задних домкратов для движения назад", Weight = ErrorWeight.LOW });
-                    return false;
-                }
-            }
-            else if (domkrat.curV == OrientationVertical.Up)
-            {
-                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.RIGHT || domkrat.rotateFixator.isSelected)
-                {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния передних домкратов для движения назад", Weight = ErrorWeight.LOW });
-                    return false;
-                }
             }
         }
         return true;

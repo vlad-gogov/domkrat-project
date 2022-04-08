@@ -42,7 +42,6 @@ public class TakeRuchka : Selectable
         anim.SetTrigger("Take");
         RuckaMoving.isMoving = false;
         down_ruchka.GetComponent<Collider>().enabled = false;
-
     }
 
     public void ChangeIsMoving()

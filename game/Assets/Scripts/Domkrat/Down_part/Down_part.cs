@@ -56,14 +56,12 @@ public class Down_part : MonoBehaviour
 
     void RealUp()
     {
-        curPosition = Makes.UP;
         animator.SetTrigger("Up"); // анимация подъема нижней части домкрата
         ruchka.GetComponent<Animator>().SetTrigger("Up"); // анимация вращения ручки
     }
 
     void RealDown()
     {
-        curPosition = Makes.DOWN;
         animator.SetTrigger("Down"); // анимация опускания (по масти) нижней части домкрата
         ruchka.GetComponent<Animator>().SetTrigger("Down"); // анимация вращения ручки
     }

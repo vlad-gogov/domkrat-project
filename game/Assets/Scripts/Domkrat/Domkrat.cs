@@ -18,11 +18,9 @@ public class Domkrat : MonoBehaviour
     public TechStand techStand;
     public TormozSwitcher tormozSwitch;
     public bool isRuchka = true;
-    private float SpeedMove = 0.007f;
+    private float SpeedMove = 1f;
     private MovingHand moveHand;
-    [SerializeField] private GameObject LeftWheel;
-    [SerializeField] private GameObject RightWheel;
-    [SerializeField] private GameObject BackWheel;
+    private DomkratMoving domkratMoving;
     [SerializeField] private BoxCollider boxHand;
 
     Animator up_part;
@@ -44,6 +42,7 @@ public class Domkrat : MonoBehaviour
         childRuchka = transform.GetChild(0).gameObject.GetComponent<Up_part>();
         moveHand = boxHand.gameObject.GetComponent<MovingHand>();
         tormozSwitch = gameObject.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent<TormozSwitcher>();
+        domkratMoving = gameObject.GetComponent<DomkratMoving>();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -112,9 +111,7 @@ public class Domkrat : MonoBehaviour
 
                 GetComponent<Rigidbody>().isKinematic = true;
                 GetComponent<BoxCollider>().enabled = false;
-                LeftWheel.GetComponent<SphereCollider>().enabled = false;
-                RightWheel.GetComponent<SphereCollider>().enabled = false;
-                BackWheel.GetComponent<SphereCollider>().enabled = false;
+                domkratMoving.OffCooliderWheel();
 
                 transform.position = BeginPoint.transform.position;
                 transform.rotation = BeginPoint.transform.rotation;
@@ -122,8 +119,6 @@ public class Domkrat : MonoBehaviour
                 float begin = BeginPoint.transform.position.z;
                 float end = EndPoint.transform.position.z;
                 StartCoroutine(MoveSet(end - begin));
-                up_part.SetTrigger("Finger_past");
-                move_mech.SetTrigger("Up");
                 Destroy(BeginPoint);
                 Destroy(EndPoint);
 
@@ -135,12 +130,15 @@ public class Domkrat : MonoBehaviour
 
     IEnumerator MoveSet(float delta)
     {
-        float shift = SpeedMove;
+        float shift = SpeedMove * Time.deltaTime;
         for (float i = 0; i <= Mathf.Abs(delta); i += shift)
         {
             gameObject.transform.Translate(Vector3.forward * shift);
+            domkratMoving.RotateWheelForUpdate(shift);
             yield return null;
         }
+        up_part.SetTrigger("Finger_past");
+        move_mech.SetTrigger("Up");
     }
 
     public void Notify(NameState state)

@@ -13,15 +13,21 @@ public class PlayerMove : MonoBehaviour
 
 
     public bool isDomkrat = false;
-    [SerializeField] private GameObject Pointer;
+    [SerializeField] private GameObject PointerDomkrat;
+    private GameObject PointerRuchka;
     private DomkratMoving moving;
     public float SpeedRotation = 10f;
     bool isDaun = false;
 
+    void Start()
+    {
+        PointerRuchka = gameObject.transform.GetChild(0).gameObject;
+    }
+
     public void PickUpDomkrat(GameObject SelectedObject)
     {
         moving = SelectedObject.GetComponent<DomkratMoving>();
-        moving.StartMoving(Pointer);
+        moving.StartMoving(PointerDomkrat);
     }
 
     private float _xRotation;
@@ -56,15 +62,24 @@ public class PlayerMove : MonoBehaviour
     }
     void MaybeCroach()
     {
+        GameObject selectedObject = PlayerRay.playerRay.GetSelected();
         if (Input.GetKey(KeyCode.LeftControl) && !isDaun)
         {
             isDaun = true;
             CameraTransform.position = new Vector3(CameraTransform.position.x, CameraTransform.position.y - 1f, CameraTransform.position.z);
+            if (selectedObject != null && selectedObject.tag == "Ruchka")
+            {
+                PointerRuchka.transform.Translate(Vector3.forward * -0.8f);
+            }
         }
         else if (!Input.GetKey(KeyCode.LeftControl) && isDaun)
         {
             isDaun = false;
             CameraTransform.position = new Vector3(CameraTransform.position.x, CameraTransform.position.y + 1f, CameraTransform.position.z);
+            if (selectedObject != null && selectedObject.tag == "Ruchka")
+            {
+                PointerRuchka.transform.Translate(Vector3.forward * 0.8f);
+            }
         }
     }
 
@@ -80,8 +95,8 @@ public class PlayerMove : MonoBehaviour
             inputVector = new Vector3(0f, 0f, Input.GetAxis("Vertical"));
             inputVector /= 2;
             float angel = Input.GetAxis("Horizontal") * Time.deltaTime * SpeedRotation;
-            transform.RotateAround(Pointer.transform.position, Vector3.up, angel);
-            moving.Rotate(Pointer, angel);
+            transform.RotateAround(PointerDomkrat.transform.position, Vector3.up, angel);
+            moving.Rotate(PointerDomkrat, angel);
         }
         Vector3 speedVector = transform.TransformVector(inputVector);
         speedVector *= Speed;

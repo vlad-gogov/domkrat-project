@@ -2,20 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 1. Надо выключить переключатель после подключение тормоза
-/// </summary>
-
 public class TormozSwitcher : Selectable
 {
     Animator downPartAnim;
     BoxCollider boxCol;
+    Down_part_rotation down_Part_Rotation;
 
     public void Start()
     {
         downPartAnim = transform.parent.GetComponent<Animator>();
         boxCol = gameObject.GetComponent<BoxCollider>();
         boxCol.enabled = false;
+        down_Part_Rotation = gameObject.transform.parent.GetComponent<Down_part_rotation>();
     }
 
     void Update()
@@ -52,6 +50,11 @@ public class TormozSwitcher : Selectable
 
     public override void Select()
     {
+        if (down_Part_Rotation.currentWheelState != WheelState.SOOS)
+        {
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Перед тем как взаимодействовать с тормозным механизмом, установить колесный ход в соосное положение" });
+            return;
+        }
         downPartAnim.SetTrigger("enableTormozPipka");
         isSelected = true;
     }

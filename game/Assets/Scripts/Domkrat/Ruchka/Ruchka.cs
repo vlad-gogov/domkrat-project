@@ -44,7 +44,11 @@ public class Ruchka : Selectable
     {
         if (Singleton.Instance.StateManager.GetState() == NameState.CHECK_TURING_MACHANISM)
         {
-            if (!push.enabled)
+            if (isSelected)
+            {
+                push.enabled = false;
+            }
+            else
             {
                 push.enabled = true;
             }
@@ -151,7 +155,10 @@ public class Ruchka : Selectable
                     )
                     {
                         if (actualDomkratDownPart.Up(TechStand.isSelected)) // Анимация подъема нижней части домкрата
+                        {
                             boxCol.enabled = false;
+                            return;
+                        }
                     }
                     else if (
                             actualDomkratUpPart.curPosition == Makes.UP
@@ -159,8 +166,11 @@ public class Ruchka : Selectable
                             && state.direction == Makes.UP
                     )
                     {
-                        if (actualDomkratDownPart.Down(TechStand.isSelected)) // Анимация опускания нижней части домкрата
+                        if (actualDomkratDownPart.Down(TechStand.isSelected))  // Анимация опускания нижней части домкрата
+                        {
                             boxCol.enabled = true;
+                            return;
+                        }
                     }
 
                 }
@@ -173,36 +183,24 @@ public class Ruchka : Selectable
                           && state.direction == Makes.UP
                     )
                     {
-                        Debug.Log("Up part UP");
                         actualDomkratUpPart.Up(state.activeSwitcher == ModeSwitch.LOADED); // Анимация подъема верхней части домкрата
+                        return;
                     }
                     else if (
                             actualDomkratUpPart.curPosition == Makes.UP
                             && state.direction == Makes.DOWN
                     )
                     {
-                        Debug.Log("Up part DOWN");
                         if (TechStand.isSelected)
                         {
                             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем как опускать ТПК", Weight = ErrorWeight.HIGH });
                             return;
                         }
                         actualDomkratUpPart.Down(state.activeSwitcher == ModeSwitch.LOADED); // Анимация опускания верхней части домкрата
+                        return;
                     }
-                    //else if (actualDomkratUpPart.curPosition == Makes.DOWN && state.direction == Makes.DOWN)
-                    //{
-                    //    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя опустить домкрат: он и так в нижнем положении.", Weight = ErrorWeight.MINOR });
-                    //    return;
-                    //}
-                    //else if (actualDomkratUpPart.curPosition == Makes.UP && state.direction == Makes.UP)
-                    //{
-                    //    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя поднять домкрат: он и так в верхнем положении.", Weight = ErrorWeight.MINOR });
-                    //    return;
-                    //}
                 }
             }
-
-            //Нужно проверить
             else if (curPosition == PositionRuchka.DOWN)
             {
                 if (
@@ -217,12 +215,14 @@ public class Ruchka : Selectable
                         anim.SetTrigger("Up");
                         actualDomkratDownPart.rotation_down_part.RotateDownPart(90f, true, 0.5f);
                         isRight = true;
+                        return;
                     }
                     else if (state.direction == Makes.DOWN)
                     {
                         anim.SetTrigger("Up");
                         actualDomkratDownPart.rotation_down_part.RotateDownPart(-90f, true, 0.5f);
                         isLeft = true;
+                        return;
                     }
                 }
             }

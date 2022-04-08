@@ -55,4 +55,11 @@ public class DomkratMoving : MovingSelect
             }
         }
     }
+
+    public void OffCooliderWheel()
+    {
+        LeftWheel.GetComponent<SphereCollider>().enabled = false;
+        RightWheel.GetComponent<SphereCollider>().enabled = false;
+        BackWheel.GetComponent<SphereCollider>().enabled = false;
+    }
 }
