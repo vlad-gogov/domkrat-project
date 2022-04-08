@@ -53,6 +53,7 @@ public class UIController : MonoBehaviour
             answerButtons[i].GetComponentInChildren<Text>().text = question.Answers[i];
             answerButtons[i].gameObject.GetComponent<Image>().color = Color.white;
             answerButtons[i].gameObject.SetActive(true);
+            answerButtons[i].gameObject.GetComponent<Button>().interactable = true;
         }
 
         for (int i = question.Answers.Length; i < answerButtons.Length; i++)
@@ -80,13 +81,14 @@ public class UIController : MonoBehaviour
 
     public void HandleSubmittedAnswer(bool isCorrect, int correctButton, int uncorrectButton)
     {
+        Debug.Log("Handle");
         ToggleAnswerButtons(false);
         ToggleImage(false);
-            if (!isCorrect)
-            {
-                ShowWrongAnswerPopup(uncorrectButton);
-            }
-            ShowCorrectButton(correctButton);
+        if (!isCorrect)
+        {
+             ShowWrongAnswerPopup(uncorrectButton);
+        }
+        ShowCorrectButton(correctButton);
     }
 
     public void HandleSubmittedAnswer(bool isCorrect, string correctButton, int[] uncorrectButton)
@@ -117,7 +119,8 @@ public class UIController : MonoBehaviour
     public void ShowCorrectButton(int correctButton)
     {
         answerButtons[correctButton].gameObject.SetActive(true);
-        answerButtons[correctButton].gameObject.GetComponent<Image>().color = Color.green; 
+        answerButtons[correctButton].gameObject.GetComponent<Image>().color = Color.green;
+        answerButtons[correctButton].gameObject.GetComponent<Button>().interactable = false;
     }
     public void ShowCorrectButtonSeq(string correctButton, int[] uncorrectButton)
     {
@@ -128,10 +131,12 @@ public class UIController : MonoBehaviour
             {
                 answerButtons[i].gameObject.SetActive(true);
                 answerButtons[i].gameObject.GetComponent<Image>().color = Color.green;
+                answerButtons[i].gameObject.GetComponent<Button>().interactable = false;
             } else
             {
                 answerButtons[i].gameObject.SetActive(true);
                 answerButtons[i].gameObject.GetComponent<Image>().color = Color.red;
+                answerButtons[i].gameObject.GetComponent<Button>().interactable = false;
             }
         }
         
@@ -147,6 +152,7 @@ public class UIController : MonoBehaviour
     {
         answerButtons[uncorrectButton].gameObject.SetActive(true);
         answerButtons[uncorrectButton].gameObject.GetComponent<Image>().color = Color.red;
+        answerButtons[uncorrectButton].gameObject.GetComponent<Button>().interactable = false;
         //wrongAnswerPopup.SetActive(true);
     }
 }
