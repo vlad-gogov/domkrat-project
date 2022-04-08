@@ -7,12 +7,15 @@ public class SwitchRoyal : Selectable
     public Up_part actualDomkratUpPart;
     public Down_part actualDomkratDownPart;
 
+    private Ruchka ruchka;
+
     private BoxCollider box;
 
     void Start()
     {
         box = gameObject.GetComponent<BoxCollider>();
         box.enabled = false;
+        ruchka = actualDomkratUpPart.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Ruchka>();
     }
 
     void Update()
@@ -53,14 +56,15 @@ public class SwitchRoyal : Selectable
                 {
                     actualDomkratDownPart.GetComponent<Animator>().SetTrigger("ToRoyal");
                     actualDomkratDownPart.rotation_down_part.currentWheelState = WheelState.ROYAL;
-                } else
+                } 
+                else
                 {
                     actualDomkratDownPart.GetComponent<Animator>().SetTrigger("ToSoos");
                     actualDomkratDownPart.rotation_down_part.currentWheelState = WheelState.SOOS;
                 }
+                ruchka.isSelected = true;
                 actualDomkratDownPart.rotation_down_part.ChangeDir();
             }
         }
-
     }
 }

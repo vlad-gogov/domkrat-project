@@ -136,12 +136,12 @@ public class TormozConnector : Selectable
                 {
                     if (Input.GetKey(KeyCode.DownArrow))
                     {
-                        StartCoroutine(domkratMove.RotateWheel(-5f, 10f));
+                        StartCoroutine(domkratMove.RotateWheel(5f, 10f));
                         isForwardWithStop = true;
                     }
                     else if (Input.GetKey(KeyCode.UpArrow))
                     {
-                        StartCoroutine(domkratMove.RotateWheel(1f, 10f, true));
+                        StartCoroutine(domkratMove.RotateWheel(-1f, 10f, true));
                         isBackdWithStop = true;
                     }
                 }

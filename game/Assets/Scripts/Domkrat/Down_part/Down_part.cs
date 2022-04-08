@@ -76,6 +76,11 @@ public class Down_part : MonoBehaviour
         curPosition = Makes.DOWN;
     }
 
+    void DeselectRuchka()
+    {
+        ruchka.GetComponent<Ruchka>().Deselect();
+    }
+
     void Update()
     {
         if (!boxFixator.enabled && (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_FLAT || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_DOWN))

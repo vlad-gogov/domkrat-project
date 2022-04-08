@@ -31,6 +31,7 @@ public class TormozMoving : MovingSelect
         if (leftConnector != null)
         {
             leftAdapter.transform.position = leftConnector.transform.position;
+            leftAdapter.transform.rotation = leftConnector.transform.rotation;
             leftWire.UpdateWire(true);
         }
         else
@@ -41,6 +42,7 @@ public class TormozMoving : MovingSelect
         if (rightConnector != null)
         {
             rightAdapter.transform.position = rightConnector.transform.position;
+            rightAdapter.transform.rotation = rightConnector.transform.rotation;
             rightWire.UpdateWire(true);
         }
         else
