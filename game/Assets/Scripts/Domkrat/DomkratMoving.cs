@@ -27,8 +27,8 @@ public class DomkratMoving : MovingSelect
 
     public void RotateWheelForUpdate(float angle, bool backWheel = true)
     {
-        LeftWheel.transform.Rotate(Vector3.up, -angle);
-        RightWheel.transform.Rotate(Vector3.up, -angle);
+        LeftWheel.transform.Rotate(Vector3.up, angle);
+        RightWheel.transform.Rotate(Vector3.up, angle);
         if (backWheel)
         {
             BackWheel.transform.Rotate(Vector3.forward, angle);
@@ -42,8 +42,7 @@ public class DomkratMoving : MovingSelect
         for (float t = 0; t <= Mathf.Abs(angle); t += speed * Time.deltaTime)
         {
             float temp = speed * signed * Time.deltaTime;
-            LeftWheel.transform.Rotate(Vector3.up, -temp);
-            RightWheel.transform.Rotate(Vector3.up, -temp);
+            RotateWheelForUpdate(temp, false);
             yield return null;
         }
         if (isBack)
@@ -51,8 +50,7 @@ public class DomkratMoving : MovingSelect
             for (float t = 0; t <= Mathf.Abs(angle); t += speed * Time.deltaTime)
             {
                 float temp = speed * signed * Time.deltaTime;
-                LeftWheel.transform.Rotate(Vector3.up, temp);
-                RightWheel.transform.Rotate(Vector3.up, temp);
+                RotateWheelForUpdate(-temp, false);
                 yield return null;
             }
         }

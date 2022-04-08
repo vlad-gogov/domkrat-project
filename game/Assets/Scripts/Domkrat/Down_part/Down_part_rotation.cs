@@ -5,9 +5,9 @@ using UnityEngine;
 public enum Direction
 {
     FORWARD = 0,
-    RIGHT = 90,
+    LEFT = 90,
     BACK = 180,
-    LEFT = 270
+    RIGHT = 270
 }
 
 public enum WheelState
@@ -28,6 +28,7 @@ public class Down_part_rotation : MonoBehaviour
     void Start()
     {
         tormozConnector.enabled = false;
+        ChangeDir();
     }
 
     public void RotateDownPart(float angle, bool isGear = false, float k = 1.0f)
@@ -61,25 +62,6 @@ public class Down_part_rotation : MonoBehaviour
         int temp = (int)gameObject.transform.localEulerAngles.y;
         int transformY = temp >= 0 ? temp % 360 : -temp % 360;
         dir = (Direction)transformY;
-        if (currentWheelState == WheelState.ROYAL)
-        {
-            if (dir == Direction.FORWARD)
-            {
-                dir = Direction.BACK;
-            }
-            else if (dir == Direction.BACK)
-            {
-                dir = Direction.FORWARD;
-            }
-            else if (dir == Direction.LEFT)
-            {
-                dir = Direction.RIGHT;
-            }
-            else if (dir == Direction.RIGHT)
-            {
-                dir = Direction.LEFT;
-            }
-        }
     }
 
     public void SwitchBoxColliderTormozConnector()

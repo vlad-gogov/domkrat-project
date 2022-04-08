@@ -148,7 +148,7 @@ public class TPKMoving : MonoBehaviour
             //Debug.Log($"{domkrat.curV} | {domkrat.downPartRotation.currentWheelState} | {domkrat.downPartRotation.dir} | {domkrat.rotateFixator.isSelected}");
             if (domkrat.curV == OrientationVertical.Up)
             {
-                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.BACK || !domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL || domkrat.downPartRotation.dir != Direction.FORWARD || !domkrat.rotateFixator.isSelected)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния передних домкратов для движения вперед", Weight = ErrorWeight.LOW });
                     return false;
@@ -156,7 +156,7 @@ public class TPKMoving : MonoBehaviour
             }
             else if (domkrat.curV == OrientationVertical.Down)
             {
-                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.FORWARD || domkrat.rotateFixator.isSelected)
+                if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS || domkrat.downPartRotation.dir != Direction.BACK || domkrat.rotateFixator.isSelected)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Не правильное состояния задних домкратов для движения вперед", Weight = ErrorWeight.LOW });
                     return false;
