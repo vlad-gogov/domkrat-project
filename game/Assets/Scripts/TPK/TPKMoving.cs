@@ -592,7 +592,14 @@ public class TPKMoving : MonoBehaviour
 
             foreach (var domkrat in domkratMovings)
             {
-                domkrat.RotateWheelForUpdate(-speedRotation * Time.deltaTime, false);
+                if (Singleton.Instance.StateManager.typeArea == TypeArea.DOWN)
+                {
+                    domkrat.RotateWheelForUpdate(-speedRotation * Time.deltaTime, false);
+                } else
+                {
+                    domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
+                }
+                
             }
             gameObject.transform.Translate(vector * shift * Time.deltaTime);
             yield return null;

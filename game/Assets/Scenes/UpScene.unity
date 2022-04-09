@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2995,7 +2995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bcf0696d55f7fe4286b16d4744090e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movingTPK: {fileID: 0}
+  movingTPK: {fileID: 1596176230}
 --- !u!65 &151958161
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12852,8 +12852,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1552190892}
   m_HandleRect: {fileID: 1552190891}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.6948117
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15788,7 +15788,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831770200}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: 0, w: 0}
   m_LocalPosition: {x: -0.019994304, y: 8.459999, z: 0.029997537}
   m_LocalScale: {x: 0.3334087, y: 0.33340874, z: 0.44599304}
   m_Children:
@@ -15798,7 +15798,7 @@ Transform:
   - {fileID: 1108113053}
   m_Father: {fileID: 1244871323}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
 --- !u!95 &831770202
 Animator:
   serializedVersion: 3
@@ -15911,7 +15911,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 834502841}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: 0, w: 0}
   m_LocalPosition: {x: -0.019994304, y: 8.459999, z: 0.029997537}
   m_LocalScale: {x: 0.3334087, y: 0.33340874, z: 0.44599304}
   m_Children:
@@ -15921,7 +15921,7 @@ Transform:
   - {fileID: 793593733}
   m_Father: {fileID: 1357300765}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
 --- !u!95 &834502843
 Animator:
   serializedVersion: 3
@@ -18181,7 +18181,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986415576}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: 0, w: 0}
   m_LocalPosition: {x: -0.019994304, y: 8.459999, z: 0.029997537}
   m_LocalScale: {x: 0.3334087, y: 0.33340874, z: 0.44599304}
   m_Children:
@@ -18191,7 +18191,7 @@ Transform:
   - {fileID: 1760373409}
   m_Father: {fileID: 270319863}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
 --- !u!95 &986415578
 Animator:
   serializedVersion: 3
@@ -23565,7 +23565,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1253657368}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -31480,7 +31480,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00088500977, y: -0.00033569336}
+  m_AnchoredPosition: {x: 0.00088500977, y: -0.00024414062}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1701788935
@@ -33642,7 +33642,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853361191}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: 0, w: 0}
   m_LocalPosition: {x: -0.019994304, y: 8.459999, z: 0.029997537}
   m_LocalScale: {x: 0.3334087, y: 0.33340874, z: 0.44599304}
   m_Children:
@@ -33652,7 +33652,7 @@ Transform:
   - {fileID: 14745282}
   m_Father: {fileID: 791921096}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
 --- !u!95 &1853361193
 Animator:
   serializedVersion: 3

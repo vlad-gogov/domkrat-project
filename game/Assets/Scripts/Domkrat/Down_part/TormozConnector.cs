@@ -120,12 +120,12 @@ public class TormozConnector : Selectable
                 // Ручка у тормоза опущена (вращение в любую сторону)
                 if(Tormoz.tormoz.tormozMovingHand.isSelected)
                 {
-                    if (Input.GetKey(KeyCode.UpArrow))
+                    if (Input.GetKey(KeyCode.DownArrow))
                     {
                         StartCoroutine(domkratMove.RotateWheel(-5f, 10f));
                         isForwardWithoutStop = true;
                     }
-                    else if (Input.GetKey(KeyCode.DownArrow))
+                    else if (Input.GetKey(KeyCode.UpArrow))
                     {
                         StartCoroutine(domkratMove.RotateWheel(5f, 10f));
                         isBackWithoutStop = true;
@@ -134,12 +134,12 @@ public class TormozConnector : Selectable
                 // Ручка у тормоза поднята (запрещает вращение в против стрелок на колесах)
                 else
                 {
-                    if (Input.GetKey(KeyCode.DownArrow))
+                    if (Input.GetKey(KeyCode.UpArrow))
                     {
                         StartCoroutine(domkratMove.RotateWheel(5f, 10f));
                         isForwardWithStop = true;
                     }
-                    else if (Input.GetKey(KeyCode.UpArrow))
+                    else if (Input.GetKey(KeyCode.DownArrow))
                     {
                         StartCoroutine(domkratMove.RotateWheel(-1f, 10f, true));
                         isBackdWithStop = true;
