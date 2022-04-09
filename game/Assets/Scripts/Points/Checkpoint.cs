@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    TPKMoving movingTPK;
-
-    void Start()
-    {
-        movingTPK = TPK.TPKObj.transform.parent.parent.GetComponent<TPKMoving>();
-    }
+   [SerializeField] TPKMoving movingTPK;
 
     private void OnTriggerEnter(Collider collider)
     {

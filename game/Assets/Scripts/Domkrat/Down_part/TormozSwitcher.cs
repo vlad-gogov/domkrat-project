@@ -27,6 +27,11 @@ public class TormozSwitcher : Selectable
 
     public override void Deselect()
     {
+        if (down_Part_Rotation.currentWheelState != WheelState.SOOS)
+        {
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Перед тем как взаимодействовать с тормозным механизмом, установить колесный ход в соосное положение" });
+            return;
+        }
         downPartAnim.SetTrigger("disableTormozPipka");
         isSelected = false;
     }

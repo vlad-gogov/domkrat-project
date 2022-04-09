@@ -45,6 +45,18 @@ public class TPK : MonoBehaviour
         }
     }
 
+    public bool CheckStand()
+    {
+        foreach (var techSand in techStands)
+        {
+            if (techSand.isSelected)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void LiftUp()
     {
         foreach (var domkrat in attachedDomkrats)

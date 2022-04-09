@@ -488,7 +488,7 @@ public class TPKMoving : MonoBehaviour
                 }
                 if (domkrat.downPartRotation.dir != Direction.BACK)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на передних домкратах должно быть направлено по ходу движения", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на передних домкратах должно быть направлено против хода движения", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }
@@ -506,7 +506,7 @@ public class TPKMoving : MonoBehaviour
                 }
                 if (domkrat.downPartRotation.dir != Direction.FORWARD)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на задних домкратах должно быть направлено по ходу движения", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на задних домкратах должно быть направлено против хода движения", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }
@@ -592,7 +592,7 @@ public class TPKMoving : MonoBehaviour
 
             foreach (var domkrat in domkratMovings)
             {
-                domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
+                domkrat.RotateWheelForUpdate(-speedRotation * Time.deltaTime, false);
             }
             gameObject.transform.Translate(vector * shift * Time.deltaTime);
             yield return null;
@@ -635,7 +635,7 @@ public class TPKMoving : MonoBehaviour
         {
             foreach (var domkrat in domkratMovings)
             {
-                domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
+                domkrat.RotateWheelForUpdate(-speedRotation * Time.deltaTime, false);
             }
             if (speed < maxSpeed)
             {
@@ -650,7 +650,7 @@ public class TPKMoving : MonoBehaviour
             speed -= a;
             foreach (var domkrat in domkratMovings)
             {
-                domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
+                domkrat.RotateWheelForUpdate(-speedRotation * Time.deltaTime, false);
             }
             gameObject.transform.Translate(vector * speed * Time.deltaTime);
             yield return null;
