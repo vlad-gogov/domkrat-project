@@ -24,6 +24,25 @@ public class TormozMoving : MovingSelect
         rightWire = transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<WireBuilder.Wire>();
     }
 
+    void Update()
+    {
+        if (Singleton.Instance.StateManager.GetState() == NameState.CHECK_BREAK_MECHANISM)
+        {
+            if (leftConnector != null)
+            {
+                leftAdapter.transform.position = leftConnector.transform.position;
+                leftAdapter.transform.rotation = leftConnector.transform.rotation;
+                leftWire.UpdateWire(true);
+            }
+            if (rightConnector != null)
+            {
+                rightAdapter.transform.position = rightConnector.transform.position;
+                rightAdapter.transform.rotation = rightConnector.transform.rotation;
+                rightWire.UpdateWire(true);
+            }
+        }
+    }
+
     public override void Moving()
     {
         transform.position = Pointer.transform.position;
@@ -36,7 +55,7 @@ public class TormozMoving : MovingSelect
         }
         else
         {
-            leftAdapter.transform.position = Pointer.transform.position;
+            leftAdapter.transform.position = defaultLeftAdapter;
         }
 
         if (rightConnector != null)
@@ -47,7 +66,7 @@ public class TormozMoving : MovingSelect
         }
         else
         {
-            rightAdapter.transform.position = Pointer.transform.position;
+            rightAdapter.transform.position = defaultRightAdapter;
         }
     }
 

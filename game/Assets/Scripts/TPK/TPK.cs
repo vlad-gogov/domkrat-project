@@ -43,7 +43,10 @@ public class TPK : MonoBehaviour
     public void LiftUp()
     {
         state = StateTPK.UP;
-        Singleton.Instance.StateManager.NextState();
+        if (Singleton.Instance.StateManager.GetState() == NameState.UP_TPK)
+        {
+            Singleton.Instance.StateManager.NextState();
+        }
         foreach (var domkrat in attachedDomkrats)
         {
             domkrat.LiftUp(/*liftTPK=*/false);

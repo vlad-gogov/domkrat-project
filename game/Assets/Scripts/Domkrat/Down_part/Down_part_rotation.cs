@@ -24,10 +24,12 @@ public class Down_part_rotation : MonoBehaviour
     public WheelState currentWheelState = WheelState.SOOS;
     [SerializeField] GameObject gear;
     [SerializeField] BoxCollider tormozConnector;
+    DomkratMoving domkratMoving;
 
     void Start()
     {
         tormozConnector.enabled = false;
+        domkratMoving = gameObject.transform.parent.parent.GetComponent<DomkratMoving>();
         ChangeDir();
     }
 
@@ -49,6 +51,7 @@ public class Down_part_rotation : MonoBehaviour
             if (isGear)
             {
                 gear.transform.Rotate(temp, 0, 0f);
+                domkratMoving.RotateWheelForUpdate(temp, false);
             }
             yield return null;
         }

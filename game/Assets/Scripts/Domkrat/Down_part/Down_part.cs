@@ -83,7 +83,7 @@ public class Down_part : MonoBehaviour
 
     void Update()
     {
-        if (!boxFixator.enabled && (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_FLAT || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_DOWN))
+        if (!boxFixator.enabled && Singleton.Instance.StateManager.GetState() == NameState.CHECK_BREAK_MECHANISM)
         {
             boxFixator.enabled = true;
         }

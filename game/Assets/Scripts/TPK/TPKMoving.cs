@@ -65,6 +65,11 @@ public class TPKMoving : MonoBehaviour
         {
             return;
         }
+        if (TPK.TPKObj.state == StateTPK.DOWN) 
+        {
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Поднимите ТПК перед тем как его перемещать", Weight = ErrorWeight.CRITICAL });
+            return;
+        }
         List<Domkrat> attachedDomkrats = TPK.TPKObj.attachedDomkrats;
         if (attachedDomkrats.Count == 4)
         {
@@ -127,6 +132,7 @@ public class TPKMoving : MonoBehaviour
         else
         {
             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите 4 домкрата перед тем как его перемещать", Weight = ErrorWeight.CRITICAL });
+            return;
         }
         curDirection = TPKDirection.STAY;
     }
@@ -143,6 +149,11 @@ public class TPKMoving : MonoBehaviour
             if (domkrat.tormozSwitch.isSelected)
             {
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Отключите тормозной механизм на всех домкратах", Weight = ErrorWeight.LOW });
+                return false;
+            }
+            if (domkrat.isTormozConnected)
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормоз не нужен для перемещения ТПК по ровной поверхности", Weight = ErrorWeight.LOW });
                 return false;
             }
             if (domkrat.curV == OrientationVertical.Up)
@@ -199,6 +210,11 @@ public class TPKMoving : MonoBehaviour
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Отключите тормозной механизм на всех домкратах", Weight = ErrorWeight.LOW });
                 return false;
             }
+            if (domkrat.isTormozConnected)
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормоз не нужен для перемещения ТПК по ровной поверхности", Weight = ErrorWeight.LOW });
+                return false;
+            }
             if (domkrat.curV == OrientationVertical.Up)
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS)
@@ -251,6 +267,11 @@ public class TPKMoving : MonoBehaviour
             if (domkrat.tormozSwitch.isSelected)
             {
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Отключите тормозной механизм на всех домкратах", Weight = ErrorWeight.LOW });
+                return false;
+            }
+            if (domkrat.isTormozConnected)
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормоз не нужен для перемещения ТПК по ровной поверхности", Weight = ErrorWeight.LOW });
                 return false;
             }
             if (domkrat.curH == OrientationHorizontal.Right)
@@ -308,6 +329,11 @@ public class TPKMoving : MonoBehaviour
             if (domkrat.tormozSwitch.isSelected)
             {
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Отключите тормозной механизм на всех домкратах", Weight = ErrorWeight.LOW });
+                return false;
+            }
+            if (domkrat.isTormozConnected)
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Тормоз не нужен для перемещения ТПК по ровной поверхности", Weight = ErrorWeight.LOW });
                 return false;
             }
             if (domkrat.curH == OrientationHorizontal.Right)
