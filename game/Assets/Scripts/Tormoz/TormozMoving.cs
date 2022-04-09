@@ -138,7 +138,9 @@ public class TormozMoving : MovingSelect
         {
             PlayerRay.playerRay.Remove(Tormoz.tormoz.gameObject.GetComponent<TormozMoving>());
             isConnected = false;
-            Tormoz.tormoz.gameObject.SetActive(false);
+            // gameObject.transform.GetChild(0).GetChild(3).GetComponent<Animator>().SetTrigger("Stop");
+            // Tormoz.tormoz.gameObject.SetActive(false);
+            Tormoz.tormoz.transform.position = new Vector3(100, 100, 100);
         }
     }
 }

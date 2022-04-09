@@ -150,7 +150,6 @@ public class TormozConnector : Selectable
             {
                 Singleton.Instance.StateManager.NextState();
                 tormozMoving.Disconnect(type);
-                tormoz.gameObject.SetActive(false);
             }
         }
     }
