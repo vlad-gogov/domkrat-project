@@ -47,6 +47,8 @@ public class TormozMoving : MovingSelect
     {
         transform.position = Pointer.transform.position;
         transform.rotation = Pointer.transform.rotation;
+        defaultLeftAdapter = leftAdapter.transform.position;
+        defaultRightAdapter = rightAdapter.transform.position;
         if (leftConnector != null)
         {
             leftAdapter.transform.position = leftConnector.transform.position;
