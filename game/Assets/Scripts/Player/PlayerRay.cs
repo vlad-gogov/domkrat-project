@@ -130,7 +130,7 @@ public class PlayerRay : MonoBehaviour
                     if (_selectedObject.tag == "Domkrat")
                     {
                         PlayerMove.isDomkrat = true;
-                        GetComponent<Rigidbody>().mass = 60;
+                        GetComponent<Rigidbody>().mass = 10f;
                         PlayerMove.PickUpDomkrat(_selectedObject);
                     }
                     if (_selectedObject.tag == "Domkrat" || _selectedObject.tag == "Perehodnick")

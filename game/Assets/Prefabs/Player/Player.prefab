@@ -241,7 +241,7 @@ MonoBehaviour:
   CameraTransform: {fileID: 388278372953040763}
   Rigidbody: {fileID: 800199198}
   isDomkrat: 0
-  Pointer: {fileID: 1301571849}
+  PointerDomkrat: {fileID: 1301571849}
   SpeedRotation: 20
 --- !u!136 &1959481051
 CapsuleCollider:
@@ -364,7 +364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4842081828954177104}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0.185, y: 0.7650002, z: 0.694}
+  m_LocalPosition: {x: 0.185, y: 0.7650002, z: 0.633}
   m_LocalScale: {x: 1.1893811, y: 1.1893814, z: 1.1893811}
   m_Children: []
   m_Father: {fileID: 388278372219599265}
