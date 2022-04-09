@@ -13,7 +13,7 @@ public partial class Menu : MonoBehaviour
     public void onClickUp()
     {
         CrossScenesStorage.typeArea = TypeArea.UP;
-        SceneManager.LoadScene("UpBlyat");
+        SceneManager.LoadScene("UpScene");
     }
 
     public void onClickDown()

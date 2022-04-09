@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Testing.unity
     guid: cf6728c6198d02f4184264a964a0b5bd
   - enabled: 1
-    path: Assets/Scenes/UpBlyat.unity
+    path: Assets/Scenes/UpScene.unity
     guid: 88efdb572372c3049a07ae1ee0ad34ed
   - enabled: 1
     path: Assets/Scenes/DownScene.unity
