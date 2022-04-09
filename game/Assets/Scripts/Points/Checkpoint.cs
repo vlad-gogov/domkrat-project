@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    // Start is called before the first frame update
+    TPKMoving movingTPK;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        movingTPK = TPK.TPKObj.transform.parent.parent.GetComponent<TPKMoving>();
     }
 
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Tpk2")
         {
-            Singleton.Instance.UIManager.OpenTutorial("Ура!!!!", /*finished=*/true);
+            Singleton.Instance.StateManager.NextState();
+            movingTPK.FinishedMoving();
         }
     }
 }

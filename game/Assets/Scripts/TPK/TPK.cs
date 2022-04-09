@@ -31,22 +31,22 @@ public class TPK : MonoBehaviour
 
     void Update()
     {
-        if (techStands.Count == 0 && Singleton.Instance.StateManager.GetState() == NameState.UP_TPK)
+        NameState curState = Singleton.Instance.StateManager.GetState();
+        if (techStands.Count == 0 && curState == NameState.UP_TPK)
         {
             foreach(var techSand in attachedDomkrats)
             {
                 techStands.Add(techSand.techStand);
             }
         }
+        if (curState == NameState.UP_TPK && state == StateTPK.UP)
+        {
+            Singleton.Instance.StateManager.NextState();
+        }
     }
 
     public void LiftUp()
     {
-        state = StateTPK.UP;
-        if (Singleton.Instance.StateManager.GetState() == NameState.UP_TPK)
-        {
-            Singleton.Instance.StateManager.NextState();
-        }
         foreach (var domkrat in attachedDomkrats)
         {
             domkrat.LiftUp(/*liftTPK=*/false);
@@ -55,7 +55,6 @@ public class TPK : MonoBehaviour
 
     public void LiftDown()
     {
-        state = StateTPK.DOWN;
         foreach (var domkrat in attachedDomkrats)
         {
             domkrat.LiftDown(/*liftTPK=*/false);

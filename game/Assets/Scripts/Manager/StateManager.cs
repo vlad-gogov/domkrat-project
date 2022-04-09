@@ -19,6 +19,8 @@ public enum NameState
     MOVE_TPK_UP = 10,
     // Down
     MOVE_TPK_DOWN = 11,
+    // Finish
+    DOWN_TPK = 12
 }
 
 public struct State
@@ -123,6 +125,8 @@ public class StateManager : MonoBehaviour
         {
             states.Add(new State() { state = NameState.MOVE_TPK_DOWN, disctiption = "Скатите ТПК по наклонной поверхности до красной точки" });
         }
+
+        states.Add(new State() { state = NameState.DOWN_TPK, disctiption = "Опустите ТПК на землю" });
 
         indexCurState = 0;
 

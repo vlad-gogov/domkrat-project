@@ -11,7 +11,8 @@ enum TPKDirection
     UP = 3,
     DOWN = 4,
     LEFT = 5,
-    BACK = 6
+    BACK = 6,
+    FINISHED = 7
 }
 
 public class TPKMoving : MonoBehaviour
@@ -33,6 +34,16 @@ public class TPKMoving : MonoBehaviour
             foreach (var domkrat in TPK.TPKObj.attachedDomkrats)
                 domkratMovings.Add(domkrat.GetComponent<DomkratMoving>());
         }
+
+        if (Singleton.Instance.StateManager.GetState() == NameState.DOWN_TPK && TPK.TPKObj.state == StateTPK.DOWN)
+        {
+            Singleton.Instance.UIManager.OpenTutorial("Ура!!!!", /*finished=*/true);
+        }
+    }
+
+    public void FinishedMoving()
+    {
+        curDirection = TPKDirection.FINISHED;
     }
 
     void Moving()
@@ -540,7 +551,7 @@ public class TPKMoving : MonoBehaviour
         delta = 300f;
         for (float i = 0; i <= Mathf.Abs(delta); i += shift * Time.deltaTime)
         {
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKeyDown(KeyCode.T) || curDirection == TPKDirection.FINISHED)
             {
                 break;
             }
