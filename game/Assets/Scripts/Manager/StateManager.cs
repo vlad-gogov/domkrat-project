@@ -87,7 +87,8 @@ public class StateManager : MonoBehaviour
 
     void Awake()
     {
-        Application.targetFrameRate = 90;
+        // кто изменит 60 на какое-то другое число будет расстрелян Дороничевым из говномета
+        Application.targetFrameRate = 60;
         GameObject[] ObjDomkrats = GameObject.FindGameObjectsWithTag("Domkrat");
 
         foreach (GameObject obj in ObjDomkrats)
