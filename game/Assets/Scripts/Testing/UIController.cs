@@ -10,6 +10,8 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private Text endGame;
     [SerializeField]
+    private Image endGameImage;
+    [SerializeField]
     private Text questionText;
     [SerializeField]
     private RawImage questionImage;
@@ -70,6 +72,7 @@ public class UIController : MonoBehaviour
         correctAnswerPopup.SetActive(false);
         wrongAnswerPopup.SetActive(false);
         endGame.gameObject.SetActive(true);
+        endGameImage.gameObject.SetActive(true);
         if (error_count != 0)
         {
             endGame.text = "Вы не сдали. Количество ошибок = " + error_count.ToString();
