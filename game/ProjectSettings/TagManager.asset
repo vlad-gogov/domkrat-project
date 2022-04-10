@@ -12,6 +12,7 @@ TagManager:
   - SetDomkrat
   - SetPerehodnickDomkrat
   - Tpk2
+  - BetonWall
   layers:
   - Default
   - TransparentFX

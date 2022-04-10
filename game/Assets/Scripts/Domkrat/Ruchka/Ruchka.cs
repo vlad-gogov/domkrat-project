@@ -209,8 +209,8 @@ public class Ruchka : Selectable
             else if (curPosition == PositionRuchka.DOWN)
             {
                 if (
-                        TPK.TPKObj.state == StateTPK.DOWN 
-                        && state.activeSwitcher == ModeSwitch.LOADED 
+                        TPK.TPKObj.state == StateTPK.DOWN
+                        && state.activeSwitcher == ModeSwitch.LOADED
                         && actualDomkratUpPart.curPosition == Makes.DOWN
                         && actualDomkratDownPart.curPosition == Makes.DOWN
                 )
@@ -229,6 +229,11 @@ public class Ruchka : Selectable
                         isLeft = true;
                         return;
                     }
+                }
+                else
+                {
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя вращать поворотный механизм в режиме без груза", Weight = ErrorWeight.MINOR });
+                    return;
                 }
             }
         }
