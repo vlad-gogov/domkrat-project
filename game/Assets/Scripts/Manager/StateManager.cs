@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public enum NameState
@@ -246,8 +248,38 @@ public class StateManager : MonoBehaviour
         string[] tutorialSteps = tutorial.Split(new string[] { "<br>" }, StringSplitOptions.None);
         for (int i=0; i<tutorialSteps.Length; i++)
         {
-            tutorials[(NameState)i] = tutorialSteps[i];
+            var tutorLine = tutorialSteps[i].Trim();
+            string modeStr = GetFirstLine(tutorLine);
+            var match = Regex.Match(modeStr, "(.*):(.*)");
+            if (!match.Success)
+            {
+                Debug.LogError($"No state for tuturial page was specified! {tutorLine}");
+                continue;
+            }
+            string state = match.Groups[1].Value;
+            string mode = match.Groups[2].Value;
+            if (mode != "")
+            {
+                var tp = (TypeArea)Enum.Parse(typeof(TypeArea), mode, /*ignore_case=*/true);
+                if (tp != typeArea)
+                {
+                    continue;
+                }
+            }
+            var st = (NameState)Enum.Parse(typeof(NameState), state, /*ignore_case=*/true);
+            tutorials[st] = RemoveFirstLine(tutorLine);
         }
+    }
+
+    string RemoveFirstLine(string str, int nlines=1)
+    {
+        return string.Join(Environment.NewLine, Regex.Split(str, "\r\n|\r|\n").Skip(nlines));
+    }
+
+    string GetFirstLine(string str)
+    {
+        var reader = new StringReader(str);
+        return reader.ReadLine();
     }
 
     public void InitialStateHack()

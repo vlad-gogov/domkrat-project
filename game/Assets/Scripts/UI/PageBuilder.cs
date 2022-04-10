@@ -23,7 +23,8 @@ public class PageBuilder : MonoBehaviour
         public DText(string content) : base(content) { }
         public override void Execute(PageBuilder owner)
         {
-            owner.addText(content);
+            string prettyContent = content.Trim().Trim(new char[] {'\r', '\n'});
+            owner.addText(prettyContent);
         }
     }
     class DVideo : Drawable
