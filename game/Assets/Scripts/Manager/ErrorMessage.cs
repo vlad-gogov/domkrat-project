@@ -41,6 +41,7 @@ public class ErrorMessage : MonoBehaviour
     public void Close()
     {
         Singleton.Instance.StateManager.Resume();
+        Singleton.Instance.StateManager.isErrorOpened = false;
         erroText.text = "";
         gameObject.SetActive(false);
     }

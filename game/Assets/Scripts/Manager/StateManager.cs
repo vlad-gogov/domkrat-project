@@ -89,6 +89,8 @@ public class StateManager : MonoBehaviour
     public bool isTuringMech = false;
     public int ruchkaIsUp = 0;
     public int isTormozConnected = 0;
+    public bool isErrorOpened = false;
+    string controlsTutorial = "тутора нэма";
 
     void Awake()
     {
@@ -186,11 +188,20 @@ public class StateManager : MonoBehaviour
 
     public void onError(Error error)
     {
+        if (isErrorOpened)
+        {
+            return;
+        }
+        isErrorOpened = true;
         counterMistakes += (int)error.Weight;
         Debug.Log(counterMistakes);
         if (gameMode == GameMode.EXAM && counterMistakes >= maxMistakes)
         {
-            Singleton.Instance.UIManager.OpenTutorial("Не сдал!!!!", /*finished=*/true);
+            Singleton.Instance.UIManager.OpenTutorial("<size=50><b>Неудача</b></size>\n" +
+                "\n" +
+                "Вы набрали слишком много штрафных баллов, экзамен не сдан! " +
+                "Максимальное число штрафных баллов для сдачи: " + maxMistakes.ToString() + "\n" +
+                "Набрано: " + counterMistakes.ToString(), /*finished=*/true);
         }
         errorMessage.OnShow(error);
     }
@@ -223,6 +234,10 @@ public class StateManager : MonoBehaviour
         if (Input.GetKey(KeyCode.F1) && gameMode == GameMode.EXAM)
         {
             Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials, NameState.DEFAULT)));
+        }
+        if (Input.GetKey(KeyCode.F2))
+        {
+            Singleton.Instance.UIManager.OpenTutorial(controlsTutorial);
         }
         if (GetState() == NameState.DISABLE_TORMOZ && isTormozConnected == 0)
         {

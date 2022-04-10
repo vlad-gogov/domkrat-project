@@ -18,6 +18,10 @@ public class TPKMoving : MonoBehaviour
     TPKDirection curDirection = TPKDirection.STAY;
     bool isMoving = false;
 
+    string finishString = "<size=50><b>Сценарий успешно завершен!</b></size>" +
+        "" +
+        "Сумма набранных штрафных баллов: ";
+
     const float EPS = 10e-4f;
 
     float speedRotation = 100f;
@@ -35,7 +39,7 @@ public class TPKMoving : MonoBehaviour
 
         if (Singleton.Instance.StateManager.GetState() == NameState.DOWN_TPK && TPK.TPKObj.state == StateTPK.DOWN)
         {
-            Singleton.Instance.UIManager.OpenTutorial("Ура!!!!", /*finished=*/true);
+            Singleton.Instance.UIManager.OpenTutorial(finishString + Singleton.Instance.StateManager.counterMistakes.ToString(), /*finished=*/true);
         }
     }
 
