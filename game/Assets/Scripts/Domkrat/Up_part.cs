@@ -60,7 +60,7 @@ public class Up_part : MonoBehaviour
             if (!isOnWeightMode)
             {
                 // Пытаемся поднять домкрат в режиме "без груза" с подключенным ТПК
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим подъема домкрата", Weight = ErrorWeight.HIGH });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим подъема ТПК", Weight = ErrorWeight.HIGH });
                 return;
             }
             if (Singleton.Instance.StateManager.ruchkaIsUp < 4)
@@ -85,7 +85,7 @@ public class Up_part : MonoBehaviour
             if (!isOnWeightMode)
             {
                 // Пытаемся опустить домкрат в режиме "без груза" с подключенным ТПК
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим опускания домкрата", Weight = ErrorWeight.HIGH });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим опускания ТПК", Weight = ErrorWeight.HIGH });
                 return;
             }
             if (Singleton.Instance.StateManager.GetState() == NameState.DISABLE_TORMOZ && Singleton.Instance.StateManager.isTormozConnected != 0)
