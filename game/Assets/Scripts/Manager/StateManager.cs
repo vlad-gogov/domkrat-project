@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public enum NameState
@@ -19,6 +21,7 @@ public enum NameState
     MOVE_TPK_UP = 10,
     // Down
     MOVE_TPK_DOWN = 11,
+    DISABLE_TORMOZ = 13,
     // Finish
     DOWN_TPK = 12
 }
@@ -67,7 +70,8 @@ public class StateManager : MonoBehaviour
 
     public GameMode gameMode;
     public TypeArea typeArea;
-    public int counterMistaks = 0;
+    public int counterMistakes = 0;
+    private int maxMistakes = 20;
     public GameObject player;
 
     private List<Domkrat> domkrats = new List<Domkrat>();
@@ -84,10 +88,12 @@ public class StateManager : MonoBehaviour
 
     public bool isTuringMech = false;
     public int ruchkaIsUp = 0;
+    public int isTormozConnected = 0;
 
     void Awake()
     {
-        Application.targetFrameRate = 90;
+        // кто изменит 60 на какое-то другое число будет расстрелян Дороничевым из говномета
+        Application.targetFrameRate = 60;
         GameObject[] ObjDomkrats = GameObject.FindGameObjectsWithTag("Domkrat");
 
         foreach (GameObject obj in ObjDomkrats)
@@ -101,7 +107,6 @@ public class StateManager : MonoBehaviour
     {
         gameMode = CrossScenesStorage.gameMode;
         typeArea = CrossScenesStorage.typeArea;
-        Debug.Log($"Current mode is: {gameMode} | {typeArea}");
 
         states.Add(new State() { state = NameState.DEFAULT, disctiption = "" });
         states.Add(new State() { state = NameState.SET_PEREHODNICK, disctiption = "Установите переходники на пакет" });
@@ -120,17 +125,19 @@ public class StateManager : MonoBehaviour
         else if (typeArea == TypeArea.UP)
         {
             states.Add(new State() { state = NameState.MOVE_TPK_UP, disctiption = "Закатите ТПК по наклонной поверхности до красной точки" });
+            states.Add(new State() { state = NameState.DISABLE_TORMOZ, disctiption = "Отключите внешний тормоз от домкратов" });
         }
         else if (typeArea == TypeArea.DOWN)
         {
             states.Add(new State() { state = NameState.MOVE_TPK_DOWN, disctiption = "Скатите ТПК по наклонной поверхности до красной точки" });
+            states.Add(new State() { state = NameState.DISABLE_TORMOZ, disctiption = "Отключите внешний тормоз от домкратов" });
         }
 
         states.Add(new State() { state = NameState.DOWN_TPK, disctiption = "Опустите ТПК на землю" });
 
         indexCurState = 0;
 
-        if ( gameMode == GameMode.FREEPLAY)
+        if (gameMode == GameMode.FREEPLAY)
         {
             NotifyAllDomkrats(NameState.CHECK_DOMKRATS);
             NotifyAllDomkrats(NameState.SET_DOMKRATS);
@@ -150,14 +157,8 @@ public class StateManager : MonoBehaviour
         if (indexCurState >= states.Count)
         {
             finished = true;
-        }
-
-        if (finished)
-        {
-            Debug.Log("Calling 'NextState' when 'finished' flag is set to 'true', ignoring this call...");
             return;
         }
-        Debug.Log(states[indexCurState].state);
 
         if (typeArea != TypeArea.FLAT && states[indexCurState].state > NameState.CHECK_BREAK_MECHANISM)
         {
@@ -168,24 +169,30 @@ public class StateManager : MonoBehaviour
         {
             NotifyAllDomkrats(states[indexCurState].state);
         }
-        if (gameMode == GameMode.TRAIN)
-        {
-            ChangeTextHelper();
-        }
+        ChangeTextHelper();
     }
 
     public void ChangeTextHelper()
     {
         Singleton.Instance.UIManager.SetHelperText(string.Copy(states[indexCurState].disctiption));
-        // InitialStateHack();
-        Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
+        if (gameMode == GameMode.TRAIN)
+        {
+            Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
+        } else if (gameMode == GameMode.EXAM && states[indexCurState].state == NameState.DEFAULT)
+        {
+            Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
+        }
     }
 
     public void onError(Error error)
     {
-        if (gameMode == GameMode.TRAIN)
-            errorMessage.OnShow(string.Copy(error.ErrorText));
-        counterMistaks += (int)error.Weight;
+        counterMistakes += (int)error.Weight;
+        Debug.Log(counterMistakes);
+        if (gameMode == GameMode.EXAM && counterMistakes >= maxMistakes)
+        {
+            Singleton.Instance.UIManager.OpenTutorial("Не сдал!!!!", /*finished=*/true);
+        }
+        errorMessage.OnShow(error);
     }
 
     void NotifyAllDomkrats(NameState state)
@@ -209,9 +216,17 @@ public class StateManager : MonoBehaviour
             NextState();
             countDomkrats++;
         }
-        if (Input.GetKey(KeyCode.F1))
+        if (Input.GetKey(KeyCode.F1) && gameMode == GameMode.TRAIN)
         {
             Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
+        }
+        if (Input.GetKey(KeyCode.F1) && gameMode == GameMode.EXAM)
+        {
+            Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials, NameState.DEFAULT)));
+        }
+        if (GetState() == NameState.DISABLE_TORMOZ && isTormozConnected == 0)
+        {
+            NextState();
         }
     }
 
@@ -225,8 +240,6 @@ public class StateManager : MonoBehaviour
         OnPause = true;
         player.GetComponent<PlayerMove>().enabled = false;
         player.GetComponent<PlayerRay>().enabled = false;
-        // если установить time в 0, то перестают работать видосы...
-        // Time.timeScale = 0;
     }
 
     public void Resume()
@@ -234,7 +247,6 @@ public class StateManager : MonoBehaviour
         OnPause = false;
         player.GetComponent<PlayerMove>().enabled = true;
         player.GetComponent<PlayerRay>().enabled = true;
-        // Time.timeScale = 1;
     }
 
     void LoadTutorial()
@@ -245,8 +257,38 @@ public class StateManager : MonoBehaviour
         string[] tutorialSteps = tutorial.Split(new string[] { "<br>" }, StringSplitOptions.None);
         for (int i=0; i<tutorialSteps.Length; i++)
         {
-            tutorials[(NameState)i] = tutorialSteps[i];
+            var tutorLine = tutorialSteps[i].Trim();
+            string modeStr = GetFirstLine(tutorLine);
+            var match = Regex.Match(modeStr, "(.*):(.*)");
+            if (!match.Success)
+            {
+                // Debug.LogError($"No state for tuturial page was specified! {tutorLine}");
+                continue;
+            }
+            string state = match.Groups[1].Value;
+            string mode = match.Groups[2].Value;
+            if (mode != "")
+            {
+                var tp = (TypeArea)Enum.Parse(typeof(TypeArea), mode, /*ignore_case=*/true);
+                if (tp != typeArea)
+                {
+                    continue;
+                }
+            }
+            var st = (NameState)Enum.Parse(typeof(NameState), state, /*ignore_case=*/true);
+            tutorials[st] = RemoveFirstLine(tutorLine);
         }
+    }
+
+    string RemoveFirstLine(string str, int nlines=1)
+    {
+        return string.Join(Environment.NewLine, Regex.Split(str, "\r\n|\r|\n").Skip(nlines));
+    }
+
+    string GetFirstLine(string str)
+    {
+        var reader = new StringReader(str);
+        return reader.ReadLine();
     }
 
     public void InitialStateHack()
@@ -257,10 +299,14 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    public string SafeGetFromDict(Dictionary<NameState, string> dict)
+    public string SafeGetFromDict(Dictionary<NameState, string> dict, NameState? state = null)
     {
         string value;
-        if (!dict.TryGetValue(states[indexCurState].state, out value))
+        if (state == null)
+        {
+            state = states[indexCurState].state;
+        }
+        if (!dict.TryGetValue(state == null? NameState.DEFAULT : (NameState)state, out value))
         {
             value = $"Для состояния {states[indexCurState].state} ещё не написаны подсказки...";
         }

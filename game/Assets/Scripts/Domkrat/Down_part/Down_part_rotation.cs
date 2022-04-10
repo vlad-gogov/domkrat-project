@@ -46,11 +46,11 @@ public class Down_part_rotation : MonoBehaviour
 
         for (float t = 0; t <= Mathf.Abs(angle); t += step * Time.deltaTime * k)
         {
-            float temp = step * signed * Time.deltaTime * k;
-            gameObject.transform.Rotate(temp, 0f, 0f);
+            float temp = step * signed * Time.deltaTime;
+            gameObject.transform.Rotate(temp * k, 0f, 0f);
             if (isGear)
             {
-                gear.transform.Rotate(temp, 0, 0f);
+                gear.transform.Rotate(temp * k, 0, 0f);
                 domkratMoving.RotateWheelForUpdate(temp, false);
             }
             yield return null;

@@ -11,15 +11,12 @@ public class QuestCollection : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(Path.Combine(Application.streamingAssetsPath, "Questions.xml"));
-
         LoadAllQuestions();
     }
 
     private void LoadAllQuestions()
     {
         XmlSerializer serializer = new XmlSerializer(typeof(QuizQuestion[]));
-        //".\\Assets\\Scripts\\Testing\\Questions.xml"
         using (StreamReader streamReader = new StreamReader(Path.Combine(Application.streamingAssetsPath, "Testing", "Questions.xml")))
         {
             allQuestions = (QuizQuestion[])serializer.Deserialize(streamReader);
@@ -56,7 +53,6 @@ public class QuestCollection : MonoBehaviour
     {   
         for (int i = 0; i < allQuestions.Length; i++)
         {
-            //Debug.Log("index " + (Int32.Parse(allQuestions[i].CorrectAnswer)));
             string correct = null;
             if (allQuestions[i].Type == (int)AnswerType.Single)
             {
@@ -65,8 +61,6 @@ public class QuestCollection : MonoBehaviour
             }
             string[] new_question = allQuestions[i].Answers;
             char[] new_seq_answer = allQuestions[i].CorrectAnswer.ToArray();
-
-            Debug.Log("seq " + allQuestions[i].CorrectAnswer);
 
             for (int k = 0; k < new_question.Length; k++)
             {
@@ -87,15 +81,12 @@ public class QuestCollection : MonoBehaviour
             
             if (allQuestions[i].Type == (int)AnswerType.Sequence)
             {
-                Debug.Log("after for " + new_seq_answer[0] + new_seq_answer[1] + new_seq_answer[2]);
-
                 string tmp = null;
                 foreach(char temp in new_seq_answer)
                 {
                     tmp += temp;
                 }
                 allQuestions[i].CorrectAnswer = tmp;
-                Debug.Log("tmp " + tmp);
             }
             else
             {

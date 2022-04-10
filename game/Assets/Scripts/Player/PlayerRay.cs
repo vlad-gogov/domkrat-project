@@ -53,22 +53,16 @@ public class PlayerRay : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(transform.position, transform.forward, Color.red);
 
         RaycastHit hit;
         if (!_selectedObject)
         {
             if (Physics.Raycast(ray, out hit, Distance, 1 << PickUp.value) || Physics.Raycast(ray, out hit, Distance, 1 << Interaction.value))
             {
-                Debug.Log($"hit: {hit}");
                 hitObject = hit.collider.gameObject;
                 selectable = hitObject.GetComponent<Selectable>();
-                Debug.Log($"hitObj: {hitObject}");
-                Debug.Log($"selectable: {selectable}");
-                Debug.Log($"_selectedObj: {_selectedObject}");
                 if (!_selectedObject)
                 {
-                    Debug.Log("calling getInfoMouse...");
                     selectable.GetInfoMouse();
                 }
             }

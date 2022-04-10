@@ -16,7 +16,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private GameObject PointerDomkrat;
     private GameObject PointerRuchka;
     private DomkratMoving moving;
-    public float SpeedRotation = 10f;
+    public float SpeedRotation = 20f;
     bool isDaun = false;
 
     void Start()

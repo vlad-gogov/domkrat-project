@@ -8,11 +8,9 @@ enum TPKDirection
     STAY = 0,
     FORWARD = 1,
     RIGHT = 2,
-    UP = 3,
-    DOWN = 4,
-    LEFT = 5,
-    BACK = 6,
-    FINISHED = 7
+    LEFT = 3,
+    BACK = 4,
+    FINISHED = 5
 }
 
 public class TPKMoving : MonoBehaviour
@@ -488,7 +486,7 @@ public class TPKMoving : MonoBehaviour
                 }
                 if (domkrat.downPartRotation.dir != Direction.BACK)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на передних домкратах должно быть направлено по ходу движения", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на передних домкратах должно быть направлено против хода движения", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }
@@ -506,7 +504,7 @@ public class TPKMoving : MonoBehaviour
                 }
                 if (domkrat.downPartRotation.dir != Direction.FORWARD)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на задних домкратах должно быть направлено по ходу движения", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Направление стрелок на задних домкратах должно быть направлено против хода движения", Weight = ErrorWeight.LOW });
                     return false;
                 }
             }
@@ -555,7 +553,7 @@ public class TPKMoving : MonoBehaviour
             {
                 break;
             }
-            Debug.Log($"{transform.rotation.x} | {Tormoz.tormoz.tormozMovingHand.isSelected}");
+            // Debug.Log($"{transform.rotation.x} | {Tormoz.tormoz.tormozMovingHand.isSelected}");
             if (transform.rotation.x > 0.02f) // поднимаемся в горку, тормоз должен быть отжат
             {
                 if (Tormoz.tormoz.tormozMovingHand.isSelected)
@@ -592,7 +590,14 @@ public class TPKMoving : MonoBehaviour
 
             foreach (var domkrat in domkratMovings)
             {
-                domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
+                if (Singleton.Instance.StateManager.typeArea == TypeArea.DOWN)
+                {
+                    domkrat.RotateWheelForUpdate(-speedRotation * Time.deltaTime, false);
+                } else
+                {
+                    domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
+                }
+                
             }
             gameObject.transform.Translate(vector * shift * Time.deltaTime);
             yield return null;
@@ -635,7 +640,7 @@ public class TPKMoving : MonoBehaviour
         {
             foreach (var domkrat in domkratMovings)
             {
-                domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
+                domkrat.RotateWheelForUpdate(-speedRotation * Time.deltaTime, false);
             }
             if (speed < maxSpeed)
             {
@@ -650,7 +655,7 @@ public class TPKMoving : MonoBehaviour
             speed -= a;
             foreach (var domkrat in domkratMovings)
             {
-                domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
+                domkrat.RotateWheelForUpdate(-speedRotation * Time.deltaTime, false);
             }
             gameObject.transform.Translate(vector * speed * Time.deltaTime);
             yield return null;

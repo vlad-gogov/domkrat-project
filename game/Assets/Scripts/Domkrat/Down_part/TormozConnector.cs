@@ -25,19 +25,7 @@ public class TormozConnector : Selectable
         boxCol.enabled = false;
         tormozMoving = Tormoz.tormoz.gameObject.GetComponent<TormozMoving>();
         tormoz = Tormoz.tormoz.GetComponent<Tormoz>();
-        if (tormozMoving == null)
-        {
-            Debug.LogError("blyat!!!");
-        }
-        if (tormoz == null)
-        {
-            Debug.Log("SUKA!!!!!");
-        }
         down_part = gameObject.transform.parent.parent.parent.parent.GetComponent<Down_part>();
-        if (down_part == null)
-        {
-            Debug.LogError("pizdec");
-        }
     }
 
     // так надо: инача в некоторых сценах ломается порядок конструирования объектов
@@ -51,6 +39,7 @@ public class TormozConnector : Selectable
         tormozMoving.Disconnect(type);
         isSelected = false;
         batya.isTormozConnected = false;
+        Singleton.Instance.StateManager.isTormozConnected--;
     }
 
     public override void GetInfoMouse()
@@ -108,6 +97,7 @@ public class TormozConnector : Selectable
         tormoz.gameObject.SetActive(true);
         isSelected = true;
         batya.isTormozConnected = true;
+        Singleton.Instance.StateManager.isTormozConnected++;
     }
 
     void Update()
@@ -120,12 +110,12 @@ public class TormozConnector : Selectable
                 // Ручка у тормоза опущена (вращение в любую сторону)
                 if(Tormoz.tormoz.tormozMovingHand.isSelected)
                 {
-                    if (Input.GetKey(KeyCode.UpArrow))
+                    if (Input.GetKey(KeyCode.DownArrow))
                     {
                         StartCoroutine(domkratMove.RotateWheel(-5f, 10f));
                         isForwardWithoutStop = true;
                     }
-                    else if (Input.GetKey(KeyCode.DownArrow))
+                    else if (Input.GetKey(KeyCode.UpArrow))
                     {
                         StartCoroutine(domkratMove.RotateWheel(5f, 10f));
                         isBackWithoutStop = true;
@@ -134,12 +124,12 @@ public class TormozConnector : Selectable
                 // Ручка у тормоза поднята (запрещает вращение в против стрелок на колесах)
                 else
                 {
-                    if (Input.GetKey(KeyCode.DownArrow))
+                    if (Input.GetKey(KeyCode.UpArrow))
                     {
                         StartCoroutine(domkratMove.RotateWheel(5f, 10f));
                         isForwardWithStop = true;
                     }
-                    else if (Input.GetKey(KeyCode.UpArrow))
+                    else if (Input.GetKey(KeyCode.DownArrow))
                     {
                         StartCoroutine(domkratMove.RotateWheel(-1f, 10f, true));
                         isBackdWithStop = true;
@@ -150,8 +140,10 @@ public class TormozConnector : Selectable
             {
                 Singleton.Instance.StateManager.NextState();
                 tormozMoving.Disconnect(type);
-                tormoz.gameObject.SetActive(false);
             }
+        } else if (curState == NameState.DISABLE_TORMOZ && !isSelected)
+        {
+            boxCol.enabled = false;
         }
     }
 }

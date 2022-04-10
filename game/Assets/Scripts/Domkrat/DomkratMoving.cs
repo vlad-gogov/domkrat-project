@@ -27,6 +27,7 @@ public class DomkratMoving : MovingSelect
 
     public void RotateWheelForUpdate(float angle, bool backWheel = true)
     {
+        angle = -angle;
         LeftWheel.transform.Rotate(Vector3.up, angle);
         RightWheel.transform.Rotate(Vector3.up, angle);
         if (backWheel)

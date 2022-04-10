@@ -81,7 +81,6 @@ public class UIController : MonoBehaviour
 
     public void HandleSubmittedAnswer(bool isCorrect, int correctButton, int uncorrectButton)
     {
-        Debug.Log("Handle");
         ToggleAnswerButtons(false);
         ToggleImage(false);
         if (!isCorrect)
@@ -124,7 +123,7 @@ public class UIController : MonoBehaviour
     }
     public void ShowCorrectButtonSeq(string correctButton, int[] uncorrectButton)
     {
-        Debug.Log("correct " + correctButton + " unn " + uncorrectButton[0] + uncorrectButton[1] + uncorrectButton[2]);
+        // Debug.Log("correct " + correctButton + " unn " + uncorrectButton[0] + uncorrectButton[1] + uncorrectButton[2]);
         for (int i = 0; i < correctButton.Length; i++)
         {
             if (uncorrectButton[i].ToString()[0].Equals(correctButton[i]))
