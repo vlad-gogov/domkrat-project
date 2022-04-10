@@ -39,6 +39,7 @@ public class TormozConnector : Selectable
         tormozMoving.Disconnect(type);
         isSelected = false;
         batya.isTormozConnected = false;
+        Singleton.Instance.StateManager.isTormozConnected--;
     }
 
     public override void GetInfoMouse()
@@ -96,6 +97,7 @@ public class TormozConnector : Selectable
         tormoz.gameObject.SetActive(true);
         isSelected = true;
         batya.isTormozConnected = true;
+        Singleton.Instance.StateManager.isTormozConnected++;
     }
 
     void Update()
@@ -139,6 +141,9 @@ public class TormozConnector : Selectable
                 Singleton.Instance.StateManager.NextState();
                 tormozMoving.Disconnect(type);
             }
+        } else if (curState == NameState.DISABLE_TORMOZ && !isSelected)
+        {
+            boxCol.enabled = false;
         }
     }
 }

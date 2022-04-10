@@ -21,6 +21,7 @@ public enum NameState
     MOVE_TPK_UP = 10,
     // Down
     MOVE_TPK_DOWN = 11,
+    DISABLE_TORMOZ = 13,
     // Finish
     DOWN_TPK = 12
 }
@@ -87,6 +88,7 @@ public class StateManager : MonoBehaviour
 
     public bool isTuringMech = false;
     public int ruchkaIsUp = 0;
+    public int isTormozConnected = 0;
 
     void Awake()
     {
@@ -123,10 +125,12 @@ public class StateManager : MonoBehaviour
         else if (typeArea == TypeArea.UP)
         {
             states.Add(new State() { state = NameState.MOVE_TPK_UP, disctiption = "Закатите ТПК по наклонной поверхности до красной точки" });
+            states.Add(new State() { state = NameState.DISABLE_TORMOZ, disctiption = "Отключите внешний тормоз от домкратов" });
         }
         else if (typeArea == TypeArea.DOWN)
         {
             states.Add(new State() { state = NameState.MOVE_TPK_DOWN, disctiption = "Скатите ТПК по наклонной поверхности до красной точки" });
+            states.Add(new State() { state = NameState.DISABLE_TORMOZ, disctiption = "Отключите внешний тормоз от домкратов" });
         }
 
         states.Add(new State() { state = NameState.DOWN_TPK, disctiption = "Опустите ТПК на землю" });
@@ -174,6 +178,9 @@ public class StateManager : MonoBehaviour
         if (gameMode == GameMode.TRAIN)
         {
             Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
+        } else if (gameMode == GameMode.EXAM && states[indexCurState].state == NameState.DEFAULT)
+        {
+            Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
         }
     }
 
@@ -181,7 +188,7 @@ public class StateManager : MonoBehaviour
     {
         counterMistakes += (int)error.Weight;
         Debug.Log(counterMistakes);
-        if (counterMistakes >= maxMistakes)
+        if (gameMode == GameMode.EXAM && counterMistakes >= maxMistakes)
         {
             Singleton.Instance.UIManager.OpenTutorial("Не сдал!!!!", /*finished=*/true);
         }
@@ -212,6 +219,14 @@ public class StateManager : MonoBehaviour
         if (Input.GetKey(KeyCode.F1) && gameMode == GameMode.TRAIN)
         {
             Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
+        }
+        if (Input.GetKey(KeyCode.F1) && gameMode == GameMode.EXAM)
+        {
+            Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials, NameState.DEFAULT)));
+        }
+        if (GetState() == NameState.DISABLE_TORMOZ && isTormozConnected == 0)
+        {
+            NextState();
         }
     }
 
@@ -284,10 +299,14 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    public string SafeGetFromDict(Dictionary<NameState, string> dict)
+    public string SafeGetFromDict(Dictionary<NameState, string> dict, NameState? state = null)
     {
         string value;
-        if (!dict.TryGetValue(states[indexCurState].state, out value))
+        if (state == null)
+        {
+            state = states[indexCurState].state;
+        }
+        if (!dict.TryGetValue(state == null? NameState.DEFAULT : (NameState)state, out value))
         {
             value = $"Для состояния {states[indexCurState].state} ещё не написаны подсказки...";
         }

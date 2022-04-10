@@ -88,6 +88,11 @@ public class Up_part : MonoBehaviour
                 Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим опускания домкрата", Weight = ErrorWeight.HIGH });
                 return;
             }
+            if (Singleton.Instance.StateManager.GetState() == NameState.DISABLE_TORMOZ && Singleton.Instance.StateManager.isTormozConnected != 0)
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Перед опусканием ТПК сначала отключите тормоза", Weight = ErrorWeight.LOW });
+                return;
+            }
             RealDown();
         }
         else

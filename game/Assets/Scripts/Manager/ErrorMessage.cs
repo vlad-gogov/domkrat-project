@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +10,7 @@ public class ErrorMessage : MonoBehaviour
 
     StateManager stateManager;
     
-    void Awake()
+    void Start()
     {
         gameObject.SetActive(true);
         erroText = transform.GetChild(0).GetComponent<Text>();
@@ -24,15 +24,15 @@ public class ErrorMessage : MonoBehaviour
         erroText.text = error.ErrorText;
         if (error.Weight == ErrorWeight.MINOR)
         {
-            gameObject.GetComponent<Image>().color = new Color(183, 183, 183, 105);
+            gameObject.GetComponent<Image>().color = new Color(183, 183, 183, 0.7f);
         }
         else
         {
-            gameObject.GetComponent<Image>().color = new Color(200, 0, 0, 105);
+            gameObject.GetComponent<Image>().color = new Color(255, 146, 146, 0.7f);
         }
         if (stateManager.gameMode == GameMode.EXAM)
         {
-            mistake.text = "Количество набранных баллов за ошибки: " + stateManager.counterMistakes;
+            mistake.text = "РљРѕР»Р»РёС‡РµСЃС‚РІРѕ С€С‚СЂР°С„РЅС‹С… Р±Р°Р»Р»РѕРІ: " + stateManager.counterMistakes;
         }
         gameObject.SetActive(true);
         Singleton.Instance.StateManager.Pause();
