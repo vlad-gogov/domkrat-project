@@ -17,6 +17,7 @@ public class VideoSteamer : MonoBehaviour
     IEnumerator PlayVideo()
     {
         var videoPlayer = GetComponent<VideoPlayer>();
+        videoPlayer.SetDirectAudioMute(0, true);
         videoPlayer.Prepare();
         var waiter = new WaitForSeconds(1);
         int failures = 0;
