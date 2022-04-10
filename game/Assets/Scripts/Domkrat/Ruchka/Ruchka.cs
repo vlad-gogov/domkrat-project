@@ -230,11 +230,6 @@ public class Ruchka : Selectable
                         return;
                     }
                 }
-                else
-                {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нельзя вращать поворотный механизм в режиме без груза", Weight = ErrorWeight.MINOR });
-                    return;
-                }
             }
         }
         else
