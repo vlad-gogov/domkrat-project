@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     TutorialBar tutorial;
     bool finished = false;
     bool isOpen = false;
+    public bool noOverwrite = false;
 
     void Awake()
     {
@@ -22,12 +23,20 @@ public class UIManager : MonoBehaviour
 
     public void SetEnterText(string text)
     {
+        if (noOverwrite)
+        {
+            return;
+        }
         enterBox.SetActive(true);
         enter.text = text;
     }
 
     public void ClearEnterText()
     {
+        if (noOverwrite)
+        {
+            return;
+        }
         enterBox.SetActive(false);
         enter.text = "";
     }

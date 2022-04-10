@@ -533,6 +533,8 @@ public class TPKMoving : MonoBehaviour
         Vector3 vector = new Vector3(0, 0, 0);
         float delta = 3f;
 
+
+
         switch (direction)
         {
             case TPKDirection.RIGHT:
@@ -551,6 +553,10 @@ public class TPKMoving : MonoBehaviour
         float a = 0.01f;
         float maxSpeed = 0.8f;
         delta = 300f;
+
+        Singleton.Instance.UIManager.SetEnterText("Нажмите T чтобы остановить движение ТПК");
+        Singleton.Instance.UIManager.noOverwrite = true;
+
         for (float i = 0; i <= Mathf.Abs(delta); i += shift * Time.deltaTime)
         {
             if (Input.GetKeyDown(KeyCode.T) || curDirection == TPKDirection.FINISHED)
@@ -606,6 +612,8 @@ public class TPKMoving : MonoBehaviour
             gameObject.transform.Translate(vector * shift * Time.deltaTime);
             yield return null;
         }
+        Singleton.Instance.UIManager.noOverwrite = false;
+        Singleton.Instance.UIManager.ClearEnterText();
         isMoving = false;
     }
 

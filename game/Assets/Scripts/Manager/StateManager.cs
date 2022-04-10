@@ -90,7 +90,7 @@ public class StateManager : MonoBehaviour
     public int ruchkaIsUp = 0;
     public int isTormozConnected = 0;
     public bool isErrorOpened = false;
-    string controlsTutorial = "тутора нэма";
+    string controlsTutorial;
 
     void Awake()
     {
@@ -293,6 +293,11 @@ public class StateManager : MonoBehaviour
             var st = (NameState)Enum.Parse(typeof(NameState), state, /*ignore_case=*/true);
             tutorials[st] = RemoveFirstLine(tutorLine);
         }
+
+        // load constrol tutorial
+        filepath = @"Texts\\controlsTutorial.txt";
+        filepath = Path.Combine(Application.streamingAssetsPath, filepath);
+        controlsTutorial = File.ReadAllText(filepath);
     }
 
     string RemoveFirstLine(string str, int nlines=1)
