@@ -69,7 +69,8 @@ public class StateManager : MonoBehaviour
 
     public GameMode gameMode;
     public TypeArea typeArea;
-    public int counterMistaks = 0;
+    public int counterMistakes = 0;
+    private int maxMistakes = 20;
     public GameObject player;
 
     private List<Domkrat> domkrats = new List<Domkrat>();
@@ -104,7 +105,6 @@ public class StateManager : MonoBehaviour
     {
         gameMode = CrossScenesStorage.gameMode;
         typeArea = CrossScenesStorage.typeArea;
-        Debug.Log($"Current mode is: {gameMode} | {typeArea}");
 
         states.Add(new State() { state = NameState.DEFAULT, disctiption = "" });
         states.Add(new State() { state = NameState.SET_PEREHODNICK, disctiption = "Установите переходники на пакет" });
@@ -133,7 +133,7 @@ public class StateManager : MonoBehaviour
 
         indexCurState = 0;
 
-        if ( gameMode == GameMode.FREEPLAY)
+        if (gameMode == GameMode.FREEPLAY)
         {
             NotifyAllDomkrats(NameState.CHECK_DOMKRATS);
             NotifyAllDomkrats(NameState.SET_DOMKRATS);
@@ -153,14 +153,8 @@ public class StateManager : MonoBehaviour
         if (indexCurState >= states.Count)
         {
             finished = true;
-        }
-
-        if (finished)
-        {
-            Debug.Log("Calling 'NextState' when 'finished' flag is set to 'true', ignoring this call...");
             return;
         }
-        Debug.Log(states[indexCurState].state);
 
         if (typeArea != TypeArea.FLAT && states[indexCurState].state > NameState.CHECK_BREAK_MECHANISM)
         {
@@ -171,24 +165,27 @@ public class StateManager : MonoBehaviour
         {
             NotifyAllDomkrats(states[indexCurState].state);
         }
-        if (gameMode == GameMode.TRAIN)
-        {
-            ChangeTextHelper();
-        }
+        ChangeTextHelper();
     }
 
     public void ChangeTextHelper()
     {
         Singleton.Instance.UIManager.SetHelperText(string.Copy(states[indexCurState].disctiption));
-        // InitialStateHack();
-        Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
+        if (gameMode == GameMode.TRAIN)
+        {
+            Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
+        }
     }
 
     public void onError(Error error)
     {
-        if (gameMode == GameMode.TRAIN)
-            errorMessage.OnShow(string.Copy(error.ErrorText));
-        counterMistaks += (int)error.Weight;
+        counterMistakes += (int)error.Weight;
+        Debug.Log(counterMistakes);
+        if (counterMistakes >= maxMistakes)
+        {
+            Singleton.Instance.UIManager.OpenTutorial("Не сдал!!!!", /*finished=*/true);
+        }
+        errorMessage.OnShow(error);
     }
 
     void NotifyAllDomkrats(NameState state)
@@ -212,7 +209,7 @@ public class StateManager : MonoBehaviour
             NextState();
             countDomkrats++;
         }
-        if (Input.GetKey(KeyCode.F1))
+        if (Input.GetKey(KeyCode.F1) && gameMode == GameMode.TRAIN)
         {
             Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
         }
@@ -228,8 +225,6 @@ public class StateManager : MonoBehaviour
         OnPause = true;
         player.GetComponent<PlayerMove>().enabled = false;
         player.GetComponent<PlayerRay>().enabled = false;
-        // если установить time в 0, то перестают работать видосы...
-        // Time.timeScale = 0;
     }
 
     public void Resume()
@@ -237,7 +232,6 @@ public class StateManager : MonoBehaviour
         OnPause = false;
         player.GetComponent<PlayerMove>().enabled = true;
         player.GetComponent<PlayerRay>().enabled = true;
-        // Time.timeScale = 1;
     }
 
     void LoadTutorial()
@@ -253,7 +247,7 @@ public class StateManager : MonoBehaviour
             var match = Regex.Match(modeStr, "(.*):(.*)");
             if (!match.Success)
             {
-                Debug.LogError($"No state for tuturial page was specified! {tutorLine}");
+                // Debug.LogError($"No state for tuturial page was specified! {tutorLine}");
                 continue;
             }
             string state = match.Groups[1].Value;

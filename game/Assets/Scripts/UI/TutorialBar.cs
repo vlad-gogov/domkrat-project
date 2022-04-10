@@ -12,7 +12,6 @@ public class TutorialBar
     public TutorialBar(GameObject scrollView)
     {
         this.scrollView = scrollView;
-        Debug.Log($"scrollView: {scrollView}");
         content = scrollView.transform.GetChild(0).GetChild(0).gameObject;
         builder = new PageBuilder(content);
     }

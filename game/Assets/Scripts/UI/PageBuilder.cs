@@ -91,7 +91,7 @@ public class PageBuilder : MonoBehaviour
             var cnt = go.AddComponent<ContentSizeFitter>();
             cnt.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             Canvas.ForceUpdateCanvases();
-            Debug.Log(go.GetComponent<RectTransform>().rect.height);
+            // Debug.Log(go.GetComponent<RectTransform>().rect.height);
         }
 
         go.transform.localPosition = new Vector3(791.5f, -go.GetComponent<RectTransform>().rect.height / 2 - offsets[offsets.Count - 1], 0f);
@@ -133,7 +133,9 @@ public class PageBuilder : MonoBehaviour
         if (File.Exists(vidPath))
         {
             vid.url = vidPath;
-            vid.errorReceived += (VideoPlayer src, string msg) => { Debug.Log($"Video player error! {msg}"); };
+            vid.errorReceived += (VideoPlayer src, string msg) => { 
+                //Debug.Log($"Video player error! {msg}"); 
+            };
             go.AddComponent<VideoSteamer>();
         }
 
@@ -148,7 +150,7 @@ public class PageBuilder : MonoBehaviour
         // Debug.Log(toDraw);
         foreach (var d in toDraw)
         {
-            Debug.Log($"{d} : {d.content}");
+            // Debug.Log($"{d} : {d.content}");
             d.Execute(this);
         }
     }

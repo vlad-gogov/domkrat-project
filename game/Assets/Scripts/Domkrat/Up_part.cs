@@ -107,7 +107,6 @@ public class Up_part : MonoBehaviour
         // то репортим в менеджер, что все проверки пройдены
         if (doNowAllCheckComplete && !wasAllCheckComplete)
         {
-            Debug.Log("Krasava, vse proverki s domkratom sdelal!!!");
             Singleton.Instance.StateManager.NextState();
         }
     }
@@ -146,7 +145,6 @@ public class Up_part : MonoBehaviour
     public void RealUp(bool liftTPK=true)
     {
         curPosition = Makes.UP;
-        TechStand.SetActive(true);
         animator.SetTrigger("Up"); // анимация подъема самого домкрата
         ruchka.GetComponent<Animator>().SetTrigger("Up"); // анимация вращения ручки
         if (liftTPK)
@@ -159,7 +157,6 @@ public class Up_part : MonoBehaviour
     public void RealDown(bool liftTPK=true)
     {
         curPosition = Makes.DOWN;
-        TechStand.SetActive(false);
         animator.SetTrigger("Down"); // анимация опускания (по масти) самого домкрата
         ruchka.GetComponent<Animator>().SetTrigger("Down"); // анимация вращения ручки
         if (liftTPK)
@@ -167,5 +164,15 @@ public class Up_part : MonoBehaviour
             TPKAnim.SetTrigger("Down"); // анимация ОПУСКАНИЯ ТПК БЛЯТЬ (да-да не удивляйтесь)
             TPK.TPKObj.LiftDown();
         }
+    }
+
+    public void OnTechStand()
+    {
+        TechStand.SetActive(true);
+    }
+
+    public void OffTechStand()
+    {
+        TechStand.SetActive(false);
     }
 }

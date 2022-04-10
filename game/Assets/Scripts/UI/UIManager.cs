@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
 {
@@ -17,18 +17,8 @@ public class UIManager : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("starting UI manager...");
         tutorial = new TutorialBar(scrollView);
     }
-
-    void Start()
-    {
-        if (Singleton.Instance.StateManager.gameMode == GameMode.EXAM)
-        {
-            helper.GetComponentInParent<UnityEngine.UI.Image>().gameObject.SetActive(false);
-        }
-    }
-
 
     public void SetEnterText(string text)
     {
@@ -60,7 +50,6 @@ public class UIManager : MonoBehaviour
         }
         isOpen = true;
         scrollView.SetActive(true);
-        Debug.Log(tutorial);
         this.finished = finished;
         tutorial.Show(tutor);
         Singleton.Instance.StateManager.Pause();

@@ -25,19 +25,7 @@ public class TormozConnector : Selectable
         boxCol.enabled = false;
         tormozMoving = Tormoz.tormoz.gameObject.GetComponent<TormozMoving>();
         tormoz = Tormoz.tormoz.GetComponent<Tormoz>();
-        if (tormozMoving == null)
-        {
-            Debug.LogError("blyat!!!");
-        }
-        if (tormoz == null)
-        {
-            Debug.Log("SUKA!!!!!");
-        }
         down_part = gameObject.transform.parent.parent.parent.parent.GetComponent<Down_part>();
-        if (down_part == null)
-        {
-            Debug.LogError("pizdec");
-        }
     }
 
     // так надо: инача в некоторых сценах ломается порядок конструирования объектов

@@ -5,11 +5,35 @@ using UnityEngine.UI;
 
 public class ErrorMessage : MonoBehaviour
 {
-    [SerializeField] Text erroText;
+    Text erroText;
+    Text mistake;
 
-    public void OnShow(string textError)
+    StateManager stateManager;
+    
+    void Awake()
     {
-        erroText.text = textError;
+        gameObject.SetActive(true);
+        erroText = transform.GetChild(0).GetComponent<Text>();
+        mistake = transform.GetChild(2).GetComponent<Text>();
+        stateManager = Singleton.Instance.StateManager;
+        gameObject.SetActive(false);
+    }
+
+    public void OnShow(Error error)
+    {
+        erroText.text = error.ErrorText;
+        if (error.Weight == ErrorWeight.MINOR)
+        {
+            gameObject.GetComponent<Image>().color = new Color(183, 183, 183, 105);
+        }
+        else
+        {
+            gameObject.GetComponent<Image>().color = new Color(200, 0, 0, 105);
+        }
+        if (stateManager.gameMode == GameMode.EXAM)
+        {
+            mistake.text = "Количество набранных баллов за ошибки: " + stateManager.counterMistakes;
+        }
         gameObject.SetActive(true);
         Singleton.Instance.StateManager.Pause();
     }

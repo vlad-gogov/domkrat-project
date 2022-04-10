@@ -8,11 +8,9 @@ enum TPKDirection
     STAY = 0,
     FORWARD = 1,
     RIGHT = 2,
-    UP = 3,
-    DOWN = 4,
-    LEFT = 5,
-    BACK = 6,
-    FINISHED = 7
+    LEFT = 3,
+    BACK = 4,
+    FINISHED = 5
 }
 
 public class TPKMoving : MonoBehaviour
@@ -555,7 +553,7 @@ public class TPKMoving : MonoBehaviour
             {
                 break;
             }
-            Debug.Log($"{transform.rotation.x} | {Tormoz.tormoz.tormozMovingHand.isSelected}");
+            // Debug.Log($"{transform.rotation.x} | {Tormoz.tormoz.tormozMovingHand.isSelected}");
             if (transform.rotation.x > 0.02f) // поднимаемся в горку, тормоз должен быть отжат
             {
                 if (Tormoz.tormoz.tormozMovingHand.isSelected)

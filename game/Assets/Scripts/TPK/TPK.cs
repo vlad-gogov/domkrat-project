@@ -10,11 +10,6 @@ public enum StateTPK
 
 public class TPK : MonoBehaviour
 {
-    // Какие операции синхронить между домкратами:
-    // 1. Подъем/опуск
-    // 2. Смена режимов на всём (ручка)
-    // 3. САСного/рояльные положения ТОЛЬКО МЕЖДУ ПАРАЛЛЕЛЬНЫМИ домкратами
-    // 4. Синхронить повороты нижних частей
     public List<Domkrat> attachedDomkrats;
     List<TechStand> techStands = new List<TechStand>();
 
@@ -81,16 +76,14 @@ public class TPK : MonoBehaviour
             col.enabled = flag;
         }
         tpkObj.GetComponent<Rigidbody>().useGravity = flag;
-        // GetComponent<BoxCollider>().enabled = !flag;
         GetComponent<Rigidbody>().useGravity = !flag;
-        // GetComponent<Rigidbody>().isKinematic = flag;
     }
 
     public int AddDomkrat(Domkrat domkrat)
     {
         attachedDomkrats.Add(domkrat);
         // Вернуть индекс домкрата потребителю, чтобы он потом мог удалить себя по этому индексу
-        Debug.Log("Domkrat dobavlen: " + attachedDomkrats.Count.ToString());
+        //Debug.Log("Domkrat dobavlen: " + attachedDomkrats.Count.ToString());
         return attachedDomkrats.Count - 1;
     }
 

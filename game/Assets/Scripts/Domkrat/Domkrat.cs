@@ -98,32 +98,29 @@ public class Domkrat : MonoBehaviour
 
         if (parent.tag == "SetPerehodnickDomkrat" && Input.GetKey(KeyCode.E))
         {
-            if (Input.GetKey(KeyCode.E))
+            if (ptConfig.type != type)
             {
-                if (ptConfig.type != type)
-                {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильная ориентация домкрата", Weight = ErrorWeight.LOW });
-                    return false;
-                }
-
-                curH = ptConfig.curH;
-                curV = ptConfig.curV;
-
-                GetComponent<Rigidbody>().isKinematic = true;
-                GetComponent<BoxCollider>().enabled = false;
-                domkratMoving.OffCooliderWheel();
-
-                transform.position = BeginPoint.transform.position;
-                transform.rotation = BeginPoint.transform.rotation;
-
-                float begin = BeginPoint.transform.position.z;
-                float end = EndPoint.transform.position.z;
-                StartCoroutine(MoveSet(end - begin));
-                Destroy(BeginPoint);
-                Destroy(EndPoint);
-
-                return true;
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильная ориентация домкрата", Weight = ErrorWeight.LOW });
+                return false;
             }
+
+            curH = ptConfig.curH;
+            curV = ptConfig.curV;
+
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<BoxCollider>().enabled = false;
+            domkratMoving.OffCooliderWheel();
+
+            transform.position = BeginPoint.transform.position;
+            transform.rotation = BeginPoint.transform.rotation;
+
+            float begin = BeginPoint.transform.position.z;
+            float end = EndPoint.transform.position.z;
+            StartCoroutine(MoveSet(end - begin));
+            Destroy(BeginPoint);
+            Destroy(EndPoint);
+
+            return true;
         }
         return false;
     }
