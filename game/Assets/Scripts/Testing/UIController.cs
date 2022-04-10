@@ -10,6 +10,8 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private Text endGame;
     [SerializeField]
+    private Button endGameButton;
+    [SerializeField]
     private Image endGameImage;
     [SerializeField]
     private Text questionText;
@@ -27,8 +29,13 @@ public class UIController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            SceneManager.LoadScene("Menu");
+            InMenu();
         }
+    }
+
+    public void InMenu()
+    {
+       SceneManager.LoadScene("Menu");
     }
 
     public void SetupUIForQuestion(QuizQuestion question)
@@ -36,7 +43,6 @@ public class UIController : MonoBehaviour
         correctAnswerPopup.SetActive(false);
         wrongAnswerPopup.SetActive(false);
 
-        //questionText.transform.position = new Vector3(0, 375, 0);
         questionText.rectTransform.localPosition = new Vector2(0, 375);
 
         if (question.QuestionImage != "")
@@ -71,6 +77,7 @@ public class UIController : MonoBehaviour
         ToggleQuestionText(false);
         correctAnswerPopup.SetActive(false);
         wrongAnswerPopup.SetActive(false);
+        endGameButton.gameObject.SetActive(true);
         endGame.gameObject.SetActive(true);
         endGameImage.gameObject.SetActive(true);
         if (error_count != 0)
