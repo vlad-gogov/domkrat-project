@@ -24,6 +24,10 @@ public class SwitchRoyal : Selectable
         {
             box.enabled = true;
         }
+        else
+        {
+            box.enabled = false;
+        }
     }
 
     public override void Deselect()
@@ -62,7 +66,7 @@ public class SwitchRoyal : Selectable
                     actualDomkratDownPart.GetComponent<Animator>().SetTrigger("ToSoos");
                     actualDomkratDownPart.rotation_down_part.currentWheelState = WheelState.SOOS;
                 }
-                ruchka.isSelected = true;
+                ruchka.StopInteraption();
                 actualDomkratDownPart.rotation_down_part.ChangeDir();
             }
         }

@@ -9,6 +9,7 @@ public class TormozConnector : Selectable
     [SerializeField] GameObject pointForTormoz;
     [SerializeField] GameObject pointerToAdapter;
     Down_part down_part;
+    TormozSwitcher tormozSwitcher;
 
     DomkratMoving domkratMove;
     Domkrat batya;
@@ -26,6 +27,7 @@ public class TormozConnector : Selectable
         tormozMoving = Tormoz.tormoz.gameObject.GetComponent<TormozMoving>();
         tormoz = Tormoz.tormoz.GetComponent<Tormoz>();
         down_part = gameObject.transform.parent.parent.parent.parent.GetComponent<Down_part>();
+        tormozSwitcher = down_part.transform.GetChild(5).GetChild(1).GetComponent<TormozSwitcher>();
     }
 
     // так надо: инача в некоторых сценах ломается порядок конструирования объектов
@@ -39,6 +41,7 @@ public class TormozConnector : Selectable
         tormozMoving.Disconnect(type);
         isSelected = false;
         batya.isTormozConnected = false;
+        tormozSwitcher.SwitchBoxCollider(true);
         Singleton.Instance.StateManager.isTormozConnected--;
     }
 
@@ -94,6 +97,7 @@ public class TormozConnector : Selectable
             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Сначала отключить тормоз от другого домкрата", Weight = ErrorWeight.LOW });
             return;
         }
+        tormozSwitcher.SwitchBoxCollider(false);
         tormoz.gameObject.SetActive(true);
         isSelected = true;
         batya.isTormozConnected = true;

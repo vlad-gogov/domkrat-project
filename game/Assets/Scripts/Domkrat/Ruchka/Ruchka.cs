@@ -34,6 +34,8 @@ public class Ruchka : Selectable
     private bool isLeft = false;
     private bool isCount = false;
 
+    private bool isUse = false;
+
     void Start()
     {
         curPosition = PositionRuchka.UP;
@@ -44,7 +46,7 @@ public class Ruchka : Selectable
     {
         if (Singleton.Instance.StateManager.GetState() == NameState.CHECK_TURING_MACHANISM)
         {
-            if (isSelected)
+            if (isUse)
             {
                 push.enabled = false;
             }
@@ -73,12 +75,15 @@ public class Ruchka : Selectable
 
     public override void Deselect()
     {
-        isSelected = false;
+        isUse = false;
     }
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы взаимодействовать с ручкой.");
+        if (!isUse)
+        {
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы взаимодействовать с ручкой.");
+        }
     }
 
     public override GameObject GetSelectObject()
@@ -117,14 +122,14 @@ public class Ruchka : Selectable
         return result;
     }
 
-    public void StartAnim()
+    public void StopInteraption()
     {
-        isSelected = true;
+        isUse = true;
     }
 
     public override void Select()
     {
-        if (isSelected)
+        if (isUse)
         {
             return;
         }

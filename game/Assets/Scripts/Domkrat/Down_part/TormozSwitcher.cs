@@ -7,6 +7,7 @@ public class TormozSwitcher : Selectable
     Animator downPartAnim;
     BoxCollider boxCol;
     Down_part_rotation down_Part_Rotation;
+    private bool isFirst = false;
 
     public void Start()
     {
@@ -19,10 +20,16 @@ public class TormozSwitcher : Selectable
     void Update()
     {
         NameState curState = Singleton.Instance.StateManager.GetState();
-        if (!boxCol.enabled && curState == NameState.CHECK_BREAK_MECHANISM)
+        if (!isFirst && curState == NameState.CHECK_BREAK_MECHANISM)
         {
             boxCol.enabled = true;
+            isFirst = true;
         }
+    }
+
+    public void SwitchBoxCollider(bool signal)
+    {
+        boxCol.enabled = signal;
     }
 
     public override void Deselect()
