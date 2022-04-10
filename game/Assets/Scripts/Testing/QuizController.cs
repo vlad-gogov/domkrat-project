@@ -85,7 +85,7 @@ public class QuizController : MonoBehaviour
         answer = null;
         //uiController.ShowCorrectButton(Int32.Parse(currentQuestion.CorrectAnswer));
         yield return new WaitForSeconds(delayBetweenQuestions);
-        if (count_question == questionCollection.allQuestions.Length)
+        if (count_question == 7)
         {
             EndTest();
         } else
