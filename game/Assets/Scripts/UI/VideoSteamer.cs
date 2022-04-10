@@ -16,22 +16,26 @@ public class VideoSteamer : MonoBehaviour
 
     IEnumerator PlayVideo()
     {
+        // GetComponent<RawImage>().color = Color.green;
+
         var videoPlayer = GetComponent<VideoPlayer>();
         videoPlayer.SetDirectAudioMute(0, true);
         videoPlayer.Prepare();
-        var waiter = new WaitForSeconds(1);
+        // refresh rate
+        var waiter = new WaitForSeconds(0.1f);
         int failures = 0;
         while (!videoPlayer.isPrepared)
         {
             yield return waiter;
-            failures++;
-            if (failures > maxFailures)
-            {
-                throw new System.Exception();
-            }
+            // failures++;
+            //if (failures > maxFailures)
+            //{
+            //    throw new System.Exception();
+            //}
         }
         var img = GetComponent<RawImage>();
         img.texture = videoPlayer.texture;
         videoPlayer.Play();
+        yield return null;
     }
 }
