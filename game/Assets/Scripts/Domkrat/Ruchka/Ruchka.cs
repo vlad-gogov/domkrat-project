@@ -154,8 +154,7 @@ public class Ruchka : Selectable
                 {
                     BoxCollider boxCol = TechStand.gameObject.GetComponent<BoxCollider>();
                     if (
-                            actualDomkratUpPart.curPosition == Makes.UP
-                            && actualDomkratDownPart.curPosition == Makes.DOWN
+                            actualDomkratDownPart.curPosition == Makes.DOWN
                             && state.direction == Makes.DOWN
                     )
                     {
@@ -166,8 +165,7 @@ public class Ruchka : Selectable
                         }
                     }
                     else if (
-                            actualDomkratUpPart.curPosition == Makes.UP
-                            && actualDomkratDownPart.curPosition == Makes.UP
+                            actualDomkratDownPart.curPosition == Makes.UP
                             && state.direction == Makes.UP
                     )
                     {
@@ -177,7 +175,22 @@ public class Ruchka : Selectable
                             return;
                         }
                     }
-
+                    else if (
+                            actualDomkratDownPart.curPosition == Makes.UP
+                            && state.direction == Makes.DOWN
+                    )
+                    {
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нижняя часть домкрата уже вверху", Weight = ErrorWeight.MINOR });
+                        return;
+                    }
+                    else if (
+                            actualDomkratDownPart.curPosition == Makes.DOWN
+                            && state.direction == Makes.UP
+                    )
+                    {
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нижняя часть домкрата уже внизу", Weight = ErrorWeight.MINOR });
+                        return;
+                    }
                 }
 
                 // Верхняя часть домкарата
@@ -202,6 +215,22 @@ public class Ruchka : Selectable
                             return;
                         }
                         actualDomkratUpPart.Down(state.activeSwitcher == ModeSwitch.LOADED); // Анимация опускания верхней части домкрата
+                        return;
+                    }
+                    else if (
+                            actualDomkratUpPart.curPosition == Makes.DOWN
+                            && state.direction == Makes.DOWN
+                    )
+                    {
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Домкрат уже в нижнем положении", Weight = ErrorWeight.MINOR });
+                        return;
+                    }
+                    else if (
+                            actualDomkratUpPart.curPosition == Makes.UP
+                            && state.direction == Makes.UP
+                    )
+                    {
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Домкрат уже в верхнем положении", Weight = ErrorWeight.MINOR });
                         return;
                     }
                 }
