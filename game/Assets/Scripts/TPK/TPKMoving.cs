@@ -80,7 +80,7 @@ public class TPKMoving : MonoBehaviour
         }
         if (TPK.TPKObj.state == StateTPK.DOWN) 
         {
-            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Поднимите ТПК перед тем как его перемещать", Weight = ErrorWeight.CRITICAL });
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Поднимите ТПК перед тем, как его перемещать", Weight = ErrorWeight.CRITICAL });
             return;
         }
         List<Domkrat> attachedDomkrats = TPK.TPKObj.attachedDomkrats;
@@ -88,7 +88,7 @@ public class TPKMoving : MonoBehaviour
         {
             if (TPK.TPKObj.state == StateTPK.DOWN)
             {
-                Singleton.Instance.StateManager.onError(new Error(){ ErrorText = "Поднимите ТПК перед тем как его перемещать", Weight = ErrorWeight.CRITICAL});
+                Singleton.Instance.StateManager.onError(new Error(){ ErrorText = "Поднимите ТПК перед тем, как его перемещать", Weight = ErrorWeight.CRITICAL});
             }
             if (isMoving)
             {
@@ -144,7 +144,7 @@ public class TPKMoving : MonoBehaviour
         }
         else
         {
-            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите 4 домкрата перед тем как его перемещать", Weight = ErrorWeight.CRITICAL });
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите 4 домкрата перед тем, как его перемещать", Weight = ErrorWeight.CRITICAL });
             return;
         }
         curDirection = TPKDirection.STAY;
@@ -232,7 +232,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы передних домкрат в соосное положение", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы передних домкратов в соосное положение", Weight = ErrorWeight.LOW });
                     return false;
                 }
                 if (domkrat.rotateFixator.isSelected)
@@ -250,7 +250,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы задних домкрат в рояльное положение", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы задних домкратов в рояльное положение", Weight = ErrorWeight.LOW });
                     return false;
                 }
                 if (!domkrat.rotateFixator.isSelected)
@@ -291,7 +291,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы правых домкрат в рояльное положение ", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы правых домкратов в рояльное положение ", Weight = ErrorWeight.LOW });
                     return false;
                 }
                 if (!domkrat.rotateFixator.isSelected)
@@ -311,7 +311,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы левых домкрат в соосное положение ", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы левых домкратов в соосное положение ", Weight = ErrorWeight.LOW });
                     return false;
                 }
                 if (domkrat.rotateFixator.isSelected)
@@ -353,7 +353,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.SOOS)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы правых домкрат в соосное положение ", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы правых домкратов в соосное положение ", Weight = ErrorWeight.LOW });
                     return false;
                 }
                 if (domkrat.rotateFixator.isSelected)
@@ -373,7 +373,7 @@ public class TPKMoving : MonoBehaviour
             {
                 if (domkrat.downPartRotation.currentWheelState != WheelState.ROYAL)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы левых домкрат в рояльное положение ", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите колесные ходы левых домкратах в рояльное положение ", Weight = ErrorWeight.LOW });
                     return false;
                 }
                 if (!domkrat.rotateFixator.isSelected)
@@ -516,7 +516,7 @@ public class TPKMoving : MonoBehaviour
         // Надо подумать
         if (!Tormoz.tormoz.tormozMovingHand.isSelected)
         {
-            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Ручка тормоза отжата (тпк не может поехать вперед)", Weight = ErrorWeight.LOW });
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Ручка тормоза отжата (ТПК не может поехать вперед)", Weight = ErrorWeight.LOW });
             return false;
         }
         return true;

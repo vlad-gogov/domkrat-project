@@ -211,7 +211,7 @@ public class Ruchka : Selectable
                     {
                         if (TPK.TPKObj.CheckStand())
                         {
-                            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем как опускать ТПК", Weight = ErrorWeight.HIGH });
+                            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем, как опускать ТПК", Weight = ErrorWeight.HIGH });
                             return;
                         }
                         actualDomkratUpPart.Down(state.activeSwitcher == ModeSwitch.LOADED); // Анимация опускания верхней части домкрата

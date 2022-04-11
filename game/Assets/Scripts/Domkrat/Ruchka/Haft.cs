@@ -30,6 +30,6 @@ public class Haft : Selectable
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы переключить положение ручки (рабочее/не рабочее)");
+        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы переключить положение ручки (рабочее/нерабочее)");
     }
 }

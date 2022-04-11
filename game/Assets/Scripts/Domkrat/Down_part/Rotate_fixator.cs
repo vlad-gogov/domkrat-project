@@ -33,10 +33,10 @@ public class Rotate_fixator : Selectable
     {
         if (!isSelected)
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы разблокировать фиксатор поворота");
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы выключить фиксатор поворота");
         } else
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы заблокировать фиксатор поворота");
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы включить фиксатор поворота");
         }
     }
 

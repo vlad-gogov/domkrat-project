@@ -94,7 +94,7 @@ public class TormozConnector : Selectable
         var result = tormozMoving.ConnectTo(pointerToAdapter, type, pointForTormoz);
         if (!result)
         {
-            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Сначала отключить тормоз от другого домкрата", Weight = ErrorWeight.LOW });
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Сначала отключите тормоз от другого домкрата", Weight = ErrorWeight.LOW });
             return;
         }
         tormozSwitcher.SwitchBoxCollider(false);

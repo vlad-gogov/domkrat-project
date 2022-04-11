@@ -31,7 +31,7 @@ public class Down_part : MonoBehaviour
             if (!isTechStand)
             {
                 // Пытаемся поднять нижнюю часть домкрата без технологической подставки с подключенным ТПК
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установить технологическую подставку перед тем как поднимать нижнюю часть домкарата", Weight = ErrorWeight.HIGH });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установить технологическую подставку перед тем, как поднимать нижнюю часть домкарата", Weight = ErrorWeight.HIGH });
                 return false;
             }
             RealUp();
@@ -46,7 +46,7 @@ public class Down_part : MonoBehaviour
             if (!isTechStand)
             {
                 // Пытаемся поднять нижнюю часть домкрата без технологической подставки с подключенным ТПК
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установить технологическую подставку перед тем как поднимать нижнюю часть домкарата", Weight = ErrorWeight.HIGH });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установить технологическую подставку перед тем, как поднимать нижнюю часть домкарата", Weight = ErrorWeight.HIGH });
                 return false;
             }
             RealDown();
@@ -99,7 +99,7 @@ public class Down_part : MonoBehaviour
                     }
                     else
                     {
-                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Разблокируйте фиксатор поворота", Weight = ErrorWeight.LOW });
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Выключить фиксатор поворота", Weight = ErrorWeight.LOW });
                     }
                 }
                 else if (Input.GetKey(KeyCode.Q))
@@ -110,7 +110,7 @@ public class Down_part : MonoBehaviour
                     }
                     else
                     {
-                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Разблокируйте фиксатор поворота", Weight = ErrorWeight.LOW });
+                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Выключить фиксатор поворота", Weight = ErrorWeight.LOW });
                     }
                 }
             } 

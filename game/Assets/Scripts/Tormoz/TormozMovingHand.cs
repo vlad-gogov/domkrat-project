@@ -21,11 +21,11 @@ public class TormozMovingHand : Selectable
     {
         if (!isSelected)
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтоб прижать ручку к корпусу");
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы прижать ручку к корпусу");
         }
         else
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтоб отжать ручку от корпуса");
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы отжать ручку от корпуса");
         }
     }
 

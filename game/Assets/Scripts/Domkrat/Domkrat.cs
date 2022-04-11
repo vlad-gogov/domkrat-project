@@ -55,7 +55,7 @@ public class Domkrat : MonoBehaviour
         }
         if (p.isPerehodnick && trigger.tag == "SetPerehodnickDomkrat")
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите E чтобы установить домкрат в переходник");
+            Singleton.Instance.UIManager.SetEnterText("Нажмите E, чтобы установить домкрат в переходник");
         }
     }
 

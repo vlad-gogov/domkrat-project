@@ -38,7 +38,7 @@ public class SwitchRoyal : Selectable
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы переключить соосно/рояльное положение колёс.");
+        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы переключить положение колёсного хода.");
     }
 
     public override GameObject GetSelectObject()
