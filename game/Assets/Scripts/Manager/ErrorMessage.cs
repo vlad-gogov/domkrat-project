@@ -24,11 +24,11 @@ public class ErrorMessage : MonoBehaviour
         erroText.text = error.ErrorText;
         if (error.Weight == ErrorWeight.MINOR)
         {
-            gameObject.GetComponent<Image>().color = new Color(90, 90, 90, 0.7f);
+            gameObject.GetComponent<Image>().color = new Color(0.4f, 0.4f, 0.4f, 0.81f);
         }
         else
         {
-            gameObject.GetComponent<Image>().color = new Color(255, 146, 146, 0.7f);
+            gameObject.GetComponent<Image>().color = new Color(0.6792453f, 0f, 0f, 0.7f);
         }
         if (stateManager.gameMode == GameMode.EXAM && error.Weight != ErrorWeight.MINOR)
         {
@@ -43,6 +43,7 @@ public class ErrorMessage : MonoBehaviour
         Singleton.Instance.StateManager.Resume();
         Singleton.Instance.StateManager.isErrorOpened = false;
         erroText.text = "";
+        mistake.text = "";
         gameObject.SetActive(false);
     }
 }

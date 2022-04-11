@@ -63,10 +63,10 @@ public class UIManager : MonoBehaviour
         var errs = Singleton.Instance.StateManager.errors;
         if (finished && errs.Count > 0)
         {
-            tutor += "\n" + "Совершенные ошибки:\n";
+            tutor += "\n\n" + "Совершенные ошибки:\n";
             foreach (var err in errs)
             {
-                tutor += $"\t{err.ErrorText}; Вес: {err.Weight}\n";
+                tutor += $"\t<color=red>{err.ErrorText}; Вес: {(int)err.Weight}</color>\n";
             }
         }
         tutorial.Show(tutor);

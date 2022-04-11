@@ -191,7 +191,10 @@ public class StateManager : MonoBehaviour
         {
             return;
         }
-        errors.Add(error);
+        if (error.Weight != ErrorWeight.MINOR)
+        {
+            errors.Add(error);
+        }
         isErrorOpened = true;
         counterMistakes += (int)error.Weight;
         if (gameMode == GameMode.EXAM && counterMistakes >= maxMistakes)
