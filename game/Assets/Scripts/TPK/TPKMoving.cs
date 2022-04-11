@@ -27,6 +27,13 @@ public class TPKMoving : MonoBehaviour
     float speedRotation = 100f;
     List<DomkratMoving> domkratMovings = new List<DomkratMoving>();
 
+    bool isFlat;
+
+    void Start()
+    {
+        isFlat = Singleton.Instance.StateManager.typeArea == TypeArea.FLAT;
+    }
+
     void Update()
     {
         Moving();
@@ -550,12 +557,15 @@ public class TPKMoving : MonoBehaviour
         float maxSpeed = 0.8f;
         delta = 300f;
 
-        Singleton.Instance.UIManager.SetEnterText("Нажмите T чтобы остановить движение ТПК");
-        Singleton.Instance.UIManager.noOverwrite = true;
+        if (isFlat)
+        {
+            Singleton.Instance.UIManager.SetEnterText("Нажмите T чтобы остановить движение ТПК");
+            Singleton.Instance.UIManager.noOverwrite = true;
+        }
 
         for (float i = 0; i <= Mathf.Abs(delta); i += shift * Time.deltaTime)
         {
-            if (Input.GetKeyDown(KeyCode.T) || curDirection == TPKDirection.FINISHED)
+            if ((Input.GetKeyDown(KeyCode.T) && isFlat) || curDirection == TPKDirection.FINISHED)
             {
                 break;
             }
