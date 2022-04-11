@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1759654723}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15811,7 +15811,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00088500977, y: -0.0005493164}
+  m_AnchoredPosition: {x: 0.00088500977, y: -0.000030517578}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &837595782
@@ -25814,7 +25814,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.48, y: 1.95, z: 1.74}
+  m_Size: {x: 2.48, y: 1.95, z: 0.93}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1380708474
 MeshRenderer:
@@ -25873,7 +25873,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1380708471}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.67, y: 0.76, z: -20}
+  m_LocalPosition: {x: -17.67, y: 0.76, z: -22.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -28766,8 +28766,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 813742230}
   m_HandleRect: {fileID: 813742229}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.99999917
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -32702,7 +32702,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1515149825}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.6948122
+  m_Size: 0.6948119
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
