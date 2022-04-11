@@ -79,11 +79,10 @@ public class TormozConnector : Selectable
             }
             else
             {
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Необходимо вывесить домкрат перед подключением тормозного механизма", Weight = ErrorWeight.LOW });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Необходимо вывесить домкрат перед подключением тормозного механизма", Weight = ErrorWeight.MINOR });
             }
         }
         else
-        // else if (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_DOWN)
         {
             ConnectTormoz();
         }
@@ -94,7 +93,7 @@ public class TormozConnector : Selectable
         var result = tormozMoving.ConnectTo(pointerToAdapter, type, pointForTormoz);
         if (!result)
         {
-            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Сначала отключите тормоз от другого домкрата", Weight = ErrorWeight.LOW });
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Сначала отключите тормоз от другого домкрата", Weight = ErrorWeight.MINOR });
             return;
         }
         tormozSwitcher.SwitchBoxCollider(false);

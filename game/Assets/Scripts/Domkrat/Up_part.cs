@@ -66,7 +66,7 @@ public class Up_part : MonoBehaviour
             if (Singleton.Instance.StateManager.ruchkaIsUp < 4)
             {
                 // Ручки не в исходном положении
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Верните все ручки в исходное положение", Weight = ErrorWeight.MEDIUM });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Верните все ручки в исходное положение", Weight = ErrorWeight.LOW });
                 return;
             }
             RealUp();
