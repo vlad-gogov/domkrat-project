@@ -31,6 +31,10 @@ public class Rotate_fixator : Selectable
 
     public override void GetInfoMouse()
     {
+        if (isMove)
+        {
+            return;
+        }
         if (!isSelected)
         {
             Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы разблокировать фиксатор поворота");

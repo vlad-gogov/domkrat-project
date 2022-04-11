@@ -25,11 +25,13 @@ public class Down_part_rotation : MonoBehaviour
     [SerializeField] GameObject gear;
     [SerializeField] BoxCollider tormozConnector;
     DomkratMoving domkratMoving;
+    TormozSwitcher tormozSwitcher;
 
     void Start()
     {
         tormozConnector.enabled = false;
         domkratMoving = gameObject.transform.parent.parent.GetComponent<DomkratMoving>();
+        tormozSwitcher = gameObject.transform.GetChild(1).GetComponent<TormozSwitcher>();
         ChangeDir();
     }
 
@@ -70,5 +72,10 @@ public class Down_part_rotation : MonoBehaviour
     public void SwitchBoxColliderTormozConnector()
     {
         tormozConnector.enabled = !tormozConnector.enabled;
+    }
+
+    public void EndAnimTormozSwitcher()
+    {
+        tormozSwitcher.isAnim = false;
     }
 }

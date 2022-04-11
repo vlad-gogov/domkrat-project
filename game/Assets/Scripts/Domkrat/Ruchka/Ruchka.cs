@@ -34,7 +34,7 @@ public class Ruchka : Selectable
     private bool isLeft = false;
     private bool isCount = false;
 
-    private bool isUse = false;
+    public bool isUse = false;
 
     void Start()
     {
@@ -150,46 +150,72 @@ public class Ruchka : Selectable
                     return;
                 }
                 // Нижняя часть домкарата
-                if (TPK.TPKObj.state == StateTPK.UP && state.activeSwitcher == ModeSwitch.WITHOUTLOAD)
+                if (TPK.TPKObj.state == StateTPK.UP)
                 {
                     BoxCollider boxCol = TechStand.gameObject.GetComponent<BoxCollider>();
-                    if (
-                            actualDomkratDownPart.curPosition == Makes.DOWN
-                            && state.direction == Makes.DOWN
-                    )
+                    if (state.activeSwitcher == ModeSwitch.WITHOUTLOAD)
                     {
-                        if (actualDomkratDownPart.Up(TechStand.isSelected)) // Анимация подъема нижней части домкрата
+
+                        if (
+                                actualDomkratDownPart.curPosition == Makes.DOWN
+                                && state.direction == Makes.DOWN
+                        )
                         {
-                            boxCol.enabled = false;
+                            if (actualDomkratDownPart.Up(TechStand.isSelected)) // Анимация подъема нижней части домкрата
+                            {
+                                boxCol.enabled = false;
+                                return;
+                            }
+                        }
+                        else if (
+                                actualDomkratDownPart.curPosition == Makes.UP
+                                && state.direction == Makes.UP
+                        )
+                        {
+                            if (actualDomkratDownPart.Down(TechStand.isSelected))  // Анимация опускания нижней части домкрата
+                            {
+                                boxCol.enabled = true;
+                                return;
+                            }
+                        }
+                        else if (
+                                actualDomkratDownPart.curPosition == Makes.UP
+                                && state.direction == Makes.DOWN
+                        )
+                        {
+                            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нижняя часть домкрата уже вверху", Weight = ErrorWeight.MINOR });
+                            return;
+                        }
+                        else if (
+                                actualDomkratDownPart.curPosition == Makes.DOWN
+                                && state.direction == Makes.UP
+                        )
+                        {
+                            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нижняя часть домкрата уже внизу", Weight = ErrorWeight.MINOR });
                             return;
                         }
                     }
-                    else if (
-                            actualDomkratDownPart.curPosition == Makes.UP
-                            && state.direction == Makes.UP
-                    )
+                    else if (state.activeSwitcher == ModeSwitch.LOADED)
                     {
-                        if (actualDomkratDownPart.Down(TechStand.isSelected))  // Анимация опускания нижней части домкрата
+                        if (
+                                actualDomkratDownPart.curPosition == Makes.UP
+                                && state.direction == Makes.UP
+                        )
                         {
-                            boxCol.enabled = true;
+                            if (actualDomkratDownPart.Down(TechStand.isSelected))  // Анимация опускания нижней части домкрата
+                            {
+                                boxCol.enabled = true;
+                                return;
+                            }
+                        }
+                        else if (
+                                actualDomkratDownPart.curPosition == Makes.UP
+                                && state.direction == Makes.DOWN
+                        )
+                        {
+                            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нижняя часть домкрата уже вверху", Weight = ErrorWeight.MINOR });
                             return;
                         }
-                    }
-                    else if (
-                            actualDomkratDownPart.curPosition == Makes.UP
-                            && state.direction == Makes.DOWN
-                    )
-                    {
-                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нижняя часть домкрата уже вверху", Weight = ErrorWeight.MINOR });
-                        return;
-                    }
-                    else if (
-                            actualDomkratDownPart.curPosition == Makes.DOWN
-                            && state.direction == Makes.UP
-                    )
-                    {
-                        Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нижняя часть домкрата уже внизу", Weight = ErrorWeight.MINOR });
-                        return;
                     }
                 }
 
@@ -239,7 +265,6 @@ public class Ruchka : Selectable
             {
                 if (
                         TPK.TPKObj.state == StateTPK.DOWN
-                        && state.activeSwitcher == ModeSwitch.LOADED
                         && actualDomkratUpPart.curPosition == Makes.DOWN
                         && actualDomkratDownPart.curPosition == Makes.DOWN
                 )
