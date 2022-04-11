@@ -73,6 +73,7 @@ public class StateManager : MonoBehaviour
     public int counterMistakes = 0;
     private int maxMistakes = 20;
     public GameObject player;
+    public List<Error> errors = new List<Error>();
 
     private List<Domkrat> domkrats = new List<Domkrat>();
 
@@ -192,6 +193,7 @@ public class StateManager : MonoBehaviour
         {
             return;
         }
+        errors.Add(error);
         isErrorOpened = true;
         counterMistakes += (int)error.Weight;
         if (gameMode == GameMode.EXAM && counterMistakes >= maxMistakes)

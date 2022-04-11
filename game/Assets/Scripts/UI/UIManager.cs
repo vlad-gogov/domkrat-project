@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -60,6 +60,15 @@ public class UIManager : MonoBehaviour
         isOpen = true;
         scrollView.SetActive(true);
         this.finished = finished;
+        var errs = Singleton.Instance.StateManager.errors;
+        if (finished && errs.Count > 0)
+        {
+            tutor += "\n" + "Совершенные ошибки:\n";
+            foreach (var err in errs)
+            {
+                tutor += $"\t{err.ErrorText}; Вес: {err.Weight}\n";
+            }
+        }
         tutorial.Show(tutor);
         Singleton.Instance.StateManager.Pause();
     }
