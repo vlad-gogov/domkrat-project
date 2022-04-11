@@ -19,7 +19,7 @@ public class TPKMoving : MonoBehaviour
     bool isMoving = false;
 
     string finishString = "<size=50><b>Сценарий успешно завершен!</b></size>" +
-        "" +
+        "\n\n" +
         "Сумма набранных штрафных баллов: ";
 
     const float EPS = 10e-4f;
