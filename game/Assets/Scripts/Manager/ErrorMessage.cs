@@ -30,7 +30,7 @@ public class ErrorMessage : MonoBehaviour
         {
             gameObject.GetComponent<Image>().color = new Color(255, 146, 146, 0.7f);
         }
-        if (stateManager.gameMode == GameMode.EXAM)
+        if (stateManager.gameMode == GameMode.EXAM && error.Weight != ErrorWeight.MINOR)
         {
             mistake.text = "Колличество штрафных баллов: " + stateManager.counterMistakes;
         }

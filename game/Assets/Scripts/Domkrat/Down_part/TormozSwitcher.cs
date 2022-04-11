@@ -8,6 +8,7 @@ public class TormozSwitcher : Selectable
     BoxCollider boxCol;
     Down_part_rotation down_Part_Rotation;
     private bool isFirst = false;
+    public bool isAnim = false;
 
     public void Start()
     {
@@ -39,12 +40,17 @@ public class TormozSwitcher : Selectable
             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Перед тем как взаимодействовать с тормозным механизмом, установите колесный ход в соосное положение" });
             return;
         }
+        isAnim = true;
         downPartAnim.SetTrigger("disableTormozPipka");
         isSelected = false;
     }
 
     public override void GetInfoMouse()
     {
+        if (isAnim)
+        {
+            return;
+        }
         if (!isSelected)
         {
             Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы включить тормозной механизм");
@@ -68,6 +74,7 @@ public class TormozSwitcher : Selectable
             return;
         }
         downPartAnim.SetTrigger("enableTormozPipka");
+        isAnim = true;
         isSelected = true;
     }
 }

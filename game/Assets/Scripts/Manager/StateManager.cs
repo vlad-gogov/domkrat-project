@@ -194,7 +194,6 @@ public class StateManager : MonoBehaviour
         }
         isErrorOpened = true;
         counterMistakes += (int)error.Weight;
-        Debug.Log(counterMistakes);
         if (gameMode == GameMode.EXAM && counterMistakes >= maxMistakes)
         {
             Singleton.Instance.UIManager.OpenTutorial("<size=50><b>Неудача</b></size>\n" +

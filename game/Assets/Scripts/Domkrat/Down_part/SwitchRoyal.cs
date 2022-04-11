@@ -11,6 +11,8 @@ public class SwitchRoyal : Selectable
 
     private BoxCollider box;
 
+    private bool isSoos = true;
+
     void Start()
     {
         box = gameObject.GetComponent<BoxCollider>();
@@ -38,7 +40,18 @@ public class SwitchRoyal : Selectable
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы переключить положение колёсного хода.");
+        if (ruchka.isUse)
+        {
+            return;
+        }
+        if (isSoos)
+        {
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы переключить колеса в рояльное положение.");
+        }
+        else
+        {
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы переключить колеса в соосное положение.");
+        }
     }
 
     public override GameObject GetSelectObject()
@@ -60,11 +73,13 @@ public class SwitchRoyal : Selectable
                 {
                     actualDomkratDownPart.GetComponent<Animator>().SetTrigger("ToRoyal");
                     actualDomkratDownPart.rotation_down_part.currentWheelState = WheelState.ROYAL;
+                    isSoos = false;
                 } 
                 else
                 {
                     actualDomkratDownPart.GetComponent<Animator>().SetTrigger("ToSoos");
                     actualDomkratDownPart.rotation_down_part.currentWheelState = WheelState.SOOS;
+                    isSoos = true;
                 }
                 ruchka.StopInteraption();
                 actualDomkratDownPart.rotation_down_part.ChangeDir();
