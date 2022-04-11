@@ -562,7 +562,7 @@ public class TPKMoving : MonoBehaviour
             Singleton.Instance.UIManager.SetEnterText("Нажмите T чтобы остановить движение ТПК");
             Singleton.Instance.UIManager.noOverwrite = true;
         }
-
+        DisableDomkrats(false);
         for (float i = 0; i <= Mathf.Abs(delta); i += shift * Time.deltaTime)
         {
             if ((Input.GetKeyDown(KeyCode.T) && isFlat) || curDirection == TPKDirection.FINISHED)
@@ -621,6 +621,13 @@ public class TPKMoving : MonoBehaviour
         Singleton.Instance.UIManager.noOverwrite = false;
         Singleton.Instance.UIManager.ClearEnterText();
         isMoving = false;
+        DisableDomkrats(true);
+    }
+
+    void DisableDomkrats(bool flag)
+    {
+        foreach (var domkrat in TPK.TPKObj.attachedDomkrats)
+            domkrat.SwitchIntecration(flag);
     }
 
     IEnumerator FailLift(TPKDirection direction)

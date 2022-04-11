@@ -159,4 +159,12 @@ public class Domkrat : MonoBehaviour
     {
         childRuchka.RealDown(liftTPK);
     }
+
+    public void SwitchIntecration(bool flag)
+    {
+        rotateFixator.gameObject.GetComponent<BoxCollider>().enabled = flag;
+        downPartRotation.SwitchBoxColliderTormozConnector();
+        tormozSwitch.gameObject.GetComponent<BoxCollider>().enabled = flag;
+        childRuchka.ruchka.GetComponent<BoxCollider>().enabled = flag;
+    }
 }
