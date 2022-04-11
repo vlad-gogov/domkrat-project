@@ -174,7 +174,6 @@ public class Ruchka : Selectable
                         {
                             if (actualDomkratDownPart.Down(TechStand.isSelected))  // Анимация опускания нижней части домкрата
                             {
-                                boxCol.enabled = true;
                                 return;
                             }
                         }
@@ -204,7 +203,6 @@ public class Ruchka : Selectable
                         {
                             if (actualDomkratDownPart.Down(TechStand.isSelected))  // Анимация опускания нижней части домкрата
                             {
-                                boxCol.enabled = true;
                                 return;
                             }
                         }

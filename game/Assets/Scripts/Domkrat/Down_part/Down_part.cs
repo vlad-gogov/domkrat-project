@@ -12,6 +12,7 @@ public class Down_part : MonoBehaviour
     public Rotate_fixator fixator;
 
     BoxCollider boxFixator;
+    BoxCollider stand;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class Down_part : MonoBehaviour
         rotation_down_part = transform.GetChild(transform.childCount - 1).GetComponent<Down_part_rotation>();
         boxFixator = fixator.gameObject.GetComponent<BoxCollider>();
         boxFixator.enabled = false;
+        stand = gameObject.transform.parent.GetChild(2).GetComponent<BoxCollider>();
     }
 
     public bool Up(bool isTechStand = false)
@@ -74,6 +76,12 @@ public class Down_part : MonoBehaviour
     void SetDown()
     {
         curPosition = Makes.DOWN;
+        
+    }
+
+    void OnStand()
+    {
+        stand.enabled = true;
     }
 
     void DeselectRuchka()
