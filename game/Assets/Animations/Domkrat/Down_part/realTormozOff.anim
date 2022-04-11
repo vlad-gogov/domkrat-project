@@ -483,7 +483,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 7.983333
+    m_StopTime: 8
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -1873,6 +1873,13 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: SwitchBoxColliderTormozConnector
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 8
+    functionName: EndAnimTormozSwitcher
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
