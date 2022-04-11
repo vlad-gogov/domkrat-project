@@ -94,6 +94,7 @@ public class StateManager : MonoBehaviour
     void Awake()
     {
         // кто изменит 60 на какое-то другое число будет расстрелян Дороничевым из говномета
+        QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         GameObject[] ObjDomkrats = GameObject.FindGameObjectsWithTag("Domkrat");
 
