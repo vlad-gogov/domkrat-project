@@ -8,6 +8,7 @@ public class TormozSwitcher : Selectable
     BoxCollider boxCol;
     Down_part_rotation down_Part_Rotation;
     private bool isFirst = false;
+    public SwitchRoyal switchRoyal;
     public bool isAnim = false;
 
     public void Start()
@@ -16,6 +17,7 @@ public class TormozSwitcher : Selectable
         boxCol = gameObject.GetComponent<BoxCollider>();
         boxCol.enabled = false;
         down_Part_Rotation = gameObject.transform.parent.GetComponent<Down_part_rotation>();
+        switchRoyal = gameObject.transform.parent.GetChild(0).GetComponent<SwitchRoyal>();
     }
 
     void Update()
@@ -35,6 +37,10 @@ public class TormozSwitcher : Selectable
 
     public override void Deselect()
     {
+        if (isAnim || switchRoyal.isAnim)
+        {
+            return;
+        }
         if (down_Part_Rotation.currentWheelState != WheelState.SOOS)
         {
             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Перед тем как взаимодействовать с тормозным механизмом, установите колесный ход в соосное положение", Weight = ErrorWeight.MINOR });
@@ -47,7 +53,7 @@ public class TormozSwitcher : Selectable
 
     public override void GetInfoMouse()
     {
-        if (isAnim)
+        if (isAnim || switchRoyal.isAnim)
         {
             return;
         }
@@ -68,6 +74,10 @@ public class TormozSwitcher : Selectable
 
     public override void Select()
     {
+        if (isAnim || switchRoyal.isAnim)
+        {
+            return;
+        }
         if (down_Part_Rotation.currentWheelState != WheelState.SOOS)
         {
             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Перед тем как взаимодействовать с тормозным механизмом, установить колесный ход в соосное положение", Weight = ErrorWeight.MINOR });

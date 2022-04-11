@@ -78,4 +78,9 @@ public class Down_part_rotation : MonoBehaviour
     {
         tormozSwitcher.isAnim = false;
     }
+
+    public void EndAnimSwitchRoyal()
+    {
+        tormozSwitcher.switchRoyal.isAnim = false;
+    }
 }

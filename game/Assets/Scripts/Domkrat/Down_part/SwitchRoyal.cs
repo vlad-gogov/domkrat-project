@@ -8,16 +8,18 @@ public class SwitchRoyal : Selectable
     public Down_part actualDomkratDownPart;
 
     private Ruchka ruchka;
-
     private BoxCollider box;
+    private TormozSwitcher tormozSwitcher;
 
     private bool isSoos = true;
+    public bool isAnim = false;
 
     void Start()
     {
         box = gameObject.GetComponent<BoxCollider>();
         box.enabled = false;
         ruchka = actualDomkratUpPart.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Ruchka>();
+        tormozSwitcher = gameObject.transform.parent.GetChild(1).GetComponent<TormozSwitcher>();
     }
 
     void Update()
@@ -40,7 +42,7 @@ public class SwitchRoyal : Selectable
 
     public override void GetInfoMouse()
     {
-        if (ruchka.isUse)
+        if (ruchka.isUse || tormozSwitcher.isAnim)
         {
             return;
         }
@@ -63,7 +65,10 @@ public class SwitchRoyal : Selectable
     {
         if (TPK.TPKObj.state == StateTPK.UP)
         {
-
+            if (ruchka.isUse || tormozSwitcher.isAnim)
+            {
+                return;
+            }
             if (
                     actualDomkratUpPart.curPosition == Makes.UP
                     && actualDomkratDownPart.curPosition == Makes.UP
@@ -81,6 +86,7 @@ public class SwitchRoyal : Selectable
                     actualDomkratDownPart.rotation_down_part.currentWheelState = WheelState.SOOS;
                     isSoos = true;
                 }
+                isAnim = true;
                 ruchka.StopInteraption();
                 actualDomkratDownPart.rotation_down_part.ChangeDir();
             }

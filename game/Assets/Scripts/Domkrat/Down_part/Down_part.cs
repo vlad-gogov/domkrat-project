@@ -79,6 +79,16 @@ public class Down_part : MonoBehaviour
         
     }
 
+    void EndAnimSwitchRoyal()
+    {
+        rotation_down_part.EndAnimSwitchRoyal();
+    }
+
+    void EndAnimTormozSwitcher()
+    {
+        rotation_down_part.EndAnimTormozSwitcher();
+    }
+
     void OnStand()
     {
         stand.enabled = true;
