@@ -21,9 +21,9 @@ public class TechStand : Selectable
     public override void GetInfoMouse()
     {
         if (!isSelected)
-            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ чтобы установить технологическую подставку");
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы установить технологическую подставку");
         else
-            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ чтобы убрать технологическую подставку");
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы убрать технологическую подставку");
     }
 
     public override GameObject GetSelectObject()

@@ -54,19 +54,19 @@ public class Up_part : MonoBehaviour
         {
             if (TPK.TPKObj.attachedDomkrats.Count < 4)
             {
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уставоите все домкраты чтобы поднять ТПК", Weight = ErrorWeight.HIGH });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите все домкраты, чтобы поднять ТПК", Weight = ErrorWeight.HIGH });
                 return;
             }
             if (!isOnWeightMode)
             {
                 // Пытаемся поднять домкрат в режиме "без груза" с подключенным ТПК
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим подъема ТПК", Weight = ErrorWeight.HIGH });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим для подъема ТПК", Weight = ErrorWeight.HIGH });
                 return;
             }
             if (Singleton.Instance.StateManager.ruchkaIsUp < 4)
             {
                 // Ручки не в исходном положении
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Верните все ручки в исхоодное положение", Weight = ErrorWeight.MEDIUM });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Верните все ручки в исходное положение", Weight = ErrorWeight.MEDIUM });
                 return;
             }
             RealUp();
@@ -85,7 +85,7 @@ public class Up_part : MonoBehaviour
             if (!isOnWeightMode)
             {
                 // Пытаемся опустить домкрат в режиме "без груза" с подключенным ТПК
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим опускания ТПК", Weight = ErrorWeight.HIGH });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Неправильный режим для опускания ТПК", Weight = ErrorWeight.HIGH });
                 return;
             }
             if (Singleton.Instance.StateManager.GetState() == NameState.DISABLE_TORMOZ && Singleton.Instance.StateManager.isTormozConnected != 0)

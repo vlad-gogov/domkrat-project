@@ -31,7 +31,7 @@ public class Perehodnick : Selectable
         GameObject trigger = collider.gameObject;
         if (!trigger.GetComponent<PointToSet>().isPerehodnick && trigger.tag == "SetPerehodnickDomkrat")
         {
-            Singleton.Instance.UIManager.SetEnterText("Нажмите E чтобы установить переходник в ТПК");
+            Singleton.Instance.UIManager.SetEnterText("Нажмите E, чтобы установить переходник в ТПК");
         }
     }
 
