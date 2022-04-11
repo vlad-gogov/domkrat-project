@@ -24,7 +24,7 @@ public class ErrorMessage : MonoBehaviour
         erroText.text = error.ErrorText;
         if (error.Weight == ErrorWeight.MINOR)
         {
-            gameObject.GetComponent<Image>().color = new Color(183, 183, 183, 0.7f);
+            gameObject.GetComponent<Image>().color = new Color(90, 90, 90, 0.7f);
         }
         else
         {

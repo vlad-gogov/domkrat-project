@@ -146,7 +146,7 @@ public class Ruchka : Selectable
             {
                 if (Singleton.Instance.StateManager.GetState() == NameState.CHECK_TURING_MACHANISM)
                 {
-                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Перед подъемом ТПК необходимо проверить поворотный механизм домкрата", Weight = ErrorWeight.LOW });
+                    Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Перед подъемом ТПК необходимо проверить поворотный механизм домкрата", Weight = ErrorWeight.MEDIUM });
                     return;
                 }
                 // Нижняя часть домкарата
@@ -235,7 +235,7 @@ public class Ruchka : Selectable
                     {
                         if (TPK.TPKObj.CheckStand())
                         {
-                            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем, как опускать ТПК", Weight = ErrorWeight.HIGH });
+                            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Уберите технологическую подставку перед тем, как опускать ТПК", Weight = ErrorWeight.MEDIUM });
                             return;
                         }
                         actualDomkratUpPart.Down(state.activeSwitcher == ModeSwitch.LOADED); // Анимация опускания верхней части домкрата
@@ -286,7 +286,7 @@ public class Ruchka : Selectable
         }
         else
         {
-            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите ручку в рабочее положение", Weight = ErrorWeight.MINOR });
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установите ручку в рабочее положение", Weight = ErrorWeight.LOW });
             return;
         }
     }

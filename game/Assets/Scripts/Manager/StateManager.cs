@@ -52,6 +52,7 @@ public enum ErrorWeight
     LOW = 1,
     MEDIUM = 2,
     HIGH = 3,
+    UBIL = 9,
     CRITICAL = 100
 }
 
@@ -60,9 +61,6 @@ public struct Error
     public string ErrorText;
     public ErrorWeight Weight;
 }
-
-//Singleton.Instance.StateManager.onError(new Error() { ErrorText = "WORK", Weight = 0 });
-
 
 public class StateManager : MonoBehaviour
 {

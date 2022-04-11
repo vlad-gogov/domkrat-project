@@ -33,7 +33,7 @@ public class Down_part : MonoBehaviour
             if (!isTechStand)
             {
                 // Пытаемся поднять нижнюю часть домкрата без технологической подставки с подключенным ТПК
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установить технологическую подставку перед тем, как поднимать нижнюю часть домкарата", Weight = ErrorWeight.HIGH });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установить технологическую подставку перед тем, как поднимать нижнюю часть домкарата", Weight = ErrorWeight.LOW });
                 return false;
             }
             RealUp();
@@ -48,7 +48,7 @@ public class Down_part : MonoBehaviour
             if (!isTechStand)
             {
                 // Пытаемся поднять нижнюю часть домкрата без технологической подставки с подключенным ТПК
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установить технологическую подставку перед тем, как поднимать нижнюю часть домкарата", Weight = ErrorWeight.HIGH });
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Установить технологическую подставку перед тем, как поднимать нижнюю часть домкарата", Weight = ErrorWeight.LOW });
                 return false;
             }
             RealDown();
