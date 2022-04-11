@@ -27,7 +27,7 @@
 			<string>На задних домкратах колесные ходы в любом положении с отключенными тормозными механизмами и с включенными фиксаторами поворота колес.</string>
 		</Answers>
 		<Type>0</Type>
-		<CorrectAnswer>0</CorrectAnswer>
+		<CorrectAnswer>1</CorrectAnswer>
 		<Asked>false</Asked>
 	</QuizQuestion>
   <QuizQuestion>
