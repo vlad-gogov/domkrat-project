@@ -65,8 +65,11 @@ public class SetRucka : PlaceForSet
             anim.SetTrigger("Idle");
     }
 
-    public override void GetInfoMouse()
+    public override void GetInfoMouse(GameObject other)
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы установить ручку");
+        if (other.tag == "Ruchka")
+        {
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы установить ручку");
+        }
     }
 }

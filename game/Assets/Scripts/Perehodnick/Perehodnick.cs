@@ -3,10 +3,14 @@ using UnityEngine.UI;
 
 public class Perehodnick : Selectable
 {
-    [SerializeField] GameObject parent_object;
-
+    [HideInInspector] public bool isConnect = true;
     public override void Select()
     {
+        if (isConnect)
+        {
+            gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            isConnect = false;
+        }
         isSelected = true;
     }
 
@@ -42,7 +46,8 @@ public class Perehodnick : Selectable
         {
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<BoxCollider>().enabled = false;
-            
+            isConnect = true;
+
             GameObject point = parent.transform.GetChild(0).gameObject;
             transform.position = point.transform.position;
             transform.rotation = point.transform.rotation;

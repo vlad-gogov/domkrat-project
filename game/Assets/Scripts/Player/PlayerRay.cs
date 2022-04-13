@@ -72,14 +72,14 @@ public class PlayerRay : MonoBehaviour
                 selectable = null;
             }
         }
-        else if (_selectedObject.tag == "Ruchka")
+        else if (_selectedObject.tag == "Ruchka" || _selectedObject.tag == "Perehodnick")
         {
             if (Physics.Raycast(ray, out hit, Distance, 1 << PlaceForItem.value))
             {
                 placeForSet = hit.collider.GetComponent<PlaceForSet>();
                 if (_selectedObject)
                 {
-                    placeForSet.GetInfoMouse();
+                    placeForSet.GetInfoMouse(_selectedObject);
                     if (Input.GetMouseButtonDown(0))
                     {
                         if (placeForSet.SetItem(_selectedObject))

@@ -5,5 +5,5 @@ using UnityEngine;
 public abstract class PlaceForSet : MonoBehaviour
 {
     public abstract bool SetItem(GameObject gameObject);
-    public abstract void GetInfoMouse();
+    public abstract void GetInfoMouse(GameObject gameObject);
 }
