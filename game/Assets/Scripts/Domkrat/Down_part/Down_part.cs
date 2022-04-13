@@ -14,20 +14,63 @@ public class Down_part : MonoBehaviour
     BoxCollider boxFixator;
     BoxCollider stand;
 
+
+    // Словарь по факту содержит матрицу всех возможных проверок: doneCheck[Makes][bool1] -> bool2
+    //      - Makes: направление в котором проверяли (вверх-вниз)
+    //      - bool1: в режиме "с грузом"/"без груза"
+    //      - bool2: проверили этот режим или нет
+    // Когда весь словарь полностью заполнится true репортим об этом в StateManager
+    Dictionary<Makes, Dictionary<bool, bool>> doneChecks = new Dictionary<Makes, Dictionary<bool, bool>>()
+    {
+        {Makes.UP, new Dictionary<bool, bool> {{true, false}, { false, false} } },
+        {Makes.DOWN, new Dictionary<bool, bool> {{true, false}, { false, false} } },
+    };
+
     void Start()
     {
         animator = GetComponent<Animator>();
         parentDomkrat = gameObject.transform.parent.GetComponent<Domkrat>();
-        // should always be `DOWN` at Start
-        curPosition = Makes.DOWN;
+        curPosition = Makes.UP;
         rotation_down_part = transform.GetChild(transform.childCount - 1).GetComponent<Down_part_rotation>();
         boxFixator = fixator.gameObject.GetComponent<BoxCollider>();
         boxFixator.enabled = false;
         stand = gameObject.transform.parent.GetChild(2).GetComponent<BoxCollider>();
     }
 
-    public bool Up(bool isTechStand = false)
+    void UpdateTestingDict(Makes newPosition, bool isOnWeight)
     {
+        bool wasAllCheckComplete = IsAllCheckComplete();
+        doneChecks[newPosition][isOnWeight] = true;
+        bool doNowAllCheckComplete = IsAllCheckComplete();
+
+        // Если результатом последней проверки стало то, что весь словарь теперь из true,
+        // то репортим в менеджер, что все проверки пройдены
+        if (doNowAllCheckComplete && !wasAllCheckComplete)
+        {
+            Singleton.Instance.StateManager.NextState();
+        }
+    }
+
+    bool IsAllCheckComplete()
+    {
+        bool isAllCheckComplete = true;
+        foreach (var value in doneChecks)
+        {
+            foreach (var isCheckDone in value.Value)
+            {
+                if (!isCheckDone.Value)
+                {
+                    isAllCheckComplete = false;
+                    break;
+                }
+            }
+        }
+        return isAllCheckComplete;
+    }
+
+    public bool Up(bool isTechStand = false, bool isOnWeightMode = false)
+    {
+        UpdateTestingDict(Makes.UP, isOnWeightMode);
         if (parentDomkrat.isAttachedToTPK)
         {
             if (!isTechStand)
@@ -38,11 +81,16 @@ public class Down_part : MonoBehaviour
             }
             RealUp();
         }
+        else
+        {
+            TestingUp();
+        }
         return true;
     }
 
-    public bool Down(bool isTechStand = false)
+    public bool Down(bool isTechStand = false, bool isOnWeightMode = false)
     {
+        UpdateTestingDict(Makes.UP, isOnWeightMode);
         if (parentDomkrat.isAttachedToTPK)
         {
             if (!isTechStand)
@@ -53,7 +101,27 @@ public class Down_part : MonoBehaviour
             }
             RealDown();
         }
+        else
+        {
+            TestingDown();
+        }
         return true;
+    }
+
+    void TestingUp()
+    {
+        Debug.Log("Test UP");
+        curPosition = Makes.UP;
+        animator.SetTrigger("LittleUp"); // анимация подъема самого домкрата
+        ruchka.GetComponent<Animator>().SetTrigger("LittleMove"); // анимация вращения ручки
+    }
+
+    void TestingDown()
+    {
+        Debug.Log("Test DOWN");
+        curPosition = Makes.DOWN;
+        animator.SetTrigger("LittleDown"); // анимация опускания самого домкрата
+        ruchka.GetComponent<Animator>().SetTrigger("LittleMove"); // анимация вращения ручки
     }
 
     void RealUp()
@@ -101,12 +169,13 @@ public class Down_part : MonoBehaviour
 
     void Update()
     {
-        if (!boxFixator.enabled && Singleton.Instance.StateManager.GetState() == NameState.CHECK_BREAK_MECHANISM)
+        NameState curState = Singleton.Instance.StateManager.GetState();
+        if (!boxFixator.enabled && curState == NameState.CHECK_BREAK_MECHANISM)
         {
             boxFixator.enabled = true;
         }
 
-        if (curPosition == Makes.UP)
+        if (curPosition == Makes.UP && curState >= NameState.UP_TPK)
         {
             if (!rotation_down_part.isRotate) {
                 if (Input.GetKey(KeyCode.E)) // 200$ c Vladika

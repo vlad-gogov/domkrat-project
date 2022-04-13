@@ -22,6 +22,8 @@ public class Up_part : MonoBehaviour
     public GameObject TechStand;
     [SerializeField] Animator TPKAnim;
 
+    GameObject up_finger, down_finger;
+
 
     // Словарь по факту содержит матрицу всех возможных проверок: doneCheck[Makes][bool1] -> bool2
     //      - Makes: направление в котором проверяли (вверх-вниз)
@@ -38,13 +40,21 @@ public class Up_part : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         parentDomkrat = gameObject.transform.parent.GetComponent<Domkrat>();
-        // should always be `DOWN` at Start
-        curPosition = Makes.DOWN;
+        curPosition = Makes.UP;
+        up_finger = gameObject.transform.GetChild(2).GetChild(0).gameObject;
+        down_finger = gameObject.transform.GetChild(2).GetChild(1).gameObject;
+    }
+
+    void Showinger()
+    {
+        up_finger.SetActive(true);
+        down_finger.SetActive(true);
     }
 
     void HideFinger()
     {
-        my_event.Invoke();
+        up_finger.SetActive(false);
+        down_finger.SetActive(false);
     }
 
     public void Up(bool isOnWeightMode = false)
@@ -73,7 +83,7 @@ public class Up_part : MonoBehaviour
         }
         else
         {
-            TestingUp();
+            //TestingUp();
         }
     }
 
@@ -97,7 +107,7 @@ public class Up_part : MonoBehaviour
         }
         else
         {
-            TestingDown(); // кто down?? сам ты down!
+            //TestingDown(); // кто down?? сам ты down!
         }
         
     }
