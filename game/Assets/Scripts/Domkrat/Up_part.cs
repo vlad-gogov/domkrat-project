@@ -59,6 +59,7 @@ public class Up_part : MonoBehaviour
 
     public void Up(bool isOnWeightMode = false)
     {
+        Debug.Log("Если это выводится при тесте домкратов ты даун");
         UpdateTestingDict(Makes.UP, isOnWeightMode);
         if (parentDomkrat.isAttachedToTPK)
         {
