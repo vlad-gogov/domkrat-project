@@ -47,6 +47,7 @@ public class Down_part : MonoBehaviour
         // то репортим в менеджер, что все проверки пройдены
         if (doNowAllCheckComplete && !wasAllCheckComplete)
         {
+            Debug.Log("ALL CHECK COMPLETE");
             Singleton.Instance.StateManager.NextState();
         }
     }
@@ -90,7 +91,7 @@ public class Down_part : MonoBehaviour
 
     public bool Down(bool isTechStand = false, bool isOnWeightMode = false)
     {
-        UpdateTestingDict(Makes.UP, isOnWeightMode);
+        UpdateTestingDict(Makes.DOWN, isOnWeightMode);
         if (parentDomkrat.isAttachedToTPK)
         {
             if (!isTechStand)

@@ -129,50 +129,62 @@ public class Ruchka : Selectable
 
     public override void Select()
     {
+
         if (isUse)
         {
             return;
         }
         var state = ComputeState();
+
+        Debug.Log("1");
+
         if (!state.isValidState)
         {
             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Конфликтующие режимы работы домкрата", Weight = ErrorWeight.LOW });
             Deselect();
             return;
         }
+
+        Debug.Log("2");
         if (han.isSelected)
         {
+            Debug.Log("3");
             if (curPosition == PositionRuchka.UP)
             {
+                Debug.Log("4");
                 NameState curState = Singleton.Instance.StateManager.GetState();
                 if (curState == NameState.CHECK_TURING_MACHANISM)
                 {
                     Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Перед подъемом ТПК необходимо проверить поворотный механизм домкрата", Weight = ErrorWeight.MEDIUM });
                     return;
                 }
-                if (curState == NameState.CHECK_DOMKRATS)
+
+                Debug.Log(curState.ToString());
+                if (curState == NameState.CHECK_DOMKRATS || curState == NameState.SET_DOMKRATS)
                 {
                     if (actualDomkratUpPart.curPosition == Makes.UP)
                     {
                         if (
                             actualDomkratDownPart.curPosition == Makes.UP
-                            && state.direction == Makes.DOWN
+                            && state.direction == Makes.UP
                         )
                         {
+                            Debug.Log("DOWN");
                             actualDomkratDownPart.Down(false, state.activeSwitcher == ModeSwitch.LOADED);
                             return;
                         }
                         else if (
                             actualDomkratDownPart.curPosition == Makes.DOWN
-                            && state.direction == Makes.UP
+                            && state.direction == Makes.DOWN
                         )
                         {
+                            Debug.Log("UP");
                             actualDomkratDownPart.Up(false, state.activeSwitcher == ModeSwitch.LOADED);
                             return;
                         }
                         else if (
                             actualDomkratDownPart.curPosition == Makes.DOWN
-                            && state.direction == Makes.DOWN
+                            && state.direction == Makes.UP
                         )
                         {
                             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нижняя часть уже внизу", Weight = ErrorWeight.MINOR });
@@ -180,7 +192,7 @@ public class Ruchka : Selectable
                         }
                         else if (
                             actualDomkratDownPart.curPosition == Makes.UP
-                            && state.direction == Makes.UP
+                            && state.direction == Makes.DOWN
                         )
                         {
                             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Нижняя часть уже вверху", Weight = ErrorWeight.MINOR });

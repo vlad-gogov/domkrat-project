@@ -169,7 +169,7 @@ public class StateManager : MonoBehaviour
 
         if (states[indexCurState].state == NameState.SET_DOMKRATS)
         {
-            //NotifyAllDomkrats(states[indexCurState].state);
+            NotifyAllDomkrats(states[indexCurState].state);
         }
         ChangeTextHelper();
     }
