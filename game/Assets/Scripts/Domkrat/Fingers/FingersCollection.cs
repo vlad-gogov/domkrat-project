@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class FingersCollection : Selectable
 {
+    GameObject domkrat;
+    Domkrat domkScript;
     // Start is called before the first frame update
     void Start()
     {
+        GameObject domkrat = gameObject.transform.parent.parent.gameObject;
+        domkScript = domkrat.GetComponent<Domkrat>();
     }
 
     // Update is called once per frame
@@ -17,18 +21,14 @@ public class FingersCollection : Selectable
 
     public override void Select()
     {
-        isSelected = true;
-
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        gameObject.transform.GetChild(1).gameObject.SetActive(false);
-
-        GameObject up_part = gameObject.transform.parent.gameObject;
-        up_part.GetComponent<Animator>().SetTrigger("fingers_off");
-        //Hide();
-
-        GameObject domkrat = gameObject.transform.parent.parent.gameObject;
-        domkrat.GetComponent<Rigidbody>().isKinematic = false;
-        Debug.Log("Fingers select");
+        if (domkScript.tryDisconnect(new GameObject[] {
+                gameObject.transform.GetChild(0).gameObject,
+                gameObject.transform.GetChild(1).gameObject 
+        }))
+        {
+            isSelected = true;
+            Debug.Log("Fingers select");
+        }
     }
 
     public override void Deselect()
@@ -43,6 +43,6 @@ public class FingersCollection : Selectable
 
     public override void GetInfoMouse()
     {
-        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы взаимодействовать с шкворнями."); ;
+        Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы взаимодействовать с шкворнями.");
     }
 }

@@ -60,7 +60,7 @@ public class PlayerRay : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+        Debug.DrawRay(ray.origin, ray.direction);
         TryEnableWall();
 
         RaycastHit hit;

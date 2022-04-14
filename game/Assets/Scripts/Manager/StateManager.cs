@@ -11,6 +11,7 @@ public enum NameState
     DEFAULT = 0,
     SET_PEREHODNICK = 1,
     CHECK_DOMKRATS = 2,
+    GET_DOMKRATS = 1488,
     SET_DOMKRATS = 3,
     CHECK_TURING_MACHANISM = 4,
     UP_TPK = 5,
@@ -113,7 +114,8 @@ public class StateManager : MonoBehaviour
         states.Add(new State() { state = NameState.DEFAULT, disctiption = "" });
         states.Add(new State() { state = NameState.SET_PEREHODNICK, disctiption = "Установите переходники на пакет" });
         states.Add(new State() { state = NameState.CHECK_DOMKRATS, disctiption = "Выполнить проверку подъема и опускание домкарата в разных режимах" });
-        states.Add(new State() { state = NameState.SET_DOMKRATS, disctiption = "Подкатите и установите домкраты" });
+        states.Add(new State() { state = NameState.GET_DOMKRATS, disctiption = "Снимите домкраты со стойки" });
+        states.Add(new State() { state = NameState.SET_DOMKRATS, disctiption = "Отсоедените оставшиеся домкраты, подкатите и установите их на ТПК" });
         states.Add(new State() { state = NameState.CHECK_TURING_MACHANISM, disctiption = "Проверьте работу механизма поворота домкрата и верните ручку домкрата в исходное положение" });
         states.Add(new State() { state = NameState.UP_TPK, disctiption = "Поднимите ТПК" });
         states.Add(new State() { state = NameState.CHECK_BREAK_MECHANISM, disctiption = "Проверьте работу тормозного механизма и отключите тормоз" });
@@ -183,6 +185,14 @@ public class StateManager : MonoBehaviour
         } else if (gameMode == GameMode.EXAM && states[indexCurState].state == NameState.DEFAULT)
         {
             Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
+        }
+    }
+
+    public void DomkratStoikaDisconnect()
+    {
+        if (GetState() == NameState.GET_DOMKRATS)
+        {
+            NextState();
         }
     }
 

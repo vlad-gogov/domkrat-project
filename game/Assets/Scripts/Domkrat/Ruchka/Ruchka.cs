@@ -27,6 +27,8 @@ public class Ruchka : Selectable
     [SerializeField] private Selectable han;
     private Animator anim;
 
+    public Domkrat batya;
+
     [SerializeField] BoxCollider push;
 
     // Переменные для проверки поворотного механизма
@@ -38,6 +40,7 @@ public class Ruchka : Selectable
 
     void Start()
     {
+        batya = gameObject.transform.parent.parent.parent.parent.GetComponent<Domkrat>();
         curPosition = PositionRuchka.UP;
         anim = GetComponent<Animator>();
     }
@@ -160,7 +163,8 @@ public class Ruchka : Selectable
                 }
 
                 Debug.Log(curState.ToString());
-                if (curState == NameState.CHECK_DOMKRATS || curState == NameState.SET_DOMKRATS)
+                // if (curState == NameState.CHECK_DOMKRATS || curState == NameState.SET_DOMKRATS)
+                if (batya.isAttachedToStoika)
                 {
                     if (actualDomkratUpPart.curPosition == Makes.UP)
                     {

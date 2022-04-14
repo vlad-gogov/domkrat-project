@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovingMech : Selectable
 {
-    bool isUp = true;
+    public bool isUp = true;
 
     public override void Select()
     {
