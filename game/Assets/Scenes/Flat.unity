@@ -1534,7 +1534,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155064541}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.8, y: 1, z: 20}
@@ -3890,8 +3890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2b5b2f948714746a8fa0975eaac91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  Unselect: 1
 --- !u!23 &356507090
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5086,8 +5084,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1345305354}
   m_HandleRect: {fileID: 1345305353}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.99999994
+  m_Value: 1
+  m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5910,7 +5908,7 @@ BoxCollider:
   m_GameObject: {fileID: 493414499}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 44.88, y: 2.9, z: 25.700357}
   m_Center: {x: 1.9712889, y: -0.21, z: 0.9230374}
@@ -9133,7 +9131,7 @@ BoxCollider:
   m_GameObject: {fileID: 811921827}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -9662,7 +9660,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826742133}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.8, y: 1, z: 20}
@@ -18225,8 +18223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2b5b2f948714746a8fa0975eaac91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  Unselect: 1
 --- !u!23 &1453937624
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19302,8 +19298,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2b5b2f948714746a8fa0975eaac91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  Unselect: 1
 --- !u!23 &1530746434
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19780,8 +19774,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2b5b2f948714746a8fa0975eaac91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  Unselect: 1
 --- !u!23 &1541928291
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -20292,8 +20284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2b5b2f948714746a8fa0975eaac91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  Unselect: 1
 --- !u!23 &1569762209
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -20706,8 +20696,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2b5b2f948714746a8fa0975eaac91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  Unselect: 1
 --- !u!23 &1608111549
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21189,8 +21177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2b5b2f948714746a8fa0975eaac91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  Unselect: 1
 --- !u!23 &1635155851
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -22222,7 +22208,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1736564242}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.8, y: 1, z: 20}
@@ -23814,7 +23800,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1832699794}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.8, y: 1, z: 20}
@@ -25025,8 +25011,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2b5b2f948714746a8fa0975eaac91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  Unselect: 1
 --- !u!23 &1913926651
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25352,7 +25336,7 @@ BoxCollider:
   m_GameObject: {fileID: 1928478736}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

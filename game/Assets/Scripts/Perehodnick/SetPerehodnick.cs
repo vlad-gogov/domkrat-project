@@ -15,7 +15,7 @@ public class SetPerehodnick : PlaceForSet
     {
         if (gameObject.tag == "Perehodnick")
         {
-            Singleton.Instance.UIManager.SetEnterText("Установить переходник на стойку");
+            Singleton.Instance.UIManager.SetEnterText("Нажмите ЛКМ, чтобы установить переходник на стойку");
         }
     }
 

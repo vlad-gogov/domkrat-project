@@ -33,7 +33,12 @@ public class Perehodnick : Selectable
     private void OnTriggerEnter(Collider collider)
     {
         GameObject trigger = collider.gameObject;
-        if (!trigger.GetComponent<PointToSet>().isPerehodnick && trigger.tag == "SetPerehodnickDomkrat")
+        var p = trigger.GetComponent<PointToSet>();
+        if (p == null)
+        {
+            return;
+        }
+        if (!p.isPerehodnick && trigger.tag == "SetPerehodnickDomkrat")
         {
             Singleton.Instance.UIManager.SetEnterText("Нажмите E, чтобы установить переходник в ТПК");
         }
@@ -64,6 +69,10 @@ public class Perehodnick : Selectable
     {
         GameObject trigger = collider.gameObject;
         PointToSet p = trigger.GetComponent<PointToSet>();
+        if (p == null)
+        {
+            return;
+        }
         if (p.isPerehodnick)
         {
             return;

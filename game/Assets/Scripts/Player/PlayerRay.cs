@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +19,8 @@ public class PlayerRay : MonoBehaviour
     private PlaceForSet placeForSet;
     public BoxCollider wall;
 
+    bool wasHintTriggered = false;
+
     void Start()
     {
         PickUp = LayerMask.NameToLayer("PickUp");
@@ -37,6 +39,11 @@ public class PlayerRay : MonoBehaviour
         moving.Remove(mv_obj);
         PlayerMove.isDomkrat = false;
 
+        DisableWall();
+    }
+
+    void DisableWall()
+    {
         wall.enabled = false;
     }
 
@@ -53,6 +60,8 @@ public class PlayerRay : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        TryEnableWall();
 
         RaycastHit hit;
         if (!_selectedObject)
@@ -80,6 +89,7 @@ public class PlayerRay : MonoBehaviour
                 if (_selectedObject)
                 {
                     placeForSet.GetInfoMouse(_selectedObject);
+                    wasHintTriggered = true;
                     if (Input.GetMouseButtonDown(0))
                     {
                         if (placeForSet.SetItem(_selectedObject))
@@ -91,8 +101,12 @@ public class PlayerRay : MonoBehaviour
             }
             else
             {
-                Singleton.Instance.UIManager.ClearEnterText();
+                if (wasHintTriggered)
+                {
+                    Singleton.Instance.UIManager.ClearEnterText();
+                }
                 placeForSet = null;
+                wasHintTriggered = false;
             }
         }
 
@@ -129,7 +143,7 @@ public class PlayerRay : MonoBehaviour
                     }
                     if (_selectedObject.tag == "Domkrat" || _selectedObject.tag == "Perehodnick")
                     {
-                        wall.enabled = true;
+                        EnableWall();
                     }
                 }
             }
@@ -138,6 +152,24 @@ public class PlayerRay : MonoBehaviour
                 UnSelectable();
             }
         }
+    }
+
+    void EnableWall()
+    {
+        wall.enabled = true;
+    }
+
+    void TryEnableWall()
+    {
+        // Реализовать логику отложенного включения стенки?
+        // Debug.Log(Input.mousePosition);
+        //var cnt = Camera.main.pixelRect.center;
+        //var ray = Camera.main.ScreenPointToRay(new Vector3(cnt.x, cnt.y, 0));
+        //RaycastHit hit;
+        //if (Physics.Raycast(ray, out hit, Distance))
+        //{
+        //    Debug.Log(hit.collider.gameObject);
+        //}
     }
 
     public GameObject GetSelected()
