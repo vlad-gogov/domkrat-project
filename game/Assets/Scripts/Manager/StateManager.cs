@@ -24,7 +24,8 @@ public enum NameState
     MOVE_TPK_DOWN = 11,
     DISABLE_TORMOZ = 13,
     // Finish
-    DOWN_TPK = 12
+    DOWN_TPK = 12,
+    RETURN_DOMKRATS=1489,
 }
 
 public struct State
@@ -138,6 +139,7 @@ public class StateManager : MonoBehaviour
         }
 
         states.Add(new State() { state = NameState.DOWN_TPK, disctiption = "Опустите ТПК на землю" });
+        states.Add(new State() { state = NameState.RETURN_DOMKRATS, disctiption = "Отсоедените домкраты от ТПК и верните их на обратно на стойку" });
 
         indexCurState = 0;
 
@@ -223,7 +225,16 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    void Update()
+    public void Finish()
+    {
+        string finishString = "<size=50><b>Сценарий успешно завершен!</b></size>" +
+           "\n\n" +
+           "Сумма набранных штрафных баллов: ";
+        Singleton.Instance.UIManager.OpenTutorial(finishString + Singleton.Instance.StateManager.counterMistakes.ToString(), /*finished=*/true);
+    }
+        
+
+void Update()
     {
         if (countPerehodnick == 4)
         {
@@ -231,10 +242,10 @@ public class StateManager : MonoBehaviour
             countPerehodnick++;
             NotifyAllDomkrats(states[indexCurState].state);
         }
-        if (countDomkrats == 4)
+        if (GetState() == NameState.SET_DOMKRATS && countDomkrats == 4)
         {
             NextState();
-            countDomkrats++;
+            // countDomkrats++;
         }
         if (Input.GetKey(KeyCode.F1) && gameMode == GameMode.TRAIN)
         {

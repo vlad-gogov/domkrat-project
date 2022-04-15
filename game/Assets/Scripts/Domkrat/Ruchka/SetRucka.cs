@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,16 +27,28 @@ public class SetRucka : PlaceForSet
 
     public override bool SetItem(GameObject other)
     {
+        return SetItem(other, /*force=*/false);
+    }
+
+    public bool SetItem(GameObject other, bool force=false, bool slowly=false, Action callback = null)
+    {
         if (other.tag == "Ruchka")
         {
-            if (!domkrat.isRuchka)
+            if (force || !domkrat.isRuchka)
             {
                 domkrat.isRuchka = true;
                 if (anim)
                 {
                     anim.SetTrigger("Push");
                 }
-                StartCoroutine(WaitForSet(TimeWait, other));
+                if (slowly)
+                {
+                    StartCoroutine(SlowlySet(other, callback));
+                }
+                else
+                {
+                    StartCoroutine(WaitForSet(TimeWait, other, callback));
+                }
                 return true;
             }
             else
@@ -46,7 +59,30 @@ public class SetRucka : PlaceForSet
         return false;
     }
 
-    IEnumerator WaitForSet(float time, GameObject other)
+    IEnumerator SlowlySet(GameObject other, Action callback = null)
+    {
+        var deltaPos = Pointer.transform.position - other.transform.position;
+        var deltaAngl = Pointer.transform.localRotation.eulerAngles - other.transform.localEulerAngles;
+        other.transform.localEulerAngles = Pointer.transform.localRotation.eulerAngles;
+
+        int steps = 60 * 2;
+        float step = 1.0f / steps;
+        for (int i=0; i<steps; i++)
+        {
+            other.transform.position = Vector3.MoveTowards(other.transform.position, Pointer.transform.position, step);
+            // other.transform.localEulerAngles = Vector3.MoveTowards(other.transform.localEulerAngles, Pointer.transform.localRotation.eulerAngles, step);
+            // other.transform.rotation = new Quaternion(other.transform.rotation.x, other.transform.rotation.y + (180 * step), other.transform.rotation.z, other.transform.rotation.w);
+            Debug.Log(other.transform.localEulerAngles);
+            yield return null;
+        }
+
+        if (callback != null)
+        {
+            callback();
+        }
+    }
+
+    IEnumerator WaitForSet(float time, GameObject other, Action callback = null)
     {
         for (float t = 0; t <= time; t += Time.deltaTime)
         {
@@ -63,6 +99,11 @@ public class SetRucka : PlaceForSet
         isSet = false;
         if (anim)
             anim.SetTrigger("Idle");
+
+        if (callback != null)
+        {
+            callback();
+        }
     }
 
     public override void GetInfoMouse(GameObject other)

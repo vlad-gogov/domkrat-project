@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ public class Domkrat : MonoBehaviour
     Down_part downPart;
     BoxCollider[] fingers;
     BoxCollider MovingHole;
+    // Down_part_rotation downPartRotation;
     public bool isTormozConnected = false;
 
     int id = -1;
@@ -46,7 +48,8 @@ public class Domkrat : MonoBehaviour
         up_part = child.GetComponent<Animator>();
         move_mech = child.transform.GetChild(0).gameObject.GetComponent<Animator>();
         childRuchka = transform.GetChild(0).gameObject.GetComponent<Up_part>();
-        childRuchka.ruchka.GetComponent<BoxCollider>().enabled = false;
+        // Так надо, пусть ручка будет включена с самого начала, если есть вопросы по этому поводу пиши в ВК Димасику
+        childRuchka.ruchka.GetComponent<BoxCollider>().enabled = true;
         downPart = transform.GetChild(1).GetComponent<Down_part>();
         moveHand = boxHand.gameObject.GetComponent<MovingHand>();
         movingMech = transform.GetChild(0).GetChild(0).GetComponent<MovingMech>();
@@ -54,6 +57,7 @@ public class Domkrat : MonoBehaviour
         domkratMoving = gameObject.GetComponent<DomkratMoving>();
         fingers = transform.GetChild(0).GetChild(2).GetComponents<BoxCollider>();
         MovingHole = transform.GetChild(0).GetChild(0).GetComponent<BoxCollider>();
+        // downPartRotation = transform.GetChild(1).GetChild(5).GetComponent<Down_part_rotation>();
         GetDomkrats(false);
     }
 
@@ -69,23 +73,50 @@ public class Domkrat : MonoBehaviour
     // Возвращает можно ли сейчас отсоеденить домкрат от стойки/ТПК
     public bool canDisconnect()
     {
-        if (isAttachedToStoika)
+        if (downPart.curPosition != Makes.DOWN)
         {
-            if (downPart.curPosition != Makes.DOWN)
-            {
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Сначала опустите колеса, перед тем как отсоединять домкрат", Weight = ErrorWeight.MEDIUM });
-                return false;
-            }
-            if (movingMech.isUp)
-            {
-                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Сначала опустите ручку, перед тем как отсоединять домкрат", Weight = ErrorWeight.MEDIUM });
-                return false;
-            }
-        } else if (isAttachedToTPK)
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Сначала опустите колеса, перед тем как отсоединять домкрат", Weight = ErrorWeight.MEDIUM });
+            return false;
+        }
+        if (movingMech.isUp)
         {
-
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Сначала опустите ручку, перед тем как отсоединять домкрат", Weight = ErrorWeight.MEDIUM });
+            return false;
         }
         return true;
+    }
+
+    void RotateDownPartAutomaticly(float angle, Action callback = null)
+    {
+        // Вместо того, чтобы отключать кучу коллайдеров, просто блочим игрока ставя игру на паузу на время анимации
+        Singleton.Instance.StateManager.Pause();
+
+        var ruchkaPos = transform.GetChild(1).GetChild(2).GetComponent<SetRucka>();
+        var ruchka = transform.GetChild(0).GetChild(1).GetChild(2).gameObject;
+        ruchkaPos.SetItem(ruchka, /*force=*/true, /*slowly=*/true, /*callback=*/() => {
+            downPartRotation.RotateDownPart(angle, /*isGear=*/true);
+            ruchka.transform.GetChild(0).GetComponent<Animator>().SetTrigger("LittleMove");
+            Singleton.Timer.SetTimer(3f, () =>
+            {
+                var rchk = transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<SetRucka>();
+                rchk.SetItem(ruchka, /*force=*/true, /*slowly=*/true, /*callback=*/() => {
+                    Singleton.Instance.StateManager.Resume();
+                    if (callback != null)
+                    {
+                        callback();
+                    }
+                });
+            });
+        });
+    }
+
+    private void Update()
+    {
+        // МБ пригодится для дебага
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    RotateDownPartAutomaticly(90);
+        //}
     }
 
     public bool tryDisconnect(GameObject[] fingers)
@@ -94,33 +125,47 @@ public class Domkrat : MonoBehaviour
         {
             return false;
         }
+        float duration = 3f;
 
         if (isAttachedToStoika)
         {
-            foreach (var finger in fingers)
-            {
-                finger.gameObject.SetActive(false);
-            }
             // Блокируем rotation по X во время опускания домкрата, чтобы он не упал назад
             gameObject.GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezeRotationX;
             downPart.Up();
             gameObject.GetComponent<Rigidbody>().isKinematic = false;
-            up_part.SetTrigger("fingers_off");
             isAttachedToStoika = false;
-            // После окончания анимации включаем rotation обратно
-            Singleton.Timer.SetTimer(3f, () => {
-                gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezeRotationX;
-                Singleton.Instance.StateManager.DomkratStoikaDisconnect();
-                boxHand.enabled = true;
-                // Пиздец костыль...
-                downPart.curPosition = Makes.DOWN;
-                childRuchka.curPosition = Makes.DOWN;
-            });
+            duration = 3f;
         } else if (isAttachedToTPK)
         {
-            up_part.SetTrigger("fingers_off");
             isAttachedToTPK = false;
+            Singleton.Instance.StateManager.countDomkrats--;
+            TPK.TPKObj.RemoveDomkrat(id);
+            if (downPartRotation.dir != Direction.BACK && downPartRotation.dir != Direction.FORWARD)
+            {
+                RotateDownPartAutomaticly(/*angle=*/90, /*callback=*/() => StartCoroutine(MoveSet(2, false, false)));
+            }
+            duration = 6f;
         }
+
+        // TODO: Сейчас пальцы просто пропадают без анимации, сделать аниму
+        // up_part.SetTrigger("fingers_off");
+        foreach (var finger in fingers)
+        {
+            finger.gameObject.SetActive(false);
+        }
+        // После окончания анимации включаем rotation обратно
+        Singleton.Timer.SetTimer(duration, () => {
+            gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezeRotationX;
+            Singleton.Instance.StateManager.DomkratStoikaDisconnect();
+            boxHand.enabled = true;
+            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<BoxCollider>().enabled = true;
+            domkratMoving.OffCooliderWheel(true);
+            // Пиздец костыль...
+            downPart.curPosition = Makes.DOWN;
+            childRuchka.curPosition = Makes.DOWN;
+            GetDomkrats(false);
+        });
 
         return true;
     }
@@ -128,6 +173,11 @@ public class Domkrat : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         GameObject trigger = collider.gameObject;
+        if (trigger.tag == "SetDomkratOnStoyka")
+        {
+            Singleton.Instance.UIManager.SetEnterText("Нажмите E, чтобы установить домкрат на стойку");
+            return;
+        }
         var p = trigger.GetComponent<PointToSet>();
         if (p == null)
         {
@@ -144,9 +194,14 @@ public class Domkrat : MonoBehaviour
         Singleton.Instance.UIManager.ClearEnterText();
     }
 
-        private void OnTriggerStay(Collider collider)
+    private void OnTriggerStay(Collider collider)
     {
         GameObject trigger = collider.gameObject;
+        if (moveHand.isSelected && trigger.tag == "SetDomkratOnStoyka")
+        {
+            SetOnStoyka(trigger);
+            return;
+        }
         PointToSet p = trigger.GetComponent<PointToSet>();
         if (p == null)
         {
@@ -161,6 +216,10 @@ public class Domkrat : MonoBehaviour
             p.isDomkrat = true;
             collider.enabled = false;
             isAttachedToTPK = true;
+            GetDomkrats(false);
+            // мб пригодится для дебага
+            // GetDomkrats(true);
+            movingMech.isUp = true;
             boxHand.enabled = false;
             Singleton.Instance.StateManager.countDomkrats++;
             id = TPK.TPKObj.AddDomkrat(this);
@@ -205,17 +264,85 @@ public class Domkrat : MonoBehaviour
         return false;
     }
 
-    IEnumerator MoveSet(float delta)
+    void SetOnStoyka(GameObject parent)
+    {
+        GameObject BeginPoint, EndPoint;
+        // Не убирайте плз этот try-catch, это костыль на котором держится весь процесс установки домкрата на стойку
+        try
+        {
+            BeginPoint = parent.transform.GetChild(0).gameObject;
+            EndPoint = parent.transform.GetChild(1).gameObject;
+        } catch
+        {
+            Debug.Log("pizda");
+            return;
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            //GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<BoxCollider>().enabled = false;
+            //movingMech.isUp = true;
+            //boxHand.enabled = false;
+            PlayerRay.playerRay.UnSelectable();
+            // domkratMoving.OffCooliderWheel();
+
+            transform.position = BeginPoint.transform.position;
+            // АХАХАХАХАХАХАХА БЛЯЯЯЯЯЯ 180 ПО Y
+            transform.rotation = new Quaternion(0, 180, 0, 0);
+
+            float begin = BeginPoint.transform.position.z;
+            float end = EndPoint.transform.position.z;
+            StartCoroutine(MoveSet(end - begin, /*performAnimation=*/false, /*isForward=*/true, /*isOnStoika=*/true));
+            Destroy(BeginPoint);
+            Destroy(EndPoint);
+        }
+    }
+
+    IEnumerator MoveSet(float delta, bool performAnimation=true, bool isForward=true, bool isOnStoika=false)
     {
         float shift = SpeedMove * Time.deltaTime;
+        Vector3 direction = isForward? Vector3.forward : Vector3.back;
+
         for (float i = 0; i <= Mathf.Abs(delta); i += shift)
         {
-            gameObject.transform.Translate(Vector3.forward * shift);
+            gameObject.transform.Translate(direction * shift);
             domkratMoving.RotateWheelForUpdate(shift);
             yield return null;
         }
-        up_part.SetTrigger("Finger_past");
-        move_mech.SetTrigger("Up");
+        if (performAnimation)
+        {
+            foreach (var finger in fingers)
+            {
+                finger.gameObject.SetActive(true);
+            }
+            up_part.SetTrigger("Finger_past");
+            move_mech.SetTrigger("Up");
+        }
+        if (isOnStoika)
+        {
+            // Блокируем rotation по X во время опускания домкрата, чтобы он не упал назад
+            gameObject.GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezeRotationX;
+            gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            Singleton.Timer.SetTimer(2f, () =>
+            {
+                move_mech.SetTrigger("Up");
+                downPart.Down();
+                Singleton.Timer.SetTimer(4f, () => {
+                    foreach (var finger in fingers)
+                    {
+                        finger.gameObject.SetActive(true);
+                    }
+                    up_part.SetTrigger("Finger_past");
+                    Singleton.Timer.SetTimer(2f, () =>
+                    {
+                        gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                        downPart.Up();
+                        Singleton.Timer.SetTimer(4f, () => Singleton.Instance.StateManager.Finish());
+                    });
+                });
+            });
+        }
     }
 
     public void Notify(NameState state)
@@ -223,14 +350,18 @@ public class Domkrat : MonoBehaviour
         if (state == NameState.SET_DOMKRATS)
         {
             // boxHand.enabled = true;
-            GetDomkrats(false);
+            // GetDomkrats(false);
         }
         else if (state == NameState.CHECK_DOMKRATS)
         {
-            childRuchka.ruchka.GetComponent<BoxCollider>().enabled = true;
+            // childRuchka.ruchka.GetComponent<BoxCollider>().enabled = true;
             // gameObject.SetActive(true);
         }
         else if (state == NameState.GET_DOMKRATS)
+        {
+            GetDomkrats(true);
+        }
+        else if (state == NameState.RETURN_DOMKRATS)
         {
             GetDomkrats(true);
         }

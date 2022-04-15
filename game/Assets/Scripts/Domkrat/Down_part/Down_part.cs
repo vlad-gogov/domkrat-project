@@ -39,6 +39,10 @@ public class Down_part : MonoBehaviour
 
     void UpdateTestingDict(Makes newPosition, bool isOnWeight)
     {
+        if (Singleton.Instance.StateManager.GetState() != NameState.CHECK_DOMKRATS)
+        {
+            return;
+        }
         bool wasAllCheckComplete = IsAllCheckComplete();
         doneChecks[newPosition][isOnWeight] = true;
         bool doNowAllCheckComplete = IsAllCheckComplete();

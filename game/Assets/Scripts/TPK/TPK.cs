@@ -89,7 +89,15 @@ public class TPK : MonoBehaviour
 
     public void RemoveDomkrat(int id)
     {
-        attachedDomkrats.RemoveAt(id);
+        // try-catch Это костыль, не удаляй его
+        try
+        {
+            attachedDomkrats.RemoveAt(id);
+        } catch
+        {
+            Debug.Log("Dima debil");
+        }
+        
     }
 
     public void SwtichTechStand(bool Signal)

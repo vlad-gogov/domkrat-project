@@ -16,7 +16,7 @@ public class MovingMech : Selectable
 
     public override void Deselect()
     {
-        isSelected = false;
+        Select();
     }
 
     public override GameObject GetSelectObject()

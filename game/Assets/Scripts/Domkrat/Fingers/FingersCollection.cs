@@ -33,7 +33,7 @@ public class FingersCollection : Selectable
 
     public override void Deselect()
     {
-        isSelected = false;
+        Select();
     }
 
     public override GameObject GetSelectObject()
