@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5129,7 +5129,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1345305353}
   m_Direction: 0
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5956,27 +5956,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 44.88, y: 2.9, z: 25.700357}
   m_Center: {x: 1.9712889, y: -0.21, z: 0.9230374}
---- !u!4 &493414502 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f317cfc0f0a325a4c87382501c27f63f, type: 3}
-  m_PrefabInstance: {fileID: 1190473460}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &493414504
-Rigidbody:
+--- !u!65 &493414501
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 493414499}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
-  m_Mass: 500
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
+  m_Size: {x: 123, y: 58.64, z: 46}
+  m_Center: {x: 1.9712889, y: -0.40229154, z: 0.9230374}
+--- !u!4 &493414502 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f317cfc0f0a325a4c87382501c27f63f, type: 3}
+  m_PrefabInstance: {fileID: 1190473460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &495692148
 GameObject:
   m_ObjectHideFlags: 0
@@ -9205,7 +9202,6 @@ GameObject:
   - component: {fileID: 811921830}
   - component: {fileID: 811921829}
   - component: {fileID: 811921828}
-  - component: {fileID: 811921832}
   m_Layer: 6
   m_Name: TechStand (1)
   m_TagString: Untagged
@@ -9222,7 +9218,7 @@ BoxCollider:
   m_GameObject: {fileID: 811921827}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -9289,22 +9285,6 @@ Transform:
   m_Father: {fileID: 493414502}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &811921832
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811921827}
-  serializedVersion: 2
-  m_Mass: 100
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!1 &812448222
 GameObject:
   m_ObjectHideFlags: 0
@@ -25540,7 +25520,6 @@ GameObject:
   - component: {fileID: 1928478739}
   - component: {fileID: 1928478738}
   - component: {fileID: 1928478737}
-  - component: {fileID: 1928478741}
   m_Layer: 6
   m_Name: TechStand
   m_TagString: Untagged
@@ -25557,7 +25536,7 @@ BoxCollider:
   m_GameObject: {fileID: 1928478736}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -25624,22 +25603,6 @@ Transform:
   m_Father: {fileID: 493414502}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &1928478741
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1928478736}
-  serializedVersion: 2
-  m_Mass: 100
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!1 &1928651761
 GameObject:
   m_ObjectHideFlags: 0

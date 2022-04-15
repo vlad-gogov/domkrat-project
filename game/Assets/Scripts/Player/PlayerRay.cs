@@ -20,6 +20,8 @@ public class PlayerRay : MonoBehaviour
     public BoxCollider wall;
 
     bool wasHintTriggered = false;
+    bool isWallEnabled = false;
+    bool isWallRestricted = false;
 
     void Start()
     {
@@ -44,7 +46,8 @@ public class PlayerRay : MonoBehaviour
 
     void DisableWall()
     {
-        wall.enabled = false;
+        isWallEnabled = false;
+        // wall.enabled = false;
     }
 
     public void Add(MovingSelect movable)
@@ -156,20 +159,43 @@ public class PlayerRay : MonoBehaviour
 
     void EnableWall()
     {
-        wall.enabled = true;
+        isWallEnabled = true;
+        // wall.enabled = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Stoyka"))
+        {
+            Debug.Log("Forcibly disabling the wall");
+            isWallRestricted = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Stoyka"))
+        {
+            Debug.Log("Allowing for the wall to be enabled");
+            isWallRestricted = false;
+        }
     }
 
     void TryEnableWall()
     {
-        // Реализовать логику отложенного включения стенки?
-        // Debug.Log(Input.mousePosition);
-        //var cnt = Camera.main.pixelRect.center;
-        //var ray = Camera.main.ScreenPointToRay(new Vector3(cnt.x, cnt.y, 0));
-        //RaycastHit hit;
-        //if (Physics.Raycast(ray, out hit, Distance))
-        //{
-        //    Debug.Log(hit.collider.gameObject);
-        //}
+        if (isWallEnabled && !isWallRestricted)
+        {
+            wall.enabled = true;
+        }
+        else
+        {
+            wall.enabled = false;
+        }
+
+        if (_selectedObject != null && _selectedObject.tag == "Domkrat")
+        {
+            _selectedObject.gameObject.GetComponent<Rigidbody>().isKinematic = isWallRestricted;
+        }
     }
 
     public GameObject GetSelected()
