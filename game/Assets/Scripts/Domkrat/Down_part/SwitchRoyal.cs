@@ -24,7 +24,7 @@ public class SwitchRoyal : Selectable
 
     void Update()
     {
-        if (actualDomkratDownPart.curPosition == Makes.UP && actualDomkratUpPart.curPosition == Makes.UP)
+        if (actualDomkratDownPart.curPosition == Makes.UP && actualDomkratUpPart.curPosition == Makes.UP && Singleton.Instance.StateManager.GetState() > NameState.CHECK_BREAK_MECHANISM)
         {
             box.enabled = true;
         }

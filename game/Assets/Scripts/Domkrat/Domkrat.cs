@@ -28,6 +28,8 @@ public class Domkrat : MonoBehaviour
     Animator move_mech;
     Up_part childRuchka;
     Down_part downPart;
+    BoxCollider[] fingers;
+    BoxCollider MovingHole;
     public bool isTormozConnected = false;
 
     int id = -1;
@@ -44,11 +46,24 @@ public class Domkrat : MonoBehaviour
         up_part = child.GetComponent<Animator>();
         move_mech = child.transform.GetChild(0).gameObject.GetComponent<Animator>();
         childRuchka = transform.GetChild(0).gameObject.GetComponent<Up_part>();
+        childRuchka.ruchka.GetComponent<BoxCollider>().enabled = false;
         downPart = transform.GetChild(1).GetComponent<Down_part>();
         moveHand = boxHand.gameObject.GetComponent<MovingHand>();
         movingMech = transform.GetChild(0).GetChild(0).GetComponent<MovingMech>();
         tormozSwitch = gameObject.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent<TormozSwitcher>();
         domkratMoving = gameObject.GetComponent<DomkratMoving>();
+        fingers = transform.GetChild(0).GetChild(2).GetComponents<BoxCollider>();
+        MovingHole = transform.GetChild(0).GetChild(0).GetComponent<BoxCollider>();
+        GetDomkrats(false);
+    }
+
+    public void GetDomkrats(bool signal)
+    {
+        foreach(var finger in fingers)
+        {
+            finger.enabled = signal;
+        }
+        MovingHole.enabled = signal;
     }
 
     // Возвращает можно ли сейчас отсоеденить домкрат от стойки/ТПК
@@ -208,10 +223,16 @@ public class Domkrat : MonoBehaviour
         if (state == NameState.SET_DOMKRATS)
         {
             // boxHand.enabled = true;
+            GetDomkrats(false);
         }
         else if (state == NameState.CHECK_DOMKRATS)
         {
-            gameObject.SetActive(true);
+            childRuchka.ruchka.GetComponent<BoxCollider>().enabled = true;
+            // gameObject.SetActive(true);
+        }
+        else if (state == NameState.GET_DOMKRATS)
+        {
+            GetDomkrats(true);
         }
     }
 

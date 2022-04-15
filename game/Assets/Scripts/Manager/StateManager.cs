@@ -168,11 +168,7 @@ public class StateManager : MonoBehaviour
         {
             TPK.TPKObj.SwitchMovingThings(true);
         }
-
-        if (states[indexCurState].state == NameState.SET_DOMKRATS)
-        {
-            NotifyAllDomkrats(states[indexCurState].state);
-        }
+        NotifyAllDomkrats(states[indexCurState].state);
         ChangeTextHelper();
     }
 
