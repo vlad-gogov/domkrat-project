@@ -58,6 +58,7 @@ public class Domkrat : MonoBehaviour
         fingers = transform.GetChild(0).GetChild(2).GetComponents<BoxCollider>();
         MovingHole = transform.GetChild(0).GetChild(0).GetComponent<BoxCollider>();
         // downPartRotation = transform.GetChild(1).GetChild(5).GetComponent<Down_part_rotation>();
+        // Замени false на true чтобы иметь возможность снимать домкраты со стойки с самого начала сцены
         GetDomkrats(false);
     }
 
@@ -81,6 +82,11 @@ public class Domkrat : MonoBehaviour
         if (movingMech.isUp)
         {
             Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Сначала опустите ручку, перед тем как отсоединять домкрат", Weight = ErrorWeight.MEDIUM });
+            return false;
+        }
+        if (isAttachedToStoika && downPart.curPosition == Makes.DOWN && downPart.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+        {
+            Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Дождитесь пока колеса полностью опустяться на землю", Weight = ErrorWeight.MEDIUM });
             return false;
         }
         return true;
@@ -112,6 +118,7 @@ public class Domkrat : MonoBehaviour
 
     private void Update()
     {
+        // Debug.Log($"normTime: {downPart.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime} | {downPart.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length}");
         // МБ пригодится для дебага
         //if (Input.GetKeyDown(KeyCode.E))
         //{
@@ -125,34 +132,47 @@ public class Domkrat : MonoBehaviour
         {
             return false;
         }
-        float duration = 3f;
-
+        float duration = 0f;
         if (isAttachedToStoika)
         {
-            // Блокируем rotation по X во время опускания домкрата, чтобы он не упал назад
-            gameObject.GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezeRotationX;
-            downPart.Up();
-            gameObject.GetComponent<Rigidbody>().isKinematic = false;
-            isAttachedToStoika = false;
-            duration = 3f;
-        } else if (isAttachedToTPK)
+            duration = 4.3f;
+        }
+        else if (isAttachedToTPK)
         {
-            isAttachedToTPK = false;
-            Singleton.Instance.StateManager.countDomkrats--;
-            TPK.TPKObj.RemoveDomkrat(id);
-            if (downPartRotation.dir != Direction.BACK && downPartRotation.dir != Direction.FORWARD)
-            {
-                RotateDownPartAutomaticly(/*angle=*/90, /*callback=*/() => StartCoroutine(MoveSet(2, false, false)));
-            }
-            duration = 6f;
+            duration = 7.3f;
         }
 
-        // TODO: Сейчас пальцы просто пропадают без анимации, сделать аниму
-        // up_part.SetTrigger("fingers_off");
-        foreach (var finger in fingers)
+        GetDomkrats(false);
+        up_part.SetTrigger("fingers_off");
+        Singleton.Timer.SetTimer(1.3f, () =>
         {
-            finger.gameObject.SetActive(false);
-        }
+            if (isAttachedToStoika)
+            {
+                // Блокируем rotation по X во время опускания домкрата, чтобы он не упал назад
+                gameObject.GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezeRotationX;
+                downPart.Up();
+                gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                isAttachedToStoika = false;
+                // duration = 3f;
+            }
+            else if (isAttachedToTPK)
+            {
+                isAttachedToTPK = false;
+                Singleton.Instance.StateManager.countDomkrats--;
+                TPK.TPKObj.RemoveDomkrat(id);
+                if (downPartRotation.dir != Direction.BACK && downPartRotation.dir != Direction.FORWARD)
+                {
+                    RotateDownPartAutomaticly(/*angle=*/90, /*callback=*/() => StartCoroutine(MoveSet(2, false, false)));
+                }
+                // duration = 6f;
+            }
+        });
+
+
+        //foreach (var finger in fingers)
+        //{
+        //    finger.gameObject.SetActive(false);
+        //}
         // После окончания анимации включаем rotation обратно
         Singleton.Timer.SetTimer(duration, () => {
             gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezeRotationX;
@@ -164,7 +184,6 @@ public class Domkrat : MonoBehaviour
             // Пиздец костыль...
             downPart.curPosition = Makes.DOWN;
             childRuchka.curPosition = Makes.DOWN;
-            GetDomkrats(false);
         });
 
         return true;
@@ -223,7 +242,6 @@ public class Domkrat : MonoBehaviour
             boxHand.enabled = false;
             Singleton.Instance.StateManager.countDomkrats++;
             id = TPK.TPKObj.AddDomkrat(this);
-            PlayerRay.playerRay.UnSelectable();
         }
     }
 
@@ -246,6 +264,7 @@ public class Domkrat : MonoBehaviour
             curH = ptConfig.curH;
             curV = ptConfig.curV;
 
+            PlayerRay.playerRay.UnSelectable();
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<BoxCollider>().enabled = false;
             domkratMoving.OffCooliderWheel();
@@ -280,7 +299,7 @@ public class Domkrat : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E))
         {
-            //GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<BoxCollider>().enabled = false;
             //movingMech.isUp = true;
             //boxHand.enabled = false;
@@ -312,10 +331,11 @@ public class Domkrat : MonoBehaviour
         }
         if (performAnimation)
         {
-            foreach (var finger in fingers)
-            {
-                finger.gameObject.SetActive(true);
-            }
+            // var fngrs = new GameObject[] { transform.GetChild(0).GetChild(2).GetChild(0).gameObject, transform.GetChild(0).GetChild(2).GetChild(1).gameObject };
+            //foreach (var finger in fngrs)
+            //{
+            //    finger.SetActive(true);
+            //}
             up_part.SetTrigger("Finger_past");
             move_mech.SetTrigger("Up");
         }
@@ -329,10 +349,11 @@ public class Domkrat : MonoBehaviour
                 move_mech.SetTrigger("Up");
                 downPart.Down();
                 Singleton.Timer.SetTimer(4f, () => {
-                    foreach (var finger in fingers)
-                    {
-                        finger.gameObject.SetActive(true);
-                    }
+                    //var fngrs = new GameObject[] { transform.GetChild(0).GetChild(2).GetChild(0).gameObject, transform.GetChild(0).GetChild(2).GetChild(1).gameObject };
+                    //foreach (var finger in fngrs)
+                    //{
+                    //    finger.SetActive(true);
+                    //}
                     up_part.SetTrigger("Finger_past");
                     Singleton.Timer.SetTimer(2f, () =>
                     {
