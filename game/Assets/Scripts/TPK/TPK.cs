@@ -17,9 +17,13 @@ public class TPK : MonoBehaviour
 
     public static TPK TPKObj { get; private set; }
 
-    void Start()
+    private void Awake()
     {
         TPKObj = this;
+    }
+
+    void Start()
+    {
         attachedDomkrats = new List<Domkrat>();
         state = StateTPK.DOWN;
     }

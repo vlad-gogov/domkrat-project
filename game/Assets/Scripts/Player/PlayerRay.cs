@@ -167,16 +167,16 @@ public class PlayerRay : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Stoyka"))
         {
-            Debug.Log("Forcibly disabling the wall");
+            Debug.Log($"Forcibly disabling the wall: {other.gameObject}");
             isWallRestricted = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Stoyka"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("WallDisabler"))
         {
-            Debug.Log("Allowing for the wall to be enabled");
+            Debug.Log($"Allowing for the wall to be enabled: {other.gameObject}");
             isWallRestricted = false;
         }
     }

@@ -139,7 +139,7 @@ public class Domkrat : MonoBehaviour
         }
         else if (isAttachedToTPK)
         {
-            duration = 7.3f;
+            duration = 3.3f;
         }
 
         GetDomkrats(false);
@@ -163,6 +163,11 @@ public class Domkrat : MonoBehaviour
                 if (downPartRotation.dir != Direction.BACK && downPartRotation.dir != Direction.FORWARD)
                 {
                     RotateDownPartAutomaticly(/*angle=*/90, /*callback=*/() => StartCoroutine(MoveSet(2, false, false)));
+                    duration += 4f;
+                }
+                else
+                {
+                    StartCoroutine(MoveSet(2, false, false));
                 }
                 // duration = 6f;
             }

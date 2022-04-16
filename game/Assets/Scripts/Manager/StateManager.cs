@@ -11,21 +11,21 @@ public enum NameState
     DEFAULT = 0,
     SET_PEREHODNICK = 1,
     CHECK_DOMKRATS = 2,
-    GET_DOMKRATS = 1488,
-    SET_DOMKRATS = 3,
-    CHECK_TURING_MACHANISM = 4,
-    UP_TPK = 5,
-    CHECK_BREAK_MECHANISM = 6,
+    GET_DOMKRATS = 3,
+    SET_DOMKRATS = 4,
+    CHECK_TURING_MACHANISM = 5,
+    UP_TPK = 6,
+    CHECK_BREAK_MECHANISM = 7,
     // Flat
-    MOVE_TPK_FLAT = 7,
+    MOVE_TPK_FLAT = 8,
     // Up
-    MOVE_TPK_UP = 10,
+    MOVE_TPK_UP = 9,
     // Down
-    MOVE_TPK_DOWN = 11,
-    DISABLE_TORMOZ = 13,
+    MOVE_TPK_DOWN = 10,
+    DISABLE_TORMOZ = 11,
     // Finish
     DOWN_TPK = 12,
-    RETURN_DOMKRATS=1489,
+    RETURN_DOMKRATS=13,
 }
 
 public struct State
@@ -169,6 +169,10 @@ public class StateManager : MonoBehaviour
         if (typeArea != TypeArea.FLAT && states[indexCurState].state > NameState.CHECK_BREAK_MECHANISM)
         {
             TPK.TPKObj.SwitchMovingThings(true);
+        }
+        if (typeArea != TypeArea.FLAT && states[indexCurState].state > NameState.DOWN_TPK)
+        {
+            TPK.TPKObj.SwitchMovingThings(false);
         }
         NotifyAllDomkrats(states[indexCurState].state);
         ChangeTextHelper();

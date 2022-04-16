@@ -49,7 +49,9 @@ public class PlayerMove : MonoBehaviour
         }
         MaybeZoom();
         MaybeCroach();
+        // MovePlayer();
     }
+
     void MaybeZoom()
     {
         float sensitivity = 15;
@@ -89,7 +91,7 @@ public class PlayerMove : MonoBehaviour
         if (!isDomkrat)
         {
             inputVector = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-        } 
+        }
         else
         {
             inputVector = new Vector3(0f, 0f, Input.GetAxis("Vertical"));

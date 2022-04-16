@@ -38,6 +38,7 @@ public class Up_part : MonoBehaviour
 
     void Start()
     {
+        TPKAnim = TPK.TPKObj.gameObject.transform.parent.GetComponent<Animator>();
         animator = GetComponent<Animator>();
         parentDomkrat = gameObject.transform.parent.GetComponent<Domkrat>();
         curPosition = Makes.UP;
