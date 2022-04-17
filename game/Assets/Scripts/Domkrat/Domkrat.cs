@@ -55,6 +55,7 @@ public class Domkrat : MonoBehaviour
         movingMech = transform.GetChild(0).GetChild(0).GetComponent<MovingMech>();
         tormozSwitch = gameObject.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent<TormozSwitcher>();
         domkratMoving = gameObject.GetComponent<DomkratMoving>();
+        domkratMoving.OffCooliderWheel(false);
         fingers = transform.GetChild(0).GetChild(2).GetComponents<BoxCollider>();
         MovingHole = transform.GetChild(0).GetChild(0).GetComponent<BoxCollider>();
         // downPartRotation = transform.GetChild(1).GetChild(5).GetComponent<Down_part_rotation>();
@@ -151,6 +152,7 @@ public class Domkrat : MonoBehaviour
                 // Блокируем rotation по X во время опускания домкрата, чтобы он не упал назад
                 gameObject.GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezeRotationX;
                 downPart.Up();
+                domkratMoving.OffCooliderWheel(true);
                 gameObject.GetComponent<Rigidbody>().isKinematic = false;
                 isAttachedToStoika = false;
                 // duration = 3f;
