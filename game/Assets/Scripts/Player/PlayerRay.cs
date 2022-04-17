@@ -64,7 +64,10 @@ public class PlayerRay : MonoBehaviour
     {
         foreach (var movable in moving)
         {
-            movable.Moving();
+            if (movable.gameObject.tag == "Domkrat")
+            {
+                movable.Moving();
+            }
         }
     }
 
@@ -122,6 +125,14 @@ public class PlayerRay : MonoBehaviour
         }
 
         checkSelectable();
+
+        foreach (var movable in moving)
+        {
+            if (movable.gameObject.tag != "Domkrat")
+            {
+                movable.Moving();
+            }
+        }
 
         //selectable = null;
         placeForSet = null;
