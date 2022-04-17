@@ -60,6 +60,14 @@ public class PlayerRay : MonoBehaviour
         moving.Remove(movable);
     }
 
+    private void FixedUpdate()
+    {
+        foreach (var movable in moving)
+        {
+            movable.Moving();
+        }
+    }
+
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -114,11 +122,6 @@ public class PlayerRay : MonoBehaviour
         }
 
         checkSelectable();
-
-        foreach (var movable in moving)
-        {
-            movable.Moving();
-        }
 
         //selectable = null;
         placeForSet = null;
