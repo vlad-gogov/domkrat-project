@@ -115,7 +115,6 @@ public class Down_part : MonoBehaviour
 
     void TestingUp()
     {
-        Debug.Log("Test UP");
         curPosition = Makes.UP;
         animator.SetTrigger("LittleUp"); // анимация подъема самого домкрата
         ruchka.GetComponent<Animator>().SetTrigger("LittleMove"); // анимация вращения ручки
@@ -123,7 +122,6 @@ public class Down_part : MonoBehaviour
 
     void TestingDown()
     {
-        Debug.Log("Test DOWN");
         curPosition = Makes.DOWN;
         animator.SetTrigger("LittleDown"); // анимация опускания самого домкрата
         ruchka.GetComponent<Animator>().SetTrigger("LittleMove"); // анимация вращения ручки

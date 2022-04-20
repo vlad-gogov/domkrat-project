@@ -17,6 +17,7 @@ public class TPKMoving : MonoBehaviour
 {
     TPKDirection curDirection = TPKDirection.STAY;
     bool isMoving = false;
+    public bool isStop = false;
 
     const float EPS = 10e-4f;
 
@@ -53,6 +54,27 @@ public class TPKMoving : MonoBehaviour
 
     void Moving()
     {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            curDirection = TPKDirection.FORWARD;
+            StartCoroutine(MoveTpk(curDirection));
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            curDirection = TPKDirection.RIGHT;
+            StartCoroutine(MoveTpk(curDirection));
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            curDirection = TPKDirection.LEFT;
+            StartCoroutine(MoveTpk(curDirection));
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            curDirection = TPKDirection.BACK;
+            StartCoroutine(MoveTpk(curDirection));
+        }
+
         if (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_FLAT || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_DOWN)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -532,8 +554,6 @@ public class TPKMoving : MonoBehaviour
         Vector3 vector = new Vector3(0, 0, 0);
         float delta = 3f;
 
-
-
         switch (direction)
         {
             case TPKDirection.RIGHT:
@@ -561,6 +581,13 @@ public class TPKMoving : MonoBehaviour
         DisableDomkrats(false);
         for (float i = 0; i <= Mathf.Abs(delta); i += shift * Time.deltaTime)
         {
+            if (isFlat && isStop)
+            {
+                Singleton.Instance.StateManager.onError(new Error() { ErrorText = "Куда покатил???", Weight = ErrorWeight.MINOR });
+                gameObject.transform.Translate(-vector * 0.3f);
+                isStop = false;
+                break;
+            }
             if ((Input.GetKeyDown(KeyCode.T) && isFlat) || curDirection == TPKDirection.FINISHED)
             {
                 break;
@@ -604,13 +631,17 @@ public class TPKMoving : MonoBehaviour
             {
                 if (Singleton.Instance.StateManager.typeArea == TypeArea.DOWN)
                 {
-                    domkrat.RotateWheelForUpdate(-speedRotation * Time.deltaTime, false);
-                } else
+                    if (Tormoz.tormoz.tormozMovingHand.isSelected)
+                    {
+                        domkrat.RotateWheelForUpdate(-speedRotation * Time.deltaTime, false);
+                    }
+                }
+                else
                 {
                     domkrat.RotateWheelForUpdate(speedRotation * Time.deltaTime, false);
                 }
-                
             }
+
             gameObject.transform.Translate(vector * shift * Time.deltaTime);
             yield return null;
         }
