@@ -21403,7 +21403,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4648262731943386532, guid: 439ddb5aa0ac5bd4592906cea2e6e8c3, type: 3}
+  - {fileID: 2100000, guid: 74c618cbf5941214cb7e10508fe77110, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24797,7 +24797,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1253657368}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -29724,6 +29724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ec4eb2180269247a6516dee0815284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStop: 0
 --- !u!4 &1596176231
 Transform:
   m_ObjectHideFlags: 0
