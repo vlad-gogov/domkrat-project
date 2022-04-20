@@ -54,26 +54,27 @@ public class TPKMoving : MonoBehaviour
 
     void Moving()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            curDirection = TPKDirection.FORWARD;
-            StartCoroutine(MoveTpk(curDirection));
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            curDirection = TPKDirection.RIGHT;
-            StartCoroutine(MoveTpk(curDirection));
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            curDirection = TPKDirection.LEFT;
-            StartCoroutine(MoveTpk(curDirection));
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            curDirection = TPKDirection.BACK;
-            StartCoroutine(MoveTpk(curDirection));
-        }
+        // Раскоментить для дебага
+        //if (Input.GetKeyDown(KeyCode.UpArrow))
+        //{
+        //    curDirection = TPKDirection.FORWARD;
+        //    StartCoroutine(MoveTpk(curDirection));
+        //}
+        //else if (Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    curDirection = TPKDirection.RIGHT;
+        //    StartCoroutine(MoveTpk(curDirection));
+        //}
+        //else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //    curDirection = TPKDirection.LEFT;
+        //    StartCoroutine(MoveTpk(curDirection));
+        //}
+        //else if (Input.GetKeyDown(KeyCode.DownArrow))
+        //{
+        //    curDirection = TPKDirection.BACK;
+        //    StartCoroutine(MoveTpk(curDirection));
+        //}
 
         if (Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_FLAT || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_UP || Singleton.Instance.StateManager.GetState() == NameState.MOVE_TPK_DOWN)
         {

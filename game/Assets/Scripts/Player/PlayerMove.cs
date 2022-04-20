@@ -1,7 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using System;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -18,10 +19,17 @@ public class PlayerMove : MonoBehaviour
     private DomkratMoving moving;
     public float SpeedRotation = 20f;
     bool isDaun = false;
+    bool allowAutoResolution = true;
+
+    int screenWidth, screenHeigth;
+    float resolutionScale = 1.0f;
 
     void Start()
     {
         PointerRuchka = gameObject.transform.GetChild(0).gameObject;
+        screenWidth = Screen.width;
+        screenHeigth = Screen.height;
+        Debug.Log($"Initial resolution is: {screenWidth}x{screenHeigth}");
     }
 
     public void PickUpDomkrat(GameObject SelectedObject)
@@ -31,6 +39,8 @@ public class PlayerMove : MonoBehaviour
     }
 
     private float _xRotation;
+
+    float fps = 60;
 
     void Update()
     {
@@ -50,6 +60,81 @@ public class PlayerMove : MonoBehaviour
         MaybeZoom();
         MaybeCroach();
         // MovePlayer();
+
+        // Вручную изменять разрешение на всякий случай
+        if (Input.GetKeyDown(KeyCode.PageUp))
+        {
+            allowAutoResolution = false;
+            ScaleResolution(resolutionScale + 0.1f);
+        }
+        else if (Input.GetKeyDown(KeyCode.PageDown))
+        {
+            allowAutoResolution = false;
+            ScaleResolution(resolutionScale - 0.1f);
+        }
+    }
+
+    int lowFps = 0;
+    int decentFps = 0;
+
+    void FPSStatus()
+    {
+        int low_fps = 24;
+        int decent_fps = 58;
+
+        if (fps < low_fps)
+        {
+            lowFps++;
+            decentFps = 0;
+        }
+        else if (fps > decent_fps)
+        {
+            lowFps = 0;
+            decentFps++;
+        }
+        else
+        {
+            lowFps = 0;
+            decentFps = 0;
+        }
+
+        if (lowFps > low_fps * 2) // примерное через 2 секунды низкого FPS'а
+        {
+            lowFps = 0;
+            decentFps = 0;
+            ScaleResolution(resolutionScale - 0.1f);
+        }
+        if (decentFps > decent_fps * 30) // примерно через 30 секунд высокого FPS'а
+        {
+            lowFps = 0;
+            decentFps = 0;
+            ScaleResolution(resolutionScale + 0.1f);
+        }
+    }
+
+    private void OnGUI()
+    {
+        fps = 1.0f / Time.deltaTime;
+        string text = "FPS: " + ((int)fps).ToString();
+
+        if (fps < 24)
+        {
+            text = $"<color=red>{text}</color>";
+        }
+        else if (fps < 40)
+        {
+            text = $"<color=orange>{text}</color>";
+        }
+        else
+        {
+            text = $"<color=green>{text}</color>";
+        }
+        text += $"\nResolution: {Screen.width}x{Screen.height}";
+        GUI.Label(new Rect(0, 0, 300, 100), text);
+        if (allowAutoResolution)
+        {
+            FPSStatus();
+        }
     }
 
     void MaybeZoom()
@@ -59,9 +144,21 @@ public class PlayerMove : MonoBehaviour
         int maxFov = 60;
         var fov = Camera.main.fieldOfView;
         fov -= Input.GetAxis("Mouse ScrollWheel") * sensitivity;
+
         fov = Mathf.Clamp(fov, minFov, maxFov);
         Camera.main.fieldOfView = fov;
     }
+
+    void ScaleResolution(float scale)
+    {
+        scale = Math.Min(1.0f, Math.Max(0.5f, scale));
+        resolutionScale = scale;
+        int newWidth = (int)(screenWidth * resolutionScale);
+        int newHeigth = (int)(screenHeigth * resolutionScale);
+        Debug.Log($"New resolution is: {newWidth}x{newHeigth}");
+        Screen.SetResolution(newWidth, newHeigth, true);
+    }
+
     void MaybeCroach()
     {
         GameObject selectedObject = PlayerRay.playerRay.GetSelected();
