@@ -141,8 +141,14 @@ public class TormozConnector : Selectable
             }
             if (isBackdWithStop && isForwardWithStop && isBackWithoutStop && isForwardWithoutStop && !isSelected)
             {
-                Singleton.Instance.StateManager.NextState();
-                tormozMoving.Disconnect(type);
+                if (tormozMoving.GetIsConnected())
+                {
+                    tormozMoving.Disconnect(type);
+                }
+                if (!tormozSwitcher.isSelected)
+                {
+                    Singleton.Instance.StateManager.NextState();
+                }
             }
         } else if (curState == NameState.DISABLE_TORMOZ && !isSelected)
         {

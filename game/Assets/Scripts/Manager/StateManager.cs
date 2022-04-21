@@ -119,7 +119,7 @@ public class StateManager : MonoBehaviour
         states.Add(new State() { state = NameState.SET_DOMKRATS, disctiption = "Отсоедените оставшиеся домкраты, подкатите и установите их на ТПК" });
         states.Add(new State() { state = NameState.CHECK_TURING_MACHANISM, disctiption = "Проверьте работу механизма поворота домкрата и верните ручку домкрата в исходное положение" });
         states.Add(new State() { state = NameState.UP_TPK, disctiption = "Поднимите ТПК" });
-        states.Add(new State() { state = NameState.CHECK_BREAK_MECHANISM, disctiption = "Проверьте работу тормозного механизма и отключите тормоз" });
+        states.Add(new State() { state = NameState.CHECK_BREAK_MECHANISM, disctiption = "Проверьте работу тормозного механизма, отключите тормоз и выключите тормозной механизм" });
 
         LoadTutorial();
 

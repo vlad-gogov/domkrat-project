@@ -16,11 +16,14 @@ public class Switch : MonoBehaviour
     public IEnumerator RotateSwitch(float angel)
     {
         float temp = angel >= 0 ? -1 : 1;
+        Vector3 prev = gameObject.transform.eulerAngles;
         for(float t = 0; t <= Mathf.Abs(angel); t += speedRotation * Time.deltaTime)
         {
             gameObject.transform.Rotate(0f, 0f, speedRotation * temp * Time.deltaTime);
             yield return null;
         }
+        Vector3 newAngles = new Vector3(0, 0, Mathf.Abs(angel));
+        gameObject.transform.eulerAngles = prev + temp * newAngles;
     }
 
     public void ChangeState(TypeMode nextType)

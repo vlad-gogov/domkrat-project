@@ -151,4 +151,9 @@ public class TormozMoving : MovingSelect
             Tormoz.tormoz.gameObject.SetActive(false);
         }
     }
+
+    public bool GetIsConnected()
+    {
+        return isConnected;
+    }
 }
