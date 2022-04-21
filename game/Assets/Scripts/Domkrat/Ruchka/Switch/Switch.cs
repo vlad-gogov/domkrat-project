@@ -12,9 +12,11 @@ public class Switch : MonoBehaviour
     public TypeMode curType = TypeMode.Off;
     public float[] rotate;
     private float speedRotation = 40f;
+    private bool isRotate;
 
     public IEnumerator RotateSwitch(float angel)
     {
+        isRotate = true;
         float temp = angel >= 0 ? -1 : 1;
         Vector3 prev = gameObject.transform.eulerAngles;
         for(float t = 0; t <= Mathf.Abs(angel); t += speedRotation * Time.deltaTime)
@@ -24,10 +26,15 @@ public class Switch : MonoBehaviour
         }
         Vector3 newAngles = new Vector3(0, 0, Mathf.Abs(angel));
         gameObject.transform.eulerAngles = prev + temp * newAngles;
+        isRotate = false;
     }
 
     public void ChangeState(TypeMode nextType)
     {
+        if (isRotate)
+        {
+            return;
+        }
         int currentIndex = (int)curType;
         int nextIndex = (int)nextType;
         StartCoroutine(RotateSwitch(rotate[currentIndex] - rotate[nextIndex]));
