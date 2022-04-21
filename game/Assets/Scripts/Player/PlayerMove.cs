@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 using System;
 
@@ -46,7 +45,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            SceneManager.LoadScene("Menu");
+            Singleton.Instance.UIManager.exitDialog.OnShow();
         }
         if (Input.GetMouseButton(1))
         {
