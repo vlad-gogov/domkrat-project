@@ -7,6 +7,14 @@ public class Logo : MonoBehaviour
 {
     public float TimeLogo;
 
+    void Awake()
+    {
+        /*
+         * Прочитать настройки из файла
+         * Изначально адаптивное разрешение выключено
+         */
+    }
+
     void Start()
     {
         var resulutions = Screen.resolutions;

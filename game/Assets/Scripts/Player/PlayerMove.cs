@@ -61,16 +61,16 @@ public class PlayerMove : MonoBehaviour
         // MovePlayer();
 
         // Вручную изменять разрешение на всякий случай
-        if (Input.GetKeyDown(KeyCode.PageUp))
-        {
-            allowAutoResolution = false;
-            ScaleResolution(resolutionScale + 0.1f);
-        }
-        else if (Input.GetKeyDown(KeyCode.PageDown))
-        {
-            allowAutoResolution = false;
-            ScaleResolution(resolutionScale - 0.1f);
-        }
+        // if (Input.GetKeyDown(KeyCode.PageUp))
+        // {
+        //     allowAutoResolution = false;
+        //     ScaleResolution(resolutionScale + 0.1f);
+        // }
+        // else if (Input.GetKeyDown(KeyCode.PageDown))
+        // {
+        //     allowAutoResolution = false;
+        //     ScaleResolution(resolutionScale - 0.1f);
+        // }
     }
 
     int lowFps = 0;
@@ -130,7 +130,7 @@ public class PlayerMove : MonoBehaviour
         }
         text += $"\nResolution: {Screen.width}x{Screen.height}";
         GUI.Label(new Rect(0, 0, 300, 100), text);
-        if (allowAutoResolution)
+        if (CrossScenesStorage.isAdaptiveResoulution)
         {
             FPSStatus();
         }
