@@ -6,13 +6,16 @@ using UnityEngine.UI;
 public class Option : MonoBehaviour
 {
     Toggle AdaptiveRes;
-    Dropdown dropDown;
+    Dropdown dropDownResolution;
+    Dropdown dropDownQuailty;
     Resolution[] res;
+    string[] quality;
 
     void Awake()
     {
         AdaptiveRes = transform.GetChild(0).GetComponent<Toggle>();
-        dropDown = transform.GetChild(1).GetComponent<Dropdown>();
+        dropDownResolution = transform.GetChild(1).GetComponent<Dropdown>();
+        dropDownQuailty = transform.GetChild(2).GetComponent<Dropdown>();
 
         res = Screen.resolutions;
         List<string> resText = new List<string>();
@@ -20,20 +23,24 @@ public class Option : MonoBehaviour
         {
             resText.Add(a.width.ToString() + " x " + a.height.ToString());
         }
-        dropDown.AddOptions(resText);
+        dropDownResolution.AddOptions(resText);
+        quality = QualitySettings.names;
+        dropDownQuailty.AddOptions(new List<string>(quality));
     }
 
     void Start()
     {
-        dropDown.gameObject.transform.GetChild(0).GetComponent<Text>().text = Screen.width.ToString() + " x " + Screen.height.ToString();
+        dropDownResolution.gameObject.transform.GetChild(0).GetComponent<Text>().text = Screen.width.ToString() + " x " + Screen.height.ToString();
         for (int i = 0; i < res.Length; i++)
         {
             if (res[i].width == Screen.width && res[i].height == Screen.height)
             {
-                dropDown.value = i;
+                dropDownResolution.value = i;
                 break;
             }
         }
+        dropDownQuailty.value = QualitySettings.GetQualityLevel();
+        dropDownQuailty.gameObject.transform.GetChild(0).GetComponent<Text>().text = quality[dropDownQuailty.value];
     }
 
     public void onClickAdaptiveResoulution()
@@ -44,8 +51,13 @@ public class Option : MonoBehaviour
 
     public void ChangeResolution()
     {
-        Screen.SetResolution(res[dropDown.value].width, res[dropDown.value].height, true);
-        CrossScenesStorage.resolution = res[dropDown.value];
+        Screen.SetResolution(res[dropDownResolution.value].width, res[dropDownResolution.value].height, true);
+        CrossScenesStorage.resolution = res[dropDownResolution.value];
+    }
+
+    public void ChangeQuality()
+    {
+        QualitySettings.SetQualityLevel(dropDownQuailty.value, true);
     }
 
 
