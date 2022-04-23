@@ -79,7 +79,7 @@ public class PlayerMove : MonoBehaviour
     void FPSStatus()
     {
         int low_fps = 24;
-        int decent_fps = 58;
+        int decent_fps = 55;
 
         if (fps < low_fps)
         {

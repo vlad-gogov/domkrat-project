@@ -49,6 +49,7 @@ public class Option : MonoBehaviour
         }
         dropDownQuailty.value = QualitySettings.GetQualityLevel();
         dropDownQuailty.gameObject.transform.GetChild(0).GetComponent<Text>().text = quality[dropDownQuailty.value];
+        AdaptiveRes.isOn = CrossScenesStorage.isAdaptiveResoulution;
     }
 
     public void onClickAdaptiveResoulution()

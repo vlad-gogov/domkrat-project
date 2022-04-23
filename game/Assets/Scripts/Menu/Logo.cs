@@ -26,7 +26,7 @@ public class Logo : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButton(0))
+        if(Input.anyKeyDown)
         {
             SceneManager.LoadScene("Menu");
         }
