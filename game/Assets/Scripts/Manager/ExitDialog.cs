@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class ExitDialog : MonoBehaviour
 {
-    public void OnShow()
+    public static ExitDialog instance { get; private set; }
+
+    public ExitDialog()
+    {
+        instance = this;
+    }
+
+    Action callbackOnNo;
+
+    public void OnShow(Action callback = null)
     {
         gameObject.SetActive(true);
-        Singleton.Instance.StateManager.Pause();
+        callbackOnNo = callback;
     }
 
     public void OnYes()
@@ -18,7 +28,10 @@ public class ExitDialog : MonoBehaviour
 
     public void OnNo()
     {
-        Singleton.Instance.StateManager.Resume();
         gameObject.SetActive(false);
+        if (callbackOnNo != null)
+        {
+            callbackOnNo();
+        }
     }
 }

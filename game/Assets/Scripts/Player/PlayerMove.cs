@@ -18,17 +18,10 @@ public class PlayerMove : MonoBehaviour
     private DomkratMoving moving;
     public float SpeedRotation = 20f;
     bool isDaun = false;
-    bool allowAutoResolution = true;
-
-    int screenWidth, screenHeigth;
-    float resolutionScale = 1.0f;
 
     void Start()
     {
         PointerRuchka = gameObject.transform.GetChild(0).gameObject;
-        screenWidth = Screen.width;
-        screenHeigth = Screen.height;
-        Debug.Log($"Initial resolution is: {screenWidth}x{screenHeigth}");
     }
 
     public void PickUpDomkrat(GameObject SelectedObject)
@@ -43,9 +36,9 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Singleton.Instance.UIManager.exitDialog.OnShow();
+            Singleton.Instance.UIManager.pauseDialog.OnShow();
         }
         if (Input.GetMouseButton(1))
         {
@@ -101,13 +94,13 @@ public class PlayerMove : MonoBehaviour
         {
             lowFps = 0;
             decentFps = 0;
-            ScaleResolution(resolutionScale - 0.1f);
+            GraphicsManager.LowerSettings();
         }
         if (decentFps > decent_fps * 30) // примерно через 30 секунд высокого FPS'а
         {
             lowFps = 0;
             decentFps = 0;
-            ScaleResolution(resolutionScale + 0.1f);
+            GraphicsManager.IncreaseSettings();
         }
     }
 
@@ -146,16 +139,6 @@ public class PlayerMove : MonoBehaviour
 
         fov = Mathf.Clamp(fov, minFov, maxFov);
         Camera.main.fieldOfView = fov;
-    }
-
-    void ScaleResolution(float scale)
-    {
-        scale = Math.Min(1.0f, Math.Max(0.5f, scale));
-        resolutionScale = scale;
-        int newWidth = (int)(screenWidth * resolutionScale);
-        int newHeigth = (int)(screenHeigth * resolutionScale);
-        Debug.Log($"New resolution is: {newWidth}x{newHeigth}");
-        Screen.SetResolution(newWidth, newHeigth, true);
     }
 
     void MaybeCroach()

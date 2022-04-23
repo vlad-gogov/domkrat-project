@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     public Text helper;
     public GameObject enterBox;
     public GameObject scrollView;
-    public ExitDialog exitDialog;
+    public PauseDialog pauseDialog;
     TutorialBar tutorial;
     bool finished = false;
     bool isOpen = false;

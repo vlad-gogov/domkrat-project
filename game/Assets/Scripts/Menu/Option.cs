@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +11,7 @@ public class Option : MonoBehaviour
     Resolution[] res;
     string[] quality;
     ushort shiftResoluiton = 0;
+    bool doPerformActionOnToggle = true;
 
     void Awake()
     {
@@ -49,13 +50,24 @@ public class Option : MonoBehaviour
         }
         dropDownQuailty.value = QualitySettings.GetQualityLevel();
         dropDownQuailty.gameObject.transform.GetChild(0).GetComponent<Text>().text = quality[dropDownQuailty.value];
+
+        // 'doPerformActionOnToggle' - костыль, изменение .isOn у Toggle триггерит эвент onValueChanged,
+        // чего мы не хотим при инициализации Toggl'а значением
+        doPerformActionOnToggle = false;
         AdaptiveRes.isOn = CrossScenesStorage.isAdaptiveResoulution;
+        // Эта строчка тоже очень важная, не трогайте её
+        doPerformActionOnToggle = true;
     }
 
     public void onClickAdaptiveResoulution()
     {
+        Debug.Log($"onClickAdaptiveResoulution() : doPerformActionOnToggle = {doPerformActionOnToggle}");
+        if (!doPerformActionOnToggle)
+        {
+            doPerformActionOnToggle = true;
+            return;
+        }
         CrossScenesStorage.isAdaptiveResoulution = !CrossScenesStorage.isAdaptiveResoulution;
-        AdaptiveRes.isOn = CrossScenesStorage.isAdaptiveResoulution;
     }
 
     public void ChangeResolution()

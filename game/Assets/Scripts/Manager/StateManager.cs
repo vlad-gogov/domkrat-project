@@ -274,11 +274,15 @@ void Update()
         return states[indexCurState].state;
     }
 
-    public void Pause()
+    public void Pause(bool stopTime = false)
     {
         OnPause = true;
         player.GetComponent<PlayerMove>().enabled = false;
         player.GetComponent<PlayerRay>().enabled = false;
+        if (stopTime)
+        {
+            Time.timeScale = 0;
+        }
     }
 
     public void Resume()
@@ -286,6 +290,7 @@ void Update()
         OnPause = false;
         player.GetComponent<PlayerMove>().enabled = true;
         player.GetComponent<PlayerRay>().enabled = true;
+        Time.timeScale = 1;
     }
 
     void LoadTutorial()
