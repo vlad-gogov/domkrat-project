@@ -11,15 +11,16 @@ public class Logo : MonoBehaviour
     {
         /*
          * Прочитать настройки из файла
-         * Изначально адаптивное разрешение выключено
          */
+        CrossScenesStorage.resolution = Screen.currentResolution;
+        CrossScenesStorage.isAdaptiveResoulution = false;
     }
 
     void Start()
     {
-        var resulutions = Screen.resolutions;
+        //var resulutions = Screen.resolutions;
         // Устанавливаем максимально возможное разрешение при запуске (поумолчанию, он запускается при том, при котором была закрыта игра)
-        Screen.SetResolution(resulutions[resulutions.Length - 1].width, resulutions[resulutions.Length - 1].height, true);
+        //Screen.SetResolution(resulutions[resulutions.Length - 1].width, resulutions[resulutions.Length - 1].height, true);
         //StartCoroutine(WaitLogo(TimeLogo));
     }
 

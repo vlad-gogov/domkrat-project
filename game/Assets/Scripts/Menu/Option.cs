@@ -10,6 +10,7 @@ public class Option : MonoBehaviour
     Dropdown dropDownQuailty;
     Resolution[] res;
     string[] quality;
+    ushort shiftResoluiton = 8;
 
     void Awake()
     {
@@ -19,9 +20,9 @@ public class Option : MonoBehaviour
 
         res = Screen.resolutions;
         List<string> resText = new List<string>();
-        foreach(var a in res)
+        for (int i = shiftResoluiton; i < res.Length; i++)
         {
-            resText.Add(a.width.ToString() + " x " + a.height.ToString());
+            resText.Add(res[i].width.ToString() + " x " + res[i].height.ToString());
         }
         dropDownResolution.AddOptions(resText);
         quality = QualitySettings.names;
@@ -31,11 +32,11 @@ public class Option : MonoBehaviour
     void Start()
     {
         dropDownResolution.gameObject.transform.GetChild(0).GetComponent<Text>().text = Screen.width.ToString() + " x " + Screen.height.ToString();
-        for (int i = 0; i < res.Length; i++)
+        for (int i = shiftResoluiton; i < res.Length; i++)
         {
-            if (res[i].width == Screen.width && res[i].height == Screen.height)
+            if (res[i].width == CrossScenesStorage.resolution.width && res[i].height == CrossScenesStorage.resolution.height)
             {
-                dropDownResolution.value = i;
+                dropDownResolution.value = i - shiftResoluiton;
                 break;
             }
         }
@@ -51,8 +52,8 @@ public class Option : MonoBehaviour
 
     public void ChangeResolution()
     {
-        Screen.SetResolution(res[dropDownResolution.value].width, res[dropDownResolution.value].height, true);
-        CrossScenesStorage.resolution = res[dropDownResolution.value];
+        CrossScenesStorage.resolution = res[dropDownResolution.value + shiftResoluiton];
+        Screen.SetResolution(CrossScenesStorage.resolution.width, CrossScenesStorage.resolution.height, true);
     }
 
     public void ChangeQuality()
