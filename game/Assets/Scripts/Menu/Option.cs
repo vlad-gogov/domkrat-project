@@ -10,7 +10,7 @@ public class Option : MonoBehaviour
     Dropdown dropDownQuailty;
     Resolution[] res;
     string[] quality;
-    ushort shiftResoluiton = 8;
+    ushort shiftResoluiton = 0;
 
     void Awake()
     {
@@ -20,9 +20,16 @@ public class Option : MonoBehaviour
 
         res = Screen.resolutions;
         List<string> resText = new List<string>();
-        for (int i = shiftResoluiton; i < res.Length; i++)
+        for (int i = 0; i < res.Length; i++)
         {
-            resText.Add(res[i].width.ToString() + " x " + res[i].height.ToString());
+            if (res[i].width < 800)
+            {
+                shiftResoluiton++;
+            }
+            else
+            {
+                resText.Add(res[i].width.ToString() + " x " + res[i].height.ToString());
+            }
         }
         dropDownResolution.AddOptions(resText);
         quality = QualitySettings.names;
