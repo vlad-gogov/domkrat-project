@@ -16,10 +16,13 @@ public class TutorialBar
         builder = new PageBuilder(content);
     }
 
-    public void Show(string text)
+    public void Show(string text, bool resetScrollBar=true)
     {
-        // scroll to top
-        scrollView.GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
+        if (resetScrollBar)
+        {
+            // scroll to top
+            scrollView.GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
+        }
         builder.ParseAndAdd(text);
         content.GetComponent<RectTransform>().sizeDelta = new Vector2(0, builder.Heigth);
     }

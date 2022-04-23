@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
         enter.text = "";
     }
 
-    public void OpenTutorial(string tutor, bool finished=false)
+    public void OpenTutorial(string tutor, bool finished=false, bool resetScrollBar=true)
     {
         if (isOpen)
         {
@@ -70,7 +70,7 @@ public class UIManager : MonoBehaviour
                 tutor += $"\t<color=red>{err.ErrorText}; Вес: {(int)err.Weight}</color>\n";
             }
         }
-        tutorial.Show(tutor);
+        tutorial.Show(tutor, resetScrollBar);
         Singleton.Instance.StateManager.Pause();
     }
 

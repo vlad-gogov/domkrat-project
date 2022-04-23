@@ -253,7 +253,7 @@ void Update()
         }
         if (Input.GetKey(KeyCode.F1) && gameMode == GameMode.TRAIN)
         {
-            Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)));
+            Singleton.Instance.UIManager.OpenTutorial(string.Copy(SafeGetFromDict(tutorials)), /*finished=*/false, /*resetScrollBar=*/false);
         }
         if (Input.GetKey(KeyCode.F1) && gameMode == GameMode.EXAM)
         {
