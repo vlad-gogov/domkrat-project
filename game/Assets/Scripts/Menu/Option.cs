@@ -37,7 +37,7 @@ public class Option : MonoBehaviour
         dropDownQuailty.AddOptions(new List<string>(quality));
     }
 
-    void Start()
+    public void InitializeValues()
     {
         dropDownResolution.gameObject.transform.GetChild(0).GetComponent<Text>().text = Screen.width.ToString() + " x " + Screen.height.ToString();
         for (int i = shiftResoluiton; i < res.Length; i++)
@@ -57,6 +57,11 @@ public class Option : MonoBehaviour
         AdaptiveRes.isOn = CrossScenesStorage.isAdaptiveResoulution;
         // Эта строчка тоже очень важная, не трогайте её
         doPerformActionOnToggle = true;
+    }
+
+    void Start()
+    {
+        InitializeValues();
     }
 
     public void onClickAdaptiveResoulution()

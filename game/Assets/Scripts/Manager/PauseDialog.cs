@@ -40,6 +40,7 @@ public class PauseDialog : MonoBehaviour
         state = PauseDialogState.SETTINGS;
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(true);
+        settingsMenu.GetComponent<Option>().InitializeValues();
     }
 
     public void OnCloseSettings()
