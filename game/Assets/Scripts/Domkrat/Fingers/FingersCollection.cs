@@ -27,7 +27,6 @@ public class FingersCollection : Selectable
         }))
         {
             isSelected = true;
-            Debug.Log("Fingers select");
         }
     }
 

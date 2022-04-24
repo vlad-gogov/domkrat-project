@@ -300,7 +300,8 @@ public class Domkrat : MonoBehaviour
             EndPoint = parent.transform.GetChild(1).gameObject;
         } catch
         {
-            Debug.Log("pizda");
+            //Debug.Log("Da");
+            //Debug.Log("Pizda");
             return;
         }
 

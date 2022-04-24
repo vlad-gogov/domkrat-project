@@ -99,7 +99,7 @@ public class TPK : MonoBehaviour
             attachedDomkrats.RemoveAt(id);
         } catch
         {
-            Debug.Log("Dima debil");
+            //Debug.Log("Dima debil");
         }
         
     }

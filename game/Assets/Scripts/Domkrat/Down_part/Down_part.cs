@@ -51,7 +51,6 @@ public class Down_part : MonoBehaviour
         // то репортим в менеджер, что все проверки пройдены
         if (doNowAllCheckComplete && !wasAllCheckComplete)
         {
-            Debug.Log("ALL CHECK COMPLETE");
             Singleton.Instance.StateManager.NextState();
         }
     }

@@ -72,7 +72,6 @@ public class SetRucka : PlaceForSet
             other.transform.position = Vector3.MoveTowards(other.transform.position, Pointer.transform.position, step);
             // other.transform.localEulerAngles = Vector3.MoveTowards(other.transform.localEulerAngles, Pointer.transform.localRotation.eulerAngles, step);
             // other.transform.rotation = new Quaternion(other.transform.rotation.x, other.transform.rotation.y + (180 * step), other.transform.rotation.z, other.transform.rotation.w);
-            Debug.Log(other.transform.localEulerAngles);
             yield return null;
         }
 
