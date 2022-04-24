@@ -139,7 +139,6 @@ public class Ruchka : Selectable
         }
         var state = ComputeState();
 
-        Debug.Log("1");
 
         if (!state.isValidState)
         {
@@ -148,13 +147,10 @@ public class Ruchka : Selectable
             return;
         }
 
-        Debug.Log("2");
         if (han.isSelected)
         {
-            Debug.Log("3");
             if (curPosition == PositionRuchka.UP)
             {
-                Debug.Log("4");
                 NameState curState = Singleton.Instance.StateManager.GetState();
                 if (curState == NameState.CHECK_TURING_MACHANISM)
                 {
@@ -162,7 +158,6 @@ public class Ruchka : Selectable
                     return;
                 }
 
-                Debug.Log(curState.ToString());
                 // if (curState == NameState.CHECK_DOMKRATS || curState == NameState.SET_DOMKRATS)
                 if (batya.isAttachedToStoika)
                 {
@@ -173,7 +168,6 @@ public class Ruchka : Selectable
                             && state.direction == Makes.UP
                         )
                         {
-                            Debug.Log("DOWN");
                             actualDomkratDownPart.Down(false, state.activeSwitcher == ModeSwitch.LOADED);
                             return;
                         }
@@ -182,7 +176,6 @@ public class Ruchka : Selectable
                             && state.direction == Makes.DOWN
                         )
                         {
-                            Debug.Log("UP");
                             actualDomkratDownPart.Up(false, state.activeSwitcher == ModeSwitch.LOADED);
                             return;
                         }
