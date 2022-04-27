@@ -29,7 +29,7 @@ public class Option : MonoBehaviour
             }
             else
             {
-                resText.Add(res[i].width.ToString() + " x " + res[i].height.ToString());
+                resText.Add(res[i].width.ToString() + " x " + res[i].height.ToString() + ", " + res[i].refreshRate + " Гц");
             }
         }
         dropDownResolution.AddOptions(resText);
@@ -39,7 +39,7 @@ public class Option : MonoBehaviour
 
     public void InitializeValues()
     {
-        dropDownResolution.gameObject.transform.GetChild(0).GetComponent<Text>().text = Screen.width.ToString() + " x " + Screen.height.ToString();
+        dropDownResolution.gameObject.transform.GetChild(0).GetComponent<Text>().text = CrossScenesStorage.resolution.width.ToString() + " x " + CrossScenesStorage.resolution.height.ToString() + ", " + CrossScenesStorage.resolution.refreshRate + " Гц";
         for (int i = shiftResoluiton; i < res.Length; i++)
         {
             if (res[i].width == CrossScenesStorage.resolution.width && res[i].height == CrossScenesStorage.resolution.height)
