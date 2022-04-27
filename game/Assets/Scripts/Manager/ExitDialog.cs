@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +23,8 @@ public class ExitDialog : MonoBehaviour
 
     public void OnYes()
     {
+        // Чтобы при следующем заходе на сцену паузы не было поумолчанию
+        Singleton.Instance.StateManager.Resume();
         SceneManager.LoadScene("Menu");
     }
 
